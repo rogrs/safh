@@ -1,0 +1,25 @@
+{
+    "safhApp": {
+        "medicos" : {
+            "home": {
+                "title": "Medicos",
+                "createLabel": "Criar novo Medicos",
+                "createOrEditLabel": "Criar ou editar Medicos",
+                "search": "Pesquisar por Medicos"
+            },
+            "created": "Um novo Medicos é criado com o identificador {{ param }}",
+            "updated": "Um Medicos é atualizado com o identificador {{ param }}",
+            "deleted": "Um Medicos é deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Medicos {{ id }}?"
+            },
+            "detail": {
+                "title": "Medicos"
+            },
+            "nome": "Nome",
+            "cpf": "Cpf",
+            "crm": "Crm",
+            "email": "Email"
+        }
+    }
+}

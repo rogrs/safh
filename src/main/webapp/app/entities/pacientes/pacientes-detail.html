@@ -1,0 +1,45 @@
+
+<div>
+    <h2><span translate="safhApp.pacientes.detail.title">Pacientes</span> {{vm.pacientes.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="safhApp.pacientes.nome">Nome</span></dt>
+        <dd>
+            <span>{{vm.pacientes.nome}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.sobrenome">Sobrenome</span></dt>
+        <dd>
+            <span>{{vm.pacientes.sobrenome}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.cpf">Cpf</span></dt>
+        <dd>
+            <span>{{vm.pacientes.cpf}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.nascimento">Nascimento</span></dt>
+        <dd>
+            <span>{{vm.pacientes.nascimento | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.naturalidade">Naturalidade</span></dt>
+        <dd>
+            <span>{{vm.pacientes.naturalidade}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.email">Email</span></dt>
+        <dd>
+            <span>{{vm.pacientes.email}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.telefone">Telefone</span></dt>
+        <dd>
+            <span>{{vm.pacientes.telefone}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.celular">Celular</span></dt>
+        <dd>
+            <span>{{vm.pacientes.celular}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

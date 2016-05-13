@@ -1,0 +1,29 @@
+{
+    "safhApp": {
+        "pacientes" : {
+            "home": {
+                "title": "Pacientes",
+                "createLabel": "Criar um(a) novo(a) Pacientes",
+                "createOrEditLabel": "Criar ou editar um(a) Pacientes",
+                "search": "Search for Pacientes"
+            },
+            "created": "A new Pacientes is created with identifier {{ param }}",
+            "updated": "A Pacientes is updated with identifier {{ param }}",
+            "deleted": "A Pacientes is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Pacientes {{ id }}?"
+            },
+            "detail": {
+                "title": "Pacientes"
+            },
+            "nome": "Nome",
+            "sobrenome": "Sobrenome",
+            "cpf": "Cpf",
+            "nascimento": "Nascimento",
+            "naturalidade": "Naturalidade",
+            "email": "Email",
+            "telefone": "Telefone",
+            "celular": "Celular"
+        }
+    }
+}

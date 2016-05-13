@@ -8,6 +8,8 @@
             "entities": {
                 "main": "Entidades",
                 "dietas": "Dietas",
+                "medicos": "Medicos",
+                "pacientes": "Pacientes",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
