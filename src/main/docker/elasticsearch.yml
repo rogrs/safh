@@ -1,0 +1,10 @@
+version: '2'
+services:
+    safh-elasticsearch:
+        container_name: safh-elasticsearch
+        image: elasticsearch:1.7.5
+        # volumes:
+        #     - ~/volumes/jhipster/safh/elasticsearch/:/usr/share/elasticsearch/data/
+        ports:
+            - 9200:9200
+            - 9300:9300

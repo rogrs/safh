@@ -1,0 +1,29 @@
+*.jar
+*.war
+*.ear
+*.db
+.svn
+######################
+# Gradle Wrapper
+######################
+!gradle/wrapper/gradle-wrapper.jar
+/target/
+.metadata
+.settings
+.project
+.classpath
+/bin
+
+######################
+# Logs
+######################
+*.log
+
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*
+
