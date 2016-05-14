@@ -38,6 +38,8 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="clinica"><span translate="safhApp.clinicas.clinica">Clinica</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descricao"><span translate="safhApp.clinicas.descricao">Descricao</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="leitos.descricao"><span translate="safhApp.clinicas.leitos">Leitos</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="enfermarias.enfermaria"><span translate="safhApp.clinicas.enfermarias">Enfermarias</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,6 +48,12 @@
                     <td><a ui-sref="clinicas-detail({id:clinicas.id})">{{clinicas.id}}</a></td>
                     <td>{{clinicas.clinica}}</td>
                     <td>{{clinicas.descricao}}</td>
+                    <td>
+                        <a ui-sref="leitos-detail({id:clinicas.leitos.id})">{{clinicas.leitos.descricao}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="enfermarias-detail({id:clinicas.enfermarias.id})">{{clinicas.enfermarias.enfermaria}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

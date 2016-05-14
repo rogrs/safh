@@ -1,6 +1,5 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -8,8 +7,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -34,15 +31,11 @@ public class Clinicas implements Serializable {
     @Column(name = "descricao")
     private String descricao;
 
-    @OneToMany(mappedBy = "descricao")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Leitos> leitos = new HashSet<>();
+    @ManyToOne
+    private Leitos leitos;
 
-    @OneToMany(mappedBy = "enfermaria")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Enfermarias> enfermarias = new HashSet<>();
+    @ManyToOne
+    private Enfermarias enfermarias;
 
     public Long getId() {
         return id;
@@ -68,19 +61,19 @@ public class Clinicas implements Serializable {
         this.descricao = descricao;
     }
 
-    public Set<Leitos> getLeitos() {
+    public Leitos getLeitos() {
         return leitos;
     }
 
-    public void setLeitos(Set<Leitos> leitos) {
+    public void setLeitos(Leitos leitos) {
         this.leitos = leitos;
     }
 
-    public Set<Enfermarias> getEnfermarias() {
+    public Enfermarias getEnfermarias() {
         return enfermarias;
     }
 
-    public void setEnfermarias(Set<Enfermarias> enfermarias) {
+    public void setEnfermarias(Enfermarias enfermarias) {
         this.enfermarias = enfermarias;
     }
 

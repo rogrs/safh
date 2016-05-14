@@ -29,6 +29,14 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="leitos_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="enfermarias_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

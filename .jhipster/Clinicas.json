@@ -3,14 +3,14 @@
         {
             "relationshipName": "leitos",
             "otherEntityName": "leitos",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "descricao"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
         },
         {
             "relationshipName": "enfermarias",
             "otherEntityName": "enfermarias",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "enfermaria"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "enfermaria"
         }
     ],
     "fields": [

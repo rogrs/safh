@@ -32,6 +32,18 @@
                      />
         </div>
 
+        <div class="form-group">
+            <label translate="safhApp.clinicas.leitos" for="field_leitos">Leitos</label>
+            <select class="form-control" id="field_leitos" name="leitos" ng-model="vm.clinicas.leitos" ng-options="leitos as leitos.descricao for leitos in vm.leitos track by leitos.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="safhApp.clinicas.enfermarias" for="field_enfermarias">Enfermarias</label>
+            <select class="form-control" id="field_enfermarias" name="enfermarias" ng-model="vm.clinicas.enfermarias" ng-options="enfermarias as enfermarias.enfermaria for enfermarias in vm.enfermarias track by enfermarias.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
