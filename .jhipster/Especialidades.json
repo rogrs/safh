@@ -1,0 +1,17 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160514183926",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "especialidades",
+    "pagination": "infinite-scroll"
+}

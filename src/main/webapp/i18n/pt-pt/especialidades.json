@@ -1,0 +1,22 @@
+{
+    "safhApp": {
+        "especialidades" : {
+            "home": {
+                "title": "Especialidades",
+                "createLabel": "Criar um(a) novo(a) Especialidades",
+                "createOrEditLabel": "Criar ou editar um(a) Especialidades",
+                "search": "Search for Especialidades"
+            },
+            "created": "A new Especialidades is created with identifier {{ param }}",
+            "updated": "A Especialidades is updated with identifier {{ param }}",
+            "deleted": "A Especialidades is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Especialidades {{ id }}?"
+            },
+            "detail": {
+                "title": "Especialidades"
+            },
+            "descricao": "Descricao"
+        }
+    }
+}
