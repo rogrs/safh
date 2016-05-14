@@ -8,6 +8,7 @@
     <include file="classpath:config/liquibase/changelog/20160513014930_added_entity_Dietas.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160513113940_added_entity_Medicos.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160513115344_added_entity_Pacientes.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160514124716_added_entity_Leitos.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

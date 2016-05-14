@@ -1,0 +1,21 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "tipo",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160514124716",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "leitos",
+    "pagination": "infinite-scroll"
+}
