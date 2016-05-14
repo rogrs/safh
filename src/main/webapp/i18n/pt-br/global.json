@@ -12,6 +12,7 @@
                 "pacientes": "Pacientes",
                 "leitos": "Leitos",
                 "enfermarias": "Enfermarias",
+                "clinicas": "Clinicas",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

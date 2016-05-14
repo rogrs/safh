@@ -1,0 +1,34 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "leitos",
+            "otherEntityName": "leitos",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "descricao"
+        },
+        {
+            "relationshipName": "enfermarias",
+            "otherEntityName": "enfermarias",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "enfermaria"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "clinica",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160514131751",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "clinicas",
+    "pagination": "infinite-scroll"
+}
