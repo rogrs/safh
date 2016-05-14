@@ -53,7 +53,7 @@ public class Pacientes implements Serializable {
     @Column(name = "telefone", nullable = false)
     private String telefone;
 
-    @Pattern(regexp = "[789][0-9]{9}")
+    @Pattern(regexp = "\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$")
     @Column(name = "celular")
     private String celular;
 

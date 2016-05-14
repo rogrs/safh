@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Test class for the PacientesResource REST controller.
  *
  * @see PacientesResource
-
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SafhApp.class)
 @WebAppConfiguration
@@ -48,19 +48,19 @@ public class PacientesResourceIntTest {
     private static final String UPDATED_NOME = "BBBBB";
     private static final String DEFAULT_SOBRENOME = "AAAAA";
     private static final String UPDATED_SOBRENOME = "BBBBB";
-    private static final String DEFAULT_CPF = "113.941.170-51";
-    private static final String UPDATED_CPF = "603.159.762-41";
+    private static final String DEFAULT_CPF = "461.823.493-87";
+    private static final String UPDATED_CPF = "199.755.384-87";
 
     private static final LocalDate DEFAULT_NASCIMENTO = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_NASCIMENTO = LocalDate.now(ZoneId.systemDefault());
     private static final String DEFAULT_NATURALIDADE = "AAAAA";
     private static final String UPDATED_NATURALIDADE = "BBBBB";
-    private static final String DEFAULT_EMAIL = "teste@email.com.br";
-    private static final String UPDATED_EMAIL = "testeV@email.com.br";
-    private static final String DEFAULT_TELEFONE = "2122223333";
-    private static final String UPDATED_TELEFONE = "2222223333";
-    private static final String DEFAULT_CELULAR = "21783726024";
-    private static final String UPDATED_CELULAR = "21983726029";
+    private static final String DEFAULT_EMAIL = "teste_velho@teste.com.br";
+    private static final String UPDATED_EMAIL = "teste_novo@teste.com.br";
+    private static final String DEFAULT_TELEFONE = "(21) 2222-3333";
+    private static final String UPDATED_TELEFONE = "(21) 91111-6029";
+    private static final String DEFAULT_CELULAR = "(21) 93341-6029";
+    private static final String UPDATED_CELULAR = "(21) 91221-6029";
 
     @Inject
     private PacientesRepository pacientesRepository;
@@ -342,4 +342,3 @@ public class PacientesResourceIntTest {
             .andExpect(jsonPath("$.[*].celular").value(hasItem(DEFAULT_CELULAR.toString())));
     }
 }
-*/
