@@ -5,11 +5,12 @@
         .module('safhApp')
         .controller('MedicosDialogController', MedicosDialogController);
 
-    MedicosDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Medicos'];
+    MedicosDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Medicos', 'Especialidades'];
 
-    function MedicosDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Medicos) {
+    function MedicosDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Medicos, Especialidades) {
         var vm = this;
         vm.medicos = entity;
+        vm.especialidades = Especialidades.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

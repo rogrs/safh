@@ -19,7 +19,8 @@
             "nome": "Nome",
             "cpf": "Cpf",
             "crm": "Crm",
-            "email": "Email"
+            "email": "Email",
+            "especialidades": "Especialidades"
         }
     }
 }

@@ -1,5 +1,12 @@
 {
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "especialidades",
+            "otherEntityName": "especialidades",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
+        }
+    ],
     "fields": [
         {
             "fieldName": "nome",

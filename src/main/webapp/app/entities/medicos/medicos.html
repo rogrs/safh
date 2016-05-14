@@ -40,6 +40,7 @@
                     <th jh-sort-by="cpf"><span translate="safhApp.medicos.cpf">Cpf</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="crm"><span translate="safhApp.medicos.crm">Crm</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="email"><span translate="safhApp.medicos.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="especialidades.descricao"><span translate="safhApp.medicos.especialidades">Especialidades</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -50,6 +51,9 @@
                     <td>{{medicos.cpf}}</td>
                     <td>{{medicos.crm}}</td>
                     <td>{{medicos.email}}</td>
+                    <td>
+                        <a ui-sref="especialidades-detail({id:medicos.especialidades.id})">{{medicos.especialidades.descricao}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

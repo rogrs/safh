@@ -37,6 +37,9 @@ public class Medicos implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @ManyToOne
+    private Especialidades especialidades;
+
     public Long getId() {
         return id;
     }
@@ -75,6 +78,14 @@ public class Medicos implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Especialidades getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(Especialidades especialidades) {
+        this.especialidades = especialidades;
     }
 
     @Override

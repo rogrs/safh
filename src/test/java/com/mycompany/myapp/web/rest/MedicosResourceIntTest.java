@@ -44,12 +44,12 @@ public class MedicosResourceIntTest {
 
     private static final String DEFAULT_NOME = "AAAAA";
     private static final String UPDATED_NOME = "BBBBB";
-    private static final String DEFAULT_CPF = "113.941.170-51";
-    private static final String UPDATED_CPF = "015.791.998-60";
+    private static final String DEFAULT_CPF = "AAAAA";
+    private static final String UPDATED_CPF = "BBBBB";
     private static final String DEFAULT_CRM = "AAAAA";
     private static final String UPDATED_CRM = "BBBBB";
-    private static final String DEFAULT_EMAIL = "teste@teste.com.br";
-    private static final String UPDATED_EMAIL = "teste2@teste.com.br";
+    private static final String DEFAULT_EMAIL = "AAAAA";
+    private static final String UPDATED_EMAIL = "BBBBB";
 
     @Inject
     private MedicosRepository medicosRepository;
