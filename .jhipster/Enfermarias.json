@@ -1,0 +1,17 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "enfermaria",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160514130128",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "enfermarias",
+    "pagination": "infinite-scroll"
+}
