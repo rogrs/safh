@@ -24,6 +24,18 @@
         {
             "fieldName": "descricao",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "qtdLeitos",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "max"
+            ],
+            "fieldValidateRulesMax": "9999"
+        },
+        {
+            "fieldName": "numeroLeito",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160514131751",

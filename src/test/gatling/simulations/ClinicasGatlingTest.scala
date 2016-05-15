@@ -67,7 +67,7 @@ class ClinicasGatlingTest extends Simulation {
             .exec(http("Create new clinicas")
             .post("/api/clinicas")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "clinica":"SAMPLE_TEXT", "descricao":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "clinica":"SAMPLE_TEXT", "descricao":"SAMPLE_TEXT", "qtdLeitos":"0", "numeroLeito":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_clinicas_url"))).exitHereIfFailed
             .pause(10)

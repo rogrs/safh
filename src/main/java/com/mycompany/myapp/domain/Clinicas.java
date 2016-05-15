@@ -31,6 +31,13 @@ public class Clinicas implements Serializable {
     @Column(name = "descricao")
     private String descricao;
 
+    @Max(value = 9999)
+    @Column(name = "qtd_leitos")
+    private Integer qtdLeitos;
+
+    @Column(name = "numero_leito")
+    private String numeroLeito;
+
     @ManyToOne
     private Leitos leitos;
 
@@ -59,6 +66,22 @@ public class Clinicas implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Integer getQtdLeitos() {
+        return qtdLeitos;
+    }
+
+    public void setQtdLeitos(Integer qtdLeitos) {
+        this.qtdLeitos = qtdLeitos;
+    }
+
+    public String getNumeroLeito() {
+        return numeroLeito;
+    }
+
+    public void setNumeroLeito(String numeroLeito) {
+        this.numeroLeito = numeroLeito;
     }
 
     public Leitos getLeitos() {
@@ -103,6 +126,8 @@ public class Clinicas implements Serializable {
             "id=" + id +
             ", clinica='" + clinica + "'" +
             ", descricao='" + descricao + "'" +
+            ", qtdLeitos='" + qtdLeitos + "'" +
+            ", numeroLeito='" + numeroLeito + "'" +
             '}';
     }
 }

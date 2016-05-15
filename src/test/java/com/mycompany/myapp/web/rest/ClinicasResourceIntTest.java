@@ -47,6 +47,11 @@ public class ClinicasResourceIntTest {
     private static final String DEFAULT_DESCRICAO = "AAAAA";
     private static final String UPDATED_DESCRICAO = "BBBBB";
 
+    private static final Integer DEFAULT_QTD_LEITOS = 9999;
+    private static final Integer UPDATED_QTD_LEITOS = 9998;
+    private static final String DEFAULT_NUMERO_LEITO = "AAAAA";
+    private static final String UPDATED_NUMERO_LEITO = "BBBBB";
+
     @Inject
     private ClinicasRepository clinicasRepository;
 
@@ -80,6 +85,8 @@ public class ClinicasResourceIntTest {
         clinicas = new Clinicas();
         clinicas.setClinica(DEFAULT_CLINICA);
         clinicas.setDescricao(DEFAULT_DESCRICAO);
+        clinicas.setQtdLeitos(DEFAULT_QTD_LEITOS);
+        clinicas.setNumeroLeito(DEFAULT_NUMERO_LEITO);
     }
 
     @Test
@@ -100,6 +107,8 @@ public class ClinicasResourceIntTest {
         Clinicas testClinicas = clinicas.get(clinicas.size() - 1);
         assertThat(testClinicas.getClinica()).isEqualTo(DEFAULT_CLINICA);
         assertThat(testClinicas.getDescricao()).isEqualTo(DEFAULT_DESCRICAO);
+        assertThat(testClinicas.getQtdLeitos()).isEqualTo(DEFAULT_QTD_LEITOS);
+        assertThat(testClinicas.getNumeroLeito()).isEqualTo(DEFAULT_NUMERO_LEITO);
 
         // Validate the Clinicas in ElasticSearch
         Clinicas clinicasEs = clinicasSearchRepository.findOne(testClinicas.getId());
@@ -136,7 +145,9 @@ public class ClinicasResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(clinicas.getId().intValue())))
                 .andExpect(jsonPath("$.[*].clinica").value(hasItem(DEFAULT_CLINICA.toString())))
-                .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())));
+                .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())))
+                .andExpect(jsonPath("$.[*].qtdLeitos").value(hasItem(DEFAULT_QTD_LEITOS)))
+                .andExpect(jsonPath("$.[*].numeroLeito").value(hasItem(DEFAULT_NUMERO_LEITO.toString())));
     }
 
     @Test
@@ -151,7 +162,9 @@ public class ClinicasResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(clinicas.getId().intValue()))
             .andExpect(jsonPath("$.clinica").value(DEFAULT_CLINICA.toString()))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()));
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()))
+            .andExpect(jsonPath("$.qtdLeitos").value(DEFAULT_QTD_LEITOS))
+            .andExpect(jsonPath("$.numeroLeito").value(DEFAULT_NUMERO_LEITO.toString()));
     }
 
     @Test
@@ -175,6 +188,8 @@ public class ClinicasResourceIntTest {
         updatedClinicas.setId(clinicas.getId());
         updatedClinicas.setClinica(UPDATED_CLINICA);
         updatedClinicas.setDescricao(UPDATED_DESCRICAO);
+        updatedClinicas.setQtdLeitos(UPDATED_QTD_LEITOS);
+        updatedClinicas.setNumeroLeito(UPDATED_NUMERO_LEITO);
 
         restClinicasMockMvc.perform(put("/api/clinicas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -187,6 +202,8 @@ public class ClinicasResourceIntTest {
         Clinicas testClinicas = clinicas.get(clinicas.size() - 1);
         assertThat(testClinicas.getClinica()).isEqualTo(UPDATED_CLINICA);
         assertThat(testClinicas.getDescricao()).isEqualTo(UPDATED_DESCRICAO);
+        assertThat(testClinicas.getQtdLeitos()).isEqualTo(UPDATED_QTD_LEITOS);
+        assertThat(testClinicas.getNumeroLeito()).isEqualTo(UPDATED_NUMERO_LEITO);
 
         // Validate the Clinicas in ElasticSearch
         Clinicas clinicasEs = clinicasSearchRepository.findOne(testClinicas.getId());
@@ -228,6 +245,8 @@ public class ClinicasResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[*].id").value(hasItem(clinicas.getId().intValue())))
             .andExpect(jsonPath("$.[*].clinica").value(hasItem(DEFAULT_CLINICA.toString())))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())));
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())))
+            .andExpect(jsonPath("$.[*].qtdLeitos").value(hasItem(DEFAULT_QTD_LEITOS)))
+            .andExpect(jsonPath("$.[*].numeroLeito").value(hasItem(DEFAULT_NUMERO_LEITO.toString())));
     }
 }

@@ -31,6 +31,28 @@
                     ng-model="vm.clinicas.descricao"
                      />
         </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.clinicas.qtdLeitos" for="field_qtdLeitos">Qtd Leitos</label>
+            <input type="number" class="form-control" name="qtdLeitos" id="field_qtdLeitos"
+                    ng-model="vm.clinicas.qtdLeitos"
+                    max="9999" />
+            <div ng-show="editForm.qtdLeitos.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.qtdLeitos.$error.max" translate="entity.validation.max" translate-value-max="9999">
+                    This field cannot be more than 9999.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.qtdLeitos.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.clinicas.numeroLeito" for="field_numeroLeito">Numero Leito</label>
+            <input type="text" class="form-control" name="numeroLeito" id="field_numeroLeito"
+                    ng-model="vm.clinicas.numeroLeito"
+                     />
+        </div>
 
         <div class="form-group">
             <label translate="safhApp.clinicas.leitos" for="field_leitos">Leitos</label>

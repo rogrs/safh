@@ -29,6 +29,14 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="qtd_leitos" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="numero_leito" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="leitos_id" type="bigint">
                 <constraints nullable="true" />
             </column>

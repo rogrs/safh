@@ -73,6 +73,8 @@
                             return {
                                 clinica: null,
                                 descricao: null,
+                                qtdLeitos: null,
+                                numeroLeito: null,
                                 id: null
                             };
                         }
