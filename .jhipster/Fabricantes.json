@@ -1,0 +1,17 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160516015203",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "fabricantes",
+    "pagination": "infinite-scroll"
+}

@@ -13,6 +13,7 @@
     <include file="classpath:config/liquibase/changelog/20160514131751_added_entity_Clinicas.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160514183926_added_entity_Especialidades.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160516013534_added_entity_Posologias.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160516015203_added_entity_Fabricantes.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20160514131751_added_entity_constraints_Clinicas.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160513113940_added_entity_constraints_Medicos.xml" relativeToChangelogFile="false"/>

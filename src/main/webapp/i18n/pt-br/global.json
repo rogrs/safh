@@ -15,6 +15,7 @@
                 "clinicas": "Clinicas",
                 "especialidades": "Especialidades",
                 "posologias": "Posologias",
+                "fabricantes": "Fabricantes",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
