@@ -33,7 +33,7 @@
                 <constraints nullable="false" />
             </column>
             
-            <column name="paciente_id" type="bigint">
+            <column name="pacientes_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

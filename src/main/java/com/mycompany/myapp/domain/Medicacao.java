@@ -38,7 +38,7 @@ public class Medicacao implements Serializable {
     private String valor;
 
     @ManyToOne
-    private Paciente paciente;
+    private Pacientes pacientes;
 
     public Long getId() {
         return id;
@@ -72,12 +72,12 @@ public class Medicacao implements Serializable {
         this.valor = valor;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public Pacientes getPacientes() {
+        return pacientes;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setPacientes(Pacientes pacientes) {
+        this.pacientes = pacientes;
     }
 
     @Override

@@ -5,12 +5,12 @@
         .module('safhApp')
         .controller('MedicacaoDialogController', MedicacaoDialogController);
 
-    MedicacaoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Medicacao', 'Paciente'];
+    MedicacaoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Medicacao', 'Pacientes'];
 
-    function MedicacaoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Medicacao, Paciente) {
+    function MedicacaoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Medicacao, Pacientes) {
         var vm = this;
         vm.medicacao = entity;
-        vm.pacientes = Paciente.query();
+        vm.pacientes = Pacientes.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

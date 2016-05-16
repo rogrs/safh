@@ -1,8 +1,8 @@
 {
     "relationships": [
         {
-            "relationshipName": "paciente",
-            "otherEntityName": "paciente",
+            "relationshipName": "pacientes",
+            "otherEntityName": "pacientes",
             "relationshipType": "many-to-one",
             "otherEntityField": "nome"
         }

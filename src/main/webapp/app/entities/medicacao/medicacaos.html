@@ -39,7 +39,7 @@
                     <th jh-sort-by="dataMedicacao"><span translate="safhApp.medicacao.dataMedicacao">Data Medicacao</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="verificar"><span translate="safhApp.medicacao.verificar">Verificar</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="valor"><span translate="safhApp.medicacao.valor">Valor</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="paciente.nome"><span translate="safhApp.medicacao.paciente">Paciente</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="pacientes.nome"><span translate="safhApp.medicacao.pacientes">Pacientes</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -50,7 +50,7 @@
                     <td>{{medicacao.verificar}}</td>
                     <td>{{medicacao.valor}}</td>
                     <td>
-                        <a ui-sref="paciente-detail({id:medicacao.paciente.id})">{{medicacao.paciente.nome}}</a>
+                        <a ui-sref="pacientes-detail({id:medicacao.pacientes.id})">{{medicacao.pacientes.nome}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
