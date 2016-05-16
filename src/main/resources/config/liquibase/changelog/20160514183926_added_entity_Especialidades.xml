@@ -27,6 +27,13 @@
             
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/especialidades.csv"
+                  separator=";"
+                  tableName="especialidades">
+     
+        </loadData>
         
     </changeSet>
 </databaseChangeLog>
