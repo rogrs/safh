@@ -1,0 +1,22 @@
+{
+    "safhApp": {
+        "posologias" : {
+            "home": {
+                "title": "Posologias",
+                "createLabel": "Criar novo Posologias",
+                "createOrEditLabel": "Criar ou editar Posologias",
+                "search": "Pesquisar por Posologias"
+            },
+            "created": "Um novo Posologias é criado com o identificador {{ param }}",
+            "updated": "Um Posologias é atualizado com o identificador {{ param }}",
+            "deleted": "Um Posologias é deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Posologias {{ id }}?"
+            },
+            "detail": {
+                "title": "Posologias"
+            },
+            "descricao": "Descricao"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160516013534",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "posologias",
+    "pagination": "infinite-scroll"
+}
