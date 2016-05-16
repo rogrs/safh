@@ -1,0 +1,72 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myMedicacaoLabel" translate="safhApp.medicacao.home.createOrEditLabel">Create or edit a Medicacao</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.medicacao.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.medicacao.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicacao.dataMedicacao" for="field_dataMedicacao">Data Medicacao</label>
+                <div class="input-group">
+                    <input id="field_dataMedicacao" type="text" class="form-control" name="dataMedicacao" uib-datepicker-popup="{{dateformat}}" ng-model="vm.medicacao.dataMedicacao" is-open="vm.datePickerOpenStatus.dataMedicacao"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataMedicacao')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.dataMedicacao.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.dataMedicacao.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicacao.verificar" for="field_verificar">Verificar</label>
+            <input type="text" class="form-control" name="verificar" id="field_verificar"
+                    ng-model="vm.medicacao.verificar"
+                    required />
+            <div ng-show="editForm.verificar.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.verificar.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicacao.valor" for="field_valor">Valor</label>
+            <input type="text" class="form-control" name="valor" id="field_valor"
+                    ng-model="vm.medicacao.valor"
+                    required />
+            <div ng-show="editForm.valor.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.valor.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label translate="safhApp.medicacao.paciente" for="field_paciente">Paciente</label>
+            <select class="form-control" id="field_paciente" name="paciente" ng-model="vm.medicacao.paciente" ng-options="paciente as paciente.nome for paciente in vm.pacientes track by paciente.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

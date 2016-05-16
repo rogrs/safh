@@ -1,0 +1,38 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "paciente",
+            "otherEntityName": "paciente",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nome"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dataMedicacao",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "verificar",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "valor",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160516034618",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "medicacao",
+    "pagination": "infinite-scroll"
+}

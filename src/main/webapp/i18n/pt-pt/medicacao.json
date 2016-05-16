@@ -1,0 +1,25 @@
+{
+    "safhApp": {
+        "medicacao" : {
+            "home": {
+                "title": "Medicacaos",
+                "createLabel": "Criar um(a) novo(a) Medicacao",
+                "createOrEditLabel": "Criar ou editar um(a) Medicacao",
+                "search": "Search for Medicacao"
+            },
+            "created": "A new Medicacao is created with identifier {{ param }}",
+            "updated": "A Medicacao is updated with identifier {{ param }}",
+            "deleted": "A Medicacao is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Medicacao {{ id }}?"
+            },
+            "detail": {
+                "title": "Medicacao"
+            },
+            "dataMedicacao": "Data Medicacao",
+            "verificar": "Verificar",
+            "valor": "Valor",
+            "paciente": "Paciente"
+        }
+    }
+}
