@@ -16,6 +16,7 @@
                 "especialidades": "Especialidades",
                 "posologias": "Posologias",
                 "fabricantes": "Fabricantes",
+                "medicamentos": "Medicamentos",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

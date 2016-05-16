@@ -1,0 +1,61 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "fabricantes",
+            "otherEntityName": "fabricantes",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
+        },
+        {
+            "relationshipName": "posologia",
+            "otherEntityName": "posologia",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "registroMinisterioSaude",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "codigoBarras",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qtdAtual",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "qtdMin",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "qtdMax",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "observacoes",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "8000"
+        }
+    ],
+    "changelogDate": "20160516023458",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "medicamentos",
+    "pagination": "infinite-scroll"
+}
