@@ -1,5 +1,12 @@
 {
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "clinicas",
+            "otherEntityName": "clinicas",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "clinica"
+        }
+    ],
     "fields": [
         {
             "fieldName": "nome",
@@ -44,22 +51,19 @@
         },
         {
             "fieldName": "telefone",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$",
-            "fieldValidateRulesPatternJava": "\\\\([0-9]{2}\\\\) [0-9]{4,6}-[0-9]{3,4}$"
+            "fieldType": "String"
         },
         {
             "fieldName": "celular",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "[789][0-9]{9}",
-            "fieldValidateRulesPatternJava": "[789][0-9]{9}"
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "peso",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "observacao",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160513115344",

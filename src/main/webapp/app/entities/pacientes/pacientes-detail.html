@@ -35,6 +35,18 @@
         <dd>
             <span>{{vm.pacientes.celular}}</span>
         </dd>
+        <dt><span translate="safhApp.pacientes.peso">Peso</span></dt>
+        <dd>
+            <span>{{vm.pacientes.peso}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.observacao">Observacao</span></dt>
+        <dd>
+            <span>{{vm.pacientes.observacao}}</span>
+        </dd>
+        <dt><span translate="safhApp.pacientes.clinicas">Clinicas</span></dt>
+        <dd>
+            <a ui-sref="clinicas-detail({id:vm.pacientes.clinicas.id})">{{vm.pacientes.clinicas.clinica}}</a>
+        </dd>
     </dl>
 
     <button type="submit"

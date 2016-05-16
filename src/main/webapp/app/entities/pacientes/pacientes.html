@@ -44,6 +44,9 @@
                     <th jh-sort-by="email"><span translate="safhApp.pacientes.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="telefone"><span translate="safhApp.pacientes.telefone">Telefone</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="celular"><span translate="safhApp.pacientes.celular">Celular</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="peso"><span translate="safhApp.pacientes.peso">Peso</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="observacao"><span translate="safhApp.pacientes.observacao">Observacao</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="clinicas.clinica"><span translate="safhApp.pacientes.clinicas">Clinicas</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -58,6 +61,11 @@
                     <td>{{pacientes.email}}</td>
                     <td>{{pacientes.telefone}}</td>
                     <td>{{pacientes.celular}}</td>
+                    <td>{{pacientes.peso}}</td>
+                    <td>{{pacientes.observacao}}</td>
+                    <td>
+                        <a ui-sref="clinicas-detail({id:pacientes.clinicas.id})">{{pacientes.clinicas.clinica}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

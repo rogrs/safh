@@ -85,31 +85,33 @@
             <label class="control-label" translate="safhApp.pacientes.telefone" for="field_telefone">Telefone</label>
             <input type="text" class="form-control" name="telefone" id="field_telefone"
                     ng-model="vm.pacientes.telefone"
-                    required ng-pattern="/\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$/" />
-            <div ng-show="editForm.telefone.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.telefone.$error.required" translate="entity.validation.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.telefone.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$">
-                    This field should follow pattern "\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$".
-                </p>
-            </div>
+                     />
         </div>
         <div class="form-group">
             <label class="control-label" translate="safhApp.pacientes.celular" for="field_celular">Celular</label>
             <input type="text" class="form-control" name="celular" id="field_celular"
                     ng-model="vm.pacientes.celular"
-                    ng-pattern="/[789][0-9]{9}/" />
-            <div ng-show="editForm.celular.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.celular.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[789][0-9]{9}">
-                    This field should follow pattern "[789][0-9]{9}".
-                </p>
-            </div>
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.peso" for="field_peso">Peso</label>
+            <input type="number" class="form-control" name="peso" id="field_peso"
+                    ng-model="vm.pacientes.peso"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.observacao" for="field_observacao">Observacao</label>
+            <input type="text" class="form-control" name="observacao" id="field_observacao"
+                    ng-model="vm.pacientes.observacao"
+                     />
         </div>
 
+        <div class="form-group">
+            <label translate="safhApp.pacientes.clinicas" for="field_clinicas">Clinicas</label>
+            <select class="form-control" id="field_clinicas" name="clinicas" ng-model="vm.pacientes.clinicas" ng-options="clinicas as clinicas.clinica for clinicas in vm.clinicas track by clinicas.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

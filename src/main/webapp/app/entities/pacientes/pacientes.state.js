@@ -79,6 +79,8 @@
                                 email: null,
                                 telefone: null,
                                 celular: null,
+                                peso: null,
+                                observacao: null,
                                 id: null
                             };
                         }
