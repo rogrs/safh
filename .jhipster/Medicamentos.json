@@ -5,12 +5,6 @@
             "otherEntityName": "fabricantes",
             "relationshipType": "many-to-one",
             "otherEntityField": "descricao"
-        },
-        {
-            "relationshipName": "posologia",
-            "otherEntityName": "posologia",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "descricao"
         }
     ],
     "fields": [
@@ -51,6 +45,10 @@
                 "maxlength"
             ],
             "fieldValidateRulesMaxlength": "8000"
+        },
+        {
+            "fieldName": "apresentacao",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160516023458",

@@ -48,11 +48,11 @@ public class Medicamentos implements Serializable {
     @Column(name = "observacoes", length = 8000)
     private String observacoes;
 
-    @ManyToOne
-    private Fabricantes fabricantes;
+    @Column(name = "apresentacao")
+    private String apresentacao;
 
     @ManyToOne
-    private Posologia posologia;
+    private Fabricantes fabricantes;
 
     public Long getId() {
         return id;
@@ -118,20 +118,20 @@ public class Medicamentos implements Serializable {
         this.observacoes = observacoes;
     }
 
+    public String getApresentacao() {
+        return apresentacao;
+    }
+
+    public void setApresentacao(String apresentacao) {
+        this.apresentacao = apresentacao;
+    }
+
     public Fabricantes getFabricantes() {
         return fabricantes;
     }
 
     public void setFabricantes(Fabricantes fabricantes) {
         this.fabricantes = fabricantes;
-    }
-
-    public Posologia getPosologia() {
-        return posologia;
-    }
-
-    public void setPosologia(Posologia posologia) {
-        this.posologia = posologia;
     }
 
     @Override
@@ -165,6 +165,7 @@ public class Medicamentos implements Serializable {
             ", qtdMin='" + qtdMin + "'" +
             ", qtdMax='" + qtdMax + "'" +
             ", observacoes='" + observacoes + "'" +
+            ", apresentacao='" + apresentacao + "'" +
             '}';
     }
 }

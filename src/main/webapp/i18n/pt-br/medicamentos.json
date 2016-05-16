@@ -23,8 +23,8 @@
             "qtdMin": "Qtd Min",
             "qtdMax": "Qtd Max",
             "observacoes": "Observacoes",
-            "fabricantes": "Fabricantes",
-            "posologia": "Posologia"
+            "apresentacao": "Apresentacao",
+            "fabricantes": "Fabricantes"
         }
     }
 }

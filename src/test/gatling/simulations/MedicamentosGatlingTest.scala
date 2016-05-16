@@ -67,7 +67,7 @@ class MedicamentosGatlingTest extends Simulation {
             .exec(http("Create new medicamentos")
             .post("/api/medicamentos")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "descricao":"SAMPLE_TEXT", "registroMinisterioSaude":"SAMPLE_TEXT", "codigoBarras":"SAMPLE_TEXT", "qtdAtual":null, "qtdMin":null, "qtdMax":null, "observacoes":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "descricao":"SAMPLE_TEXT", "registroMinisterioSaude":"SAMPLE_TEXT", "codigoBarras":"SAMPLE_TEXT", "qtdAtual":null, "qtdMin":null, "qtdMax":null, "observacoes":"SAMPLE_TEXT", "apresentacao":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_medicamentos_url"))).exitHereIfFailed
             .pause(10)

@@ -43,8 +43,8 @@
                     <th jh-sort-by="qtdMin"><span translate="safhApp.medicamentos.qtdMin">Qtd Min</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="qtdMax"><span translate="safhApp.medicamentos.qtdMax">Qtd Max</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="observacoes"><span translate="safhApp.medicamentos.observacoes">Observacoes</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="apresentacao"><span translate="safhApp.medicamentos.apresentacao">Apresentacao</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="fabricantes.descricao"><span translate="safhApp.medicamentos.fabricantes">Fabricantes</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="posologia.descricao"><span translate="safhApp.medicamentos.posologia">Posologia</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -58,11 +58,9 @@
                     <td>{{medicamentos.qtdMin}}</td>
                     <td>{{medicamentos.qtdMax}}</td>
                     <td>{{medicamentos.observacoes}}</td>
+                    <td>{{medicamentos.apresentacao}}</td>
                     <td>
                         <a ui-sref="fabricantes-detail({id:medicamentos.fabricantes.id})">{{medicamentos.fabricantes.descricao}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="posologia-detail({id:medicamentos.posologia.id})">{{medicamentos.posologia.descricao}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

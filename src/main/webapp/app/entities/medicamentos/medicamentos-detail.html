@@ -31,13 +31,13 @@
         <dd>
             <span>{{vm.medicamentos.observacoes}}</span>
         </dd>
+        <dt><span translate="safhApp.medicamentos.apresentacao">Apresentacao</span></dt>
+        <dd>
+            <span>{{vm.medicamentos.apresentacao}}</span>
+        </dd>
         <dt><span translate="safhApp.medicamentos.fabricantes">Fabricantes</span></dt>
         <dd>
             <a ui-sref="fabricantes-detail({id:vm.medicamentos.fabricantes.id})">{{vm.medicamentos.fabricantes.descricao}}</a>
-        </dd>
-        <dt><span translate="safhApp.medicamentos.posologia">Posologia</span></dt>
-        <dd>
-            <a ui-sref="posologia-detail({id:vm.medicamentos.posologia.id})">{{vm.medicamentos.posologia.descricao}}</a>
         </dd>
     </dl>
 

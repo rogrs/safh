@@ -73,16 +73,16 @@
                 </p>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicamentos.apresentacao" for="field_apresentacao">Apresentacao</label>
+            <input type="text" class="form-control" name="apresentacao" id="field_apresentacao"
+                    ng-model="vm.medicamentos.apresentacao"
+                     />
+        </div>
 
         <div class="form-group">
             <label translate="safhApp.medicamentos.fabricantes" for="field_fabricantes">Fabricantes</label>
             <select class="form-control" id="field_fabricantes" name="fabricantes" ng-model="vm.medicamentos.fabricantes" ng-options="fabricantes as fabricantes.descricao for fabricantes in vm.fabricantes track by fabricantes.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label translate="safhApp.medicamentos.posologia" for="field_posologia">Posologia</label>
-            <select class="form-control" id="field_posologia" name="posologia" ng-model="vm.medicamentos.posologia" ng-options="posologia as posologia.descricao for posologia in vm.posologias track by posologia.id">
                 <option value=""></option>
             </select>
         </div>

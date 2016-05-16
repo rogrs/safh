@@ -78,6 +78,7 @@
                                 qtdMin: null,
                                 qtdMax: null,
                                 observacoes: null,
+                                apresentacao: null,
                                 id: null
                             };
                         }
