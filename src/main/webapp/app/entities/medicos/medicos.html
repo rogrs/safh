@@ -37,8 +37,8 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="nome"><span translate="safhApp.medicos.nome">Nome</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="cpf"><span translate="safhApp.medicos.cpf">Cpf</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="crm"><span translate="safhApp.medicos.crm">Crm</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cpf"><span translate="safhApp.medicos.cpf">Cpf</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="email"><span translate="safhApp.medicos.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="especialidades.descricao"><span translate="safhApp.medicos.especialidades">Especialidades</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
@@ -48,8 +48,8 @@
                 <tr ng-repeat="medicos in vm.medicos track by medicos.id">
                     <td><a ui-sref="medicos-detail({id:medicos.id})">{{medicos.id}}</a></td>
                     <td>{{medicos.nome}}</td>
-                    <td>{{medicos.cpf}}</td>
                     <td>{{medicos.crm}}</td>
+                    <td>{{medicos.cpf}}</td>
                     <td>{{medicos.email}}</td>
                     <td>
                         <a ui-sref="especialidades-detail({id:medicos.especialidades.id})">{{medicos.especialidades.descricao}}</a>

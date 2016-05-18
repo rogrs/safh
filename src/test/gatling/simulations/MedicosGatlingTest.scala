@@ -67,7 +67,7 @@ class MedicosGatlingTest extends Simulation {
             .exec(http("Create new medicos")
             .post("/api/medicos")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "nome":"SAMPLE_TEXT", "cpf":"SAMPLE_TEXT", "crm":"SAMPLE_TEXT", "email":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "nome":"SAMPLE_TEXT", "crm":"SAMPLE_TEXT", "cpf":"SAMPLE_TEXT", "email":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_medicos_url"))).exitHereIfFailed
             .pause(10)

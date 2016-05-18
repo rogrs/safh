@@ -44,12 +44,12 @@ public class MedicosResourceIntTest {
 
     private static final String DEFAULT_NOME = "AAAAA";
     private static final String UPDATED_NOME = "BBBBB";
-    private static final String DEFAULT_CPF = "AAAAA";
-    private static final String UPDATED_CPF = "BBBBB";
     private static final String DEFAULT_CRM = "AAAAA";
     private static final String UPDATED_CRM = "BBBBB";
-    private static final String DEFAULT_EMAIL = "AAAAA";
-    private static final String UPDATED_EMAIL = "BBBBB";
+    private static final String DEFAULT_CPF = "158.846.893-30";
+    private static final String UPDATED_CPF = "198.698.414-14";
+    private static final String DEFAULT_EMAIL = "teste@teste.com.br";
+    private static final String UPDATED_EMAIL = "teste2@teste.com.br";
 
     @Inject
     private MedicosRepository medicosRepository;
@@ -83,8 +83,8 @@ public class MedicosResourceIntTest {
         medicosSearchRepository.deleteAll();
         medicos = new Medicos();
         medicos.setNome(DEFAULT_NOME);
-        medicos.setCpf(DEFAULT_CPF);
         medicos.setCrm(DEFAULT_CRM);
+        medicos.setCpf(DEFAULT_CPF);
         medicos.setEmail(DEFAULT_EMAIL);
     }
 
@@ -105,8 +105,8 @@ public class MedicosResourceIntTest {
         assertThat(medicos).hasSize(databaseSizeBeforeCreate + 1);
         Medicos testMedicos = medicos.get(medicos.size() - 1);
         assertThat(testMedicos.getNome()).isEqualTo(DEFAULT_NOME);
-        assertThat(testMedicos.getCpf()).isEqualTo(DEFAULT_CPF);
         assertThat(testMedicos.getCrm()).isEqualTo(DEFAULT_CRM);
+        assertThat(testMedicos.getCpf()).isEqualTo(DEFAULT_CPF);
         assertThat(testMedicos.getEmail()).isEqualTo(DEFAULT_EMAIL);
 
         // Validate the Medicos in ElasticSearch
@@ -144,8 +144,8 @@ public class MedicosResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
                 .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-                .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
                 .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM.toString())))
+                .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
                 .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())));
     }
 
@@ -161,8 +161,8 @@ public class MedicosResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(medicos.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.cpf").value(DEFAULT_CPF.toString()))
             .andExpect(jsonPath("$.crm").value(DEFAULT_CRM.toString()))
+            .andExpect(jsonPath("$.cpf").value(DEFAULT_CPF.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()));
     }
 
@@ -186,8 +186,8 @@ public class MedicosResourceIntTest {
         Medicos updatedMedicos = new Medicos();
         updatedMedicos.setId(medicos.getId());
         updatedMedicos.setNome(UPDATED_NOME);
-        updatedMedicos.setCpf(UPDATED_CPF);
         updatedMedicos.setCrm(UPDATED_CRM);
+        updatedMedicos.setCpf(UPDATED_CPF);
         updatedMedicos.setEmail(UPDATED_EMAIL);
 
         restMedicosMockMvc.perform(put("/api/medicos")
@@ -200,8 +200,8 @@ public class MedicosResourceIntTest {
         assertThat(medicos).hasSize(databaseSizeBeforeUpdate);
         Medicos testMedicos = medicos.get(medicos.size() - 1);
         assertThat(testMedicos.getNome()).isEqualTo(UPDATED_NOME);
-        assertThat(testMedicos.getCpf()).isEqualTo(UPDATED_CPF);
         assertThat(testMedicos.getCrm()).isEqualTo(UPDATED_CRM);
+        assertThat(testMedicos.getCpf()).isEqualTo(UPDATED_CPF);
         assertThat(testMedicos.getEmail()).isEqualTo(UPDATED_EMAIL);
 
         // Validate the Medicos in ElasticSearch
@@ -244,8 +244,8 @@ public class MedicosResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-            .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
             .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM.toString())))
+            .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())));
     }
 }

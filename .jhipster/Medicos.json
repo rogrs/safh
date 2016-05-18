@@ -16,16 +16,26 @@
             ]
         },
         {
-            "fieldName": "cpf",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "crm",
             "fieldType": "String"
         },
         {
+            "fieldName": "cpf",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}",
+            "fieldValidateRulesPatternJava": "[0-9]{3}\\\\.?[0-9]{3}\\\\.?[0-9]{3}\\\\-?[0-9]{2}"
+        },
+        {
             "fieldName": "email",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$",
+            "fieldValidateRulesPatternJava": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,4}$"
         }
     ],
     "changelogDate": "20160513113940",

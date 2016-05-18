@@ -28,12 +28,14 @@ public class Medicos implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "cpf")
-    private String cpf;
-
     @Column(name = "crm")
     private String crm;
 
+    @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}")
+    @Column(name = "cpf")
+    private String cpf;
+
+    @Pattern(regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
     @Column(name = "email")
     private String email;
 
@@ -56,20 +58,20 @@ public class Medicos implements Serializable {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
     public String getCrm() {
         return crm;
     }
 
     public void setCrm(String crm) {
         this.crm = crm;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getEmail() {
@@ -113,8 +115,8 @@ public class Medicos implements Serializable {
         return "Medicos{" +
             "id=" + id +
             ", nome='" + nome + "'" +
-            ", cpf='" + cpf + "'" +
             ", crm='" + crm + "'" +
+            ", cpf='" + cpf + "'" +
             ", email='" + email + "'" +
             '}';
     }

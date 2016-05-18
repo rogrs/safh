@@ -72,8 +72,8 @@
                         entity: function () {
                             return {
                                 nome: null,
-                                cpf: null,
                                 crm: null,
+                                cpf: null,
                                 email: null,
                                 id: null
                             };

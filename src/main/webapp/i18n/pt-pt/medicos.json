@@ -17,8 +17,8 @@
                 "title": "Medicos"
             },
             "nome": "Nome",
-            "cpf": "Cpf",
             "crm": "Crm",
+            "cpf": "Cpf",
             "email": "Email",
             "especialidades": "Especialidades"
         }

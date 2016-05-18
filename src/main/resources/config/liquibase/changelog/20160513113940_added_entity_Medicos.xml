@@ -25,11 +25,11 @@
                 <constraints nullable="false" />
             </column>
             
-            <column name="cpf" type="varchar(255)">
+            <column name="crm" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="crm" type="varchar(255)">
+            <column name="cpf" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
