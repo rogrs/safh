@@ -13,7 +13,7 @@
     <artifactId>safh</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>SAFH</name>
+    <name>Sistema de Acompanhamento para Faturamento Hospitalar</name>
 
     <prerequisites>
         <maven>3.0.0</maven>
@@ -828,4 +828,6 @@
         </profile>
     </profiles>
 
+    <url>http://52.67.11.231:8080/</url>
+    <description>Sistema de Acompanhamento para Faturamento Hospitalar</description>
 </project>

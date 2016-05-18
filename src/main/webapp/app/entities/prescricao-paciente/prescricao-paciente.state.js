@@ -9,131 +9,126 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('medicacao', {
+        .state('prescricao-paciente', {
             parent: 'entity',
-            url: '/medicacao',
+            url: '/prescricao-paciente',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'safhApp.medicacao.home.title'
+                pageTitle: 'safhApp.prescricaoPaciente.home.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/medicacao/medicacaos.html',
-                    controller: 'MedicacaoController',
+                    templateUrl: 'app/entities/prescricao-paciente/prescricao-pacientes.html',
+                    controller: 'PrescricaoPacienteController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('medicacao');
-                    $translatePartialLoader.addPart('');
-                    $translatePartialLoader.addPart('');
+                    $translatePartialLoader.addPart('prescricaoPaciente');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
             }
         })
-        .state('medicacao-detail', {
+        .state('prescricao-paciente-detail', {
             parent: 'entity',
-            url: '/medicacao/{id}',
+            url: '/prescricao-paciente/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'safhApp.medicacao.detail.title'
+                pageTitle: 'safhApp.prescricaoPaciente.detail.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/medicacao/medicacao-detail.html',
-                    controller: 'MedicacaoDetailController',
+                    templateUrl: 'app/entities/prescricao-paciente/prescricao-paciente-detail.html',
+                    controller: 'PrescricaoPacienteDetailController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('medicacao');
-                    $translatePartialLoader.addPart('');
-                    $translatePartialLoader.addPart('');
+                    $translatePartialLoader.addPart('prescricaoPaciente');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Medicacao', function($stateParams, Medicacao) {
-                    return Medicacao.get({id : $stateParams.id});
+                entity: ['$stateParams', 'PrescricaoPaciente', function($stateParams, PrescricaoPaciente) {
+                    return PrescricaoPaciente.get({id : $stateParams.id});
                 }]
             }
         })
-        .state('medicacao.new', {
-            parent: 'medicacao',
+        .state('prescricao-paciente.new', {
+            parent: 'prescricao-paciente',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/medicacao/medicacao-dialog.html',
-                    controller: 'MedicacaoDialogController',
+                    templateUrl: 'app/entities/prescricao-paciente/prescricao-paciente-dialog.html',
+                    controller: 'PrescricaoPacienteDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
                         entity: function () {
                             return {
-                                dataMedicacao: null,
-                                valor: null,
-                                verificar: null,
-                                horario: null,
+                                dataEntrada: null,
+                                quant: null,
+                                obse: null,
                                 id: null
                             };
                         }
                     }
                 }).result.then(function() {
-                    $state.go('medicacao', null, { reload: true });
+                    $state.go('prescricao-paciente', null, { reload: true });
                 }, function() {
-                    $state.go('medicacao');
+                    $state.go('prescricao-paciente');
                 });
             }]
         })
-        .state('medicacao.edit', {
-            parent: 'medicacao',
+        .state('prescricao-paciente.edit', {
+            parent: 'prescricao-paciente',
             url: '/{id}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/medicacao/medicacao-dialog.html',
-                    controller: 'MedicacaoDialogController',
+                    templateUrl: 'app/entities/prescricao-paciente/prescricao-paciente-dialog.html',
+                    controller: 'PrescricaoPacienteDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Medicacao', function(Medicacao) {
-                            return Medicacao.get({id : $stateParams.id});
+                        entity: ['PrescricaoPaciente', function(PrescricaoPaciente) {
+                            return PrescricaoPaciente.get({id : $stateParams.id});
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('medicacao', null, { reload: true });
+                    $state.go('prescricao-paciente', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });
             }]
         })
-        .state('medicacao.delete', {
-            parent: 'medicacao',
+        .state('prescricao-paciente.delete', {
+            parent: 'prescricao-paciente',
             url: '/{id}/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/medicacao/medicacao-delete-dialog.html',
-                    controller: 'MedicacaoDeleteController',
+                    templateUrl: 'app/entities/prescricao-paciente/prescricao-paciente-delete-dialog.html',
+                    controller: 'PrescricaoPacienteDeleteController',
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['Medicacao', function(Medicacao) {
-                            return Medicacao.get({id : $stateParams.id});
+                        entity: ['PrescricaoPaciente', function(PrescricaoPaciente) {
+                            return PrescricaoPaciente.get({id : $stateParams.id});
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('medicacao', null, { reload: true });
+                    $state.go('prescricao-paciente', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });

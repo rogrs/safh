@@ -1,0 +1,28 @@
+{
+    "safhApp": {
+        "prescricaoPaciente" : {
+            "home": {
+                "title": "Prescricao Pacientes",
+                "createLabel": "Criar um(a) novo(a) Prescricao Paciente",
+                "createOrEditLabel": "Criar ou editar um(a) Prescricao Paciente",
+                "search": "Search for Prescricao Paciente"
+            },
+            "created": "A new Prescricao Paciente is created with identifier {{ param }}",
+            "updated": "A Prescricao Paciente is updated with identifier {{ param }}",
+            "deleted": "A Prescricao Paciente is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Prescricao Paciente {{ id }}?"
+            },
+            "detail": {
+                "title": "Prescricao Paciente"
+            },
+            "dataEntrada": "Data Entrada",
+            "quant": "Quant",
+            "obse": "Obse",
+            "pacientes": "Pacientes",
+            "medicamentos": "Medicamentos",
+            "posologias": "Posologias",
+            "dietas": "Dietas"
+        }
+    }
+}

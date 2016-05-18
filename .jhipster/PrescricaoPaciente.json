@@ -1,0 +1,53 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "pacientes",
+            "otherEntityName": "pacientes",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nome"
+        },
+        {
+            "relationshipName": "medicamentos",
+            "otherEntityName": "medicamentos",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
+        },
+        {
+            "relationshipName": "posologias",
+            "otherEntityName": "posologias",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
+        },
+        {
+            "relationshipName": "dietas",
+            "otherEntityName": "dietas",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "descricao"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dataEntrada",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quant",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "obse",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160518042950",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "prescricao_paciente",
+    "pagination": "infinite-scroll"
+}

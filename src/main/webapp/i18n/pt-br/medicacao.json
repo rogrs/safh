@@ -17,8 +17,9 @@
                 "title": "Medicacao"
             },
             "dataMedicacao": "Data Medicacao",
-            "verificar": "Verificar",
             "valor": "Valor",
+            "verificar": "Verificar",
+            "horario": "Horario",
             "pacientes": "Pacientes"
         }
     }

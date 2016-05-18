@@ -7,13 +7,17 @@
         <dd>
             <span>{{vm.medicacao.dataMedicacao | date:'mediumDate'}}</span>
         </dd>
-        <dt><span translate="safhApp.medicacao.verificar">Verificar</span></dt>
-        <dd>
-            <span>{{vm.medicacao.verificar}}</span>
-        </dd>
         <dt><span translate="safhApp.medicacao.valor">Valor</span></dt>
         <dd>
             <span>{{vm.medicacao.valor}}</span>
+        </dd>
+        <dt><span translate="safhApp.medicacao.verificar">Verificar</span></dt>
+        <dd>
+            <span translate="{{'safhApp.Verificacoes.' + vm.medicacao.verificar}}">{{vm.medicacao.verificar}}</span>
+        </dd>
+        <dt><span translate="safhApp.medicacao.horario">Horario</span></dt>
+        <dd>
+            <span translate="{{'safhApp.Horas.' + vm.medicacao.horario}}">{{vm.medicacao.horario}}</span>
         </dd>
         <dt><span translate="safhApp.medicacao.pacientes">Pacientes</span></dt>
         <dd>

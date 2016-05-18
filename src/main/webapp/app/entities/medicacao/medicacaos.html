@@ -37,8 +37,9 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="dataMedicacao"><span translate="safhApp.medicacao.dataMedicacao">Data Medicacao</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="verificar"><span translate="safhApp.medicacao.verificar">Verificar</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="valor"><span translate="safhApp.medicacao.valor">Valor</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="verificar"><span translate="safhApp.medicacao.verificar">Verificar</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="horario"><span translate="safhApp.medicacao.horario">Horario</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="pacientes.nome"><span translate="safhApp.medicacao.pacientes">Pacientes</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -47,8 +48,9 @@
                 <tr ng-repeat="medicacao in vm.medicacaos track by medicacao.id">
                     <td><a ui-sref="medicacao-detail({id:medicacao.id})">{{medicacao.id}}</a></td>
                         <td>{{medicacao.dataMedicacao | date:'mediumDate'}}</td>
-                    <td>{{medicacao.verificar}}</td>
                     <td>{{medicacao.valor}}</td>
+                    <td translate="{{'safhApp.Verificacoes.' + medicacao.verificar}}">{{medicacao.verificar}}</td>
+                    <td translate="{{'safhApp.Horas.' + medicacao.horario}}">{{medicacao.horario}}</td>
                     <td>
                         <a ui-sref="pacientes-detail({id:medicacao.pacientes.id})">{{medicacao.pacientes.nome}}</a>
                     </td>

@@ -30,10 +30,25 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="safhApp.medicacao.verificar" for="field_verificar">Verificar</label>
-            <input type="text" class="form-control" name="verificar" id="field_verificar"
-                    ng-model="vm.medicacao.verificar"
+            <label class="control-label" translate="safhApp.medicacao.valor" for="field_valor">Valor</label>
+            <input type="text" class="form-control" name="valor" id="field_valor"
+                    ng-model="vm.medicacao.valor"
                     required />
+            <div ng-show="editForm.valor.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.valor.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicacao.verificar" for="field_verificar">Verificar</label>
+            <select class="form-control" name="verificar" ng-model="vm.medicacao.verificar" id="field_verificar" required>
+                <option value="PA" translate="safhApp.Verificacoes.PA">PA</option>
+                <option value="HGT" translate="safhApp.Verificacoes.HGT">HGT</option>
+                <option value="TAX" translate="safhApp.Verificacoes.TAX">TAX</option>
+                <option value="FC" translate="safhApp.Verificacoes.FC">FC</option>
+            </select>
             <div ng-show="editForm.verificar.$invalid">
                 <p class="help-block"
                     ng-show="editForm.verificar.$error.required" translate="entity.validation.required">
@@ -42,13 +57,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="safhApp.medicacao.valor" for="field_valor">Valor</label>
-            <input type="text" class="form-control" name="valor" id="field_valor"
-                    ng-model="vm.medicacao.valor"
-                    required />
-            <div ng-show="editForm.valor.$invalid">
+            <label class="control-label" translate="safhApp.medicacao.horario" for="field_horario">Horario</label>
+            <select class="form-control" name="horario" ng-model="vm.medicacao.horario" id="field_horario" required>
+                <option value="H12" translate="safhApp.Horas.H12">H12</option>
+                <option value="H24" translate="safhApp.Horas.H24">H24</option>
+                <option value="H18" translate="safhApp.Horas.H18">H18</option>
+                <option value="H6" translate="safhApp.Horas.H6">H6</option>
+            </select>
+            <div ng-show="editForm.horario.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.valor.$error.required" translate="entity.validation.required">
+                    ng-show="editForm.horario.$error.required" translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
