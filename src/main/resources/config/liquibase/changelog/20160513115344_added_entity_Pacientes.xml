@@ -29,15 +29,55 @@
                 <constraints nullable="false" />
             </column>
             
-            <column name="cpf" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="naturalidade" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="telefone" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="celular" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="peso" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="observacao" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             
             <column name="nascimento" type="date">
                 <constraints nullable="true" />
             </column>
             
-            <column name="naturalidade" type="varchar(255)">
+            <column name="endereco" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="numero" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="complemento" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="bairro" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="cidade" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="uf" type="varchar(2)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="cpf" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
@@ -45,14 +85,14 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="telefone" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            
-            <column name="celular" type="varchar(255)">
+            <column name="cep" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
+            <column name="clinicas_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

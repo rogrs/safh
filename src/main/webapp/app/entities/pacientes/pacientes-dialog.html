@@ -38,48 +38,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="safhApp.pacientes.cpf" for="field_cpf">Cpf</label>
-            <input type="text" class="form-control" name="cpf" id="field_cpf"
-                    ng-model="vm.pacientes.cpf"
-                    required ng-pattern="/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/" />
-            <div ng-show="editForm.cpf.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.cpf.$error.required" translate="entity.validation.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.cpf.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}">
-                    This field should follow pattern "[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}".
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="safhApp.pacientes.nascimento" for="field_nascimento">Nascimento</label>
-                <div class="input-group">
-                    <input id="field_nascimento" type="text" class="form-control" name="nascimento" uib-datepicker-popup="{{dateformat}}" ng-model="vm.pacientes.nascimento" is-open="vm.datePickerOpenStatus.nascimento"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('nascimento')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-        </div>
-        <div class="form-group">
             <label class="control-label" translate="safhApp.pacientes.naturalidade" for="field_naturalidade">Naturalidade</label>
             <input type="text" class="form-control" name="naturalidade" id="field_naturalidade"
                     ng-model="vm.pacientes.naturalidade"
                      />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="safhApp.pacientes.email" for="field_email">Email</label>
-            <input type="text" class="form-control" name="email" id="field_email"
-                    ng-model="vm.pacientes.email"
-                    ng-pattern="/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" />
-            <div ng-show="editForm.email.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.email.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-                    This field should follow pattern "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$".
-                </p>
-            </div>
         </div>
         <div class="form-group">
             <label class="control-label" translate="safhApp.pacientes.telefone" for="field_telefone">Telefone</label>
@@ -103,6 +65,76 @@
             <label class="control-label" translate="safhApp.pacientes.observacao" for="field_observacao">Observacao</label>
             <input type="text" class="form-control" name="observacao" id="field_observacao"
                     ng-model="vm.pacientes.observacao"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.nascimento" for="field_nascimento">Nascimento</label>
+                <div class="input-group">
+                    <input id="field_nascimento" type="text" class="form-control" name="nascimento" uib-datepicker-popup="{{dateformat}}" ng-model="vm.pacientes.nascimento" is-open="vm.datePickerOpenStatus.nascimento"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('nascimento')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.endereco" for="field_endereco">Endereco</label>
+            <input type="text" class="form-control" name="endereco" id="field_endereco"
+                    ng-model="vm.pacientes.endereco"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.numero" for="field_numero">Numero</label>
+            <input type="text" class="form-control" name="numero" id="field_numero"
+                    ng-model="vm.pacientes.numero"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.complemento" for="field_complemento">Complemento</label>
+            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                    ng-model="vm.pacientes.complemento"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.bairro" for="field_bairro">Bairro</label>
+            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                    ng-model="vm.pacientes.bairro"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.cidade" for="field_cidade">Cidade</label>
+            <input type="text" class="form-control" name="cidade" id="field_cidade"
+                    ng-model="vm.pacientes.cidade"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.uf" for="field_uf">Uf</label>
+            <input type="text" class="form-control" name="uf" id="field_uf"
+                    ng-model="vm.pacientes.uf"
+                    ng-maxlength="2" />
+            <div ng-show="editForm.uf.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.uf.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="2">
+                    This field cannot be longer than 2 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.cpf" for="field_cpf">Cpf</label>
+            <input type="text" class="form-control" name="cpf" id="field_cpf"
+                    ng-model="vm.pacientes.cpf"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                    ng-model="vm.pacientes.email"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.pacientes.cep" for="field_cep">Cep</label>
+            <input type="text" class="form-control" name="cep" id="field_cep"
+                    ng-model="vm.pacientes.cep"
                      />
         </div>
 

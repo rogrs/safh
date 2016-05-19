@@ -23,31 +23,8 @@
             ]
         },
         {
-            "fieldName": "cpf",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}",
-            "fieldValidateRulesPatternJava": "[0-9]{3}\\\\.?[0-9]{3}\\\\.?[0-9]{3}\\\\-?[0-9]{2}"
-        },
-        {
-            "fieldName": "nascimento",
-            "fieldType": "LocalDate"
-        },
-        {
             "fieldName": "naturalidade",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "email",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$",
-            "fieldValidateRulesPatternJava": "[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,4}$"
         },
         {
             "fieldName": "telefone",
@@ -63,6 +40,52 @@
         },
         {
             "fieldName": "observacao",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nascimento",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "endereco",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numero",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "complemento",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bairro",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cidade",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "uf",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "2"
+        },
+        {
+            "fieldName": "cpf",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "cep",
             "fieldType": "String"
         }
     ],

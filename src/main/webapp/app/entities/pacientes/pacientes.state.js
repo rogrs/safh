@@ -73,14 +73,21 @@
                             return {
                                 nome: null,
                                 sobrenome: null,
-                                cpf: null,
-                                nascimento: null,
                                 naturalidade: null,
-                                email: null,
                                 telefone: null,
                                 celular: null,
                                 peso: null,
                                 observacao: null,
+                                nascimento: null,
+                                endereco: null,
+                                numero: null,
+                                complemento: null,
+                                bairro: null,
+                                cidade: null,
+                                uf: null,
+                                cpf: null,
+                                email: null,
+                                cep: null,
                                 id: null
                             };
                         }

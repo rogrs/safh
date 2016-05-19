@@ -33,29 +33,54 @@ public class Pacientes implements Serializable {
     @Column(name = "sobrenome", nullable = false)
     private String sobrenome;
 
-    @NotNull
-    @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}")
-    @Column(name = "cpf", nullable = false)
-    private String cpf;
+    @Column(name = "naturalidade")
+    private String naturalidade;
+
+    @Column(name = "telefone")
+    private String telefone;
+
+    @Column(name = "celular")
+    private String celular;
+
+    @Column(name = "peso")
+    private Float peso;
+
+    @Column(name = "observacao")
+    private String observacao;
 
     @Column(name = "nascimento")
     private LocalDate nascimento;
 
-    @Column(name = "naturalidade")
-    private String naturalidade;
+    @Column(name = "endereco")
+    private String endereco;
 
-    @Pattern(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+    @Column(name = "numero")
+    private String numero;
+
+    @Column(name = "complemento")
+    private String complemento;
+
+    @Column(name = "bairro")
+    private String bairro;
+
+    @Column(name = "cidade")
+    private String cidade;
+
+    @Size(max = 2)
+    @Column(name = "uf", length = 2)
+    private String uf;
+
+    @Column(name = "cpf")
+    private String cpf;
+
     @Column(name = "email")
     private String email;
 
-    @NotNull
-    @Pattern(regexp = "\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$")
-    @Column(name = "telefone", nullable = false)
-    private String telefone;
+    @Column(name = "cep")
+    private String cep;
 
-    @Pattern(regexp = "\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$")
-    @Column(name = "celular")
-    private String celular;
+    @ManyToOne
+    private Clinicas clinicas;
 
     public Long getId() {
         return id;
@@ -81,36 +106,12 @@ public class Pacientes implements Serializable {
         this.sobrenome = sobrenome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public LocalDate getNascimento() {
-        return nascimento;
-    }
-
-    public void setNascimento(LocalDate nascimento) {
-        this.nascimento = nascimento;
-    }
-
     public String getNaturalidade() {
         return naturalidade;
     }
 
     public void setNaturalidade(String naturalidade) {
         this.naturalidade = naturalidade;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getTelefone() {
@@ -127,6 +128,110 @@ public class Pacientes implements Serializable {
 
     public void setCelular(String celular) {
         this.celular = celular;
+    }
+
+    public Float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Float peso) {
+        this.peso = peso;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public LocalDate getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public Clinicas getClinicas() {
+        return clinicas;
+    }
+
+    public void setClinicas(Clinicas clinicas) {
+        this.clinicas = clinicas;
     }
 
     @Override
@@ -155,12 +260,21 @@ public class Pacientes implements Serializable {
             "id=" + id +
             ", nome='" + nome + "'" +
             ", sobrenome='" + sobrenome + "'" +
-            ", cpf='" + cpf + "'" +
-            ", nascimento='" + nascimento + "'" +
             ", naturalidade='" + naturalidade + "'" +
-            ", email='" + email + "'" +
             ", telefone='" + telefone + "'" +
             ", celular='" + celular + "'" +
+            ", peso='" + peso + "'" +
+            ", observacao='" + observacao + "'" +
+            ", nascimento='" + nascimento + "'" +
+            ", endereco='" + endereco + "'" +
+            ", numero='" + numero + "'" +
+            ", complemento='" + complemento + "'" +
+            ", bairro='" + bairro + "'" +
+            ", cidade='" + cidade + "'" +
+            ", uf='" + uf + "'" +
+            ", cpf='" + cpf + "'" +
+            ", email='" + email + "'" +
+            ", cep='" + cep + "'" +
             '}';
     }
 }

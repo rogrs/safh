@@ -38,14 +38,21 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="nome"><span translate="safhApp.pacientes.nome">Nome</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="sobrenome"><span translate="safhApp.pacientes.sobrenome">Sobrenome</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="cpf"><span translate="safhApp.pacientes.cpf">Cpf</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="nascimento"><span translate="safhApp.pacientes.nascimento">Nascimento</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="naturalidade"><span translate="safhApp.pacientes.naturalidade">Naturalidade</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="email"><span translate="safhApp.pacientes.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="telefone"><span translate="safhApp.pacientes.telefone">Telefone</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="celular"><span translate="safhApp.pacientes.celular">Celular</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="peso"><span translate="safhApp.pacientes.peso">Peso</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="observacao"><span translate="safhApp.pacientes.observacao">Observacao</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="nascimento"><span translate="safhApp.pacientes.nascimento">Nascimento</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="endereco"><span translate="safhApp.pacientes.endereco">Endereco</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="numero"><span translate="safhApp.pacientes.numero">Numero</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="complemento"><span translate="safhApp.pacientes.complemento">Complemento</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="bairro"><span translate="safhApp.pacientes.bairro">Bairro</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cidade"><span translate="safhApp.pacientes.cidade">Cidade</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="uf"><span translate="safhApp.pacientes.uf">Uf</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cpf"><span translate="safhApp.pacientes.cpf">Cpf</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="email"><span translate="safhApp.pacientes.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cep"><span translate="safhApp.pacientes.cep">Cep</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="clinicas.clinica"><span translate="safhApp.pacientes.clinicas">Clinicas</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -55,14 +62,21 @@
                     <td><a ui-sref="pacientes-detail({id:pacientes.id})">{{pacientes.id}}</a></td>
                     <td>{{pacientes.nome}}</td>
                     <td>{{pacientes.sobrenome}}</td>
-                    <td>{{pacientes.cpf}}</td>
-                        <td>{{pacientes.nascimento | date:'mediumDate'}}</td>
                     <td>{{pacientes.naturalidade}}</td>
-                    <td>{{pacientes.email}}</td>
                     <td>{{pacientes.telefone}}</td>
                     <td>{{pacientes.celular}}</td>
                     <td>{{pacientes.peso}}</td>
                     <td>{{pacientes.observacao}}</td>
+                        <td>{{pacientes.nascimento | date:'mediumDate'}}</td>
+                    <td>{{pacientes.endereco}}</td>
+                    <td>{{pacientes.numero}}</td>
+                    <td>{{pacientes.complemento}}</td>
+                    <td>{{pacientes.bairro}}</td>
+                    <td>{{pacientes.cidade}}</td>
+                    <td>{{pacientes.uf}}</td>
+                    <td>{{pacientes.cpf}}</td>
+                    <td>{{pacientes.email}}</td>
+                    <td>{{pacientes.cep}}</td>
                     <td>
                         <a ui-sref="clinicas-detail({id:pacientes.clinicas.id})">{{pacientes.clinicas.clinica}}</a>
                     </td>
