@@ -130,5 +130,5 @@
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{entityName}} cannot already have an ID"
     },
-    "footer": "Este é o seu rodapé"
+    "footer": "SAFH - Sistema de Acompanhamento para Faturamento Hospitalar"
 }
