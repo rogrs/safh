@@ -1,0 +1,31 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "pacientes",
+            "otherEntityName": "pacientes",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nome"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dataEvolucao",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "200"
+        }
+    ],
+    "changelogDate": "20160521133157",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "evolucao_paciente",
+    "pagination": "infinite-scroll"
+}

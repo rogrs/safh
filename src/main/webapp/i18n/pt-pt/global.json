@@ -19,6 +19,7 @@
                 "medicamentos": "Medicamentos",
                 "medicacao": "Medicacao",
                 "prescricaoPaciente": "Prescricao Paciente",
+                "evolucaoPaciente": "Evolucao Paciente",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

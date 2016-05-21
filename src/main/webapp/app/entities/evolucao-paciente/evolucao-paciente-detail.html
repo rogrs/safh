@@ -1,0 +1,25 @@
+
+<div>
+    <h2><span translate="safhApp.evolucaoPaciente.detail.title">Evolucao Paciente</span> {{vm.evolucaoPaciente.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="safhApp.evolucaoPaciente.dataEvolucao">Data Evolucao</span></dt>
+        <dd>
+            <span>{{vm.evolucaoPaciente.dataEvolucao | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="safhApp.evolucaoPaciente.descricao">Descricao</span></dt>
+        <dd>
+            <span>{{vm.evolucaoPaciente.descricao}}</span>
+        </dd>
+        <dt><span translate="safhApp.evolucaoPaciente.pacientes">Pacientes</span></dt>
+        <dd>
+            <a ui-sref="pacientes-detail({id:vm.evolucaoPaciente.pacientes.id})">{{vm.evolucaoPaciente.pacientes.nome}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
