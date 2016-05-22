@@ -54,6 +54,9 @@ public class Medicamentos implements Serializable {
     @ManyToOne
     private Fabricantes fabricantes;
 
+    @ManyToOne
+    private Posologias posologias;
+
     public Long getId() {
         return id;
     }
@@ -132,6 +135,14 @@ public class Medicamentos implements Serializable {
 
     public void setFabricantes(Fabricantes fabricantes) {
         this.fabricantes = fabricantes;
+    }
+
+    public Posologias getPosologias() {
+        return posologias;
+    }
+
+    public void setPosologias(Posologias posologias) {
+        this.posologias = posologias;
     }
 
     @Override
