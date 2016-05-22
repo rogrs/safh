@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity InternacaoPaciente.
+    -->
+    <changeSet id="20160522222819-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="pacientes_id"
+                                 baseTableName="internacao_paciente"
+                                 constraintName="fk_internacaopaciente_pacientes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pacientes"/>
+
+        <addForeignKeyConstraint baseColumnNames="nome_id"
+                                 baseTableName="internacao_paciente"
+                                 constraintName="fk_internacaopaciente_nome_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="medicos"/>
+
+        <addForeignKeyConstraint baseColumnNames="evolucao_paciente_id"
+                                 baseTableName="internacao_paciente"
+                                 constraintName="fk_internacaopaciente_evolucaopaciente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="evolucao_paciente"/>
+
+    </changeSet>
+</databaseChangeLog>

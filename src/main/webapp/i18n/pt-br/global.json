@@ -20,6 +20,7 @@
                 "medicacao": "Medicação",
                 "prescricaoPaciente": "Prescrição do Paciente",
                 "evolucaoPaciente": "Evolucao Paciente",
+                "internacaoPaciente": "Internacao Paciente",
                 "jhipster-needle-menu-add-entry": "SAFH will add additional entities here (do not translate!)"
             },
             "account": {
