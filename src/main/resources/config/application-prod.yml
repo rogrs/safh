@@ -18,10 +18,10 @@ spring:
         livereload:
             enabled: false
     datasource:
-        url: jdbc:postgresql://localhost:5432/safh
+        url: postgres://iamrrvtkjbpjvm:arIvxTSwjek_ZoZyPefKixVScu@ec2-54-243-204-129.compute-1.amazonaws.com:5432/da2o0thglncf5b
         name:
-        username: safh
-        password:
+        username: iamrrvtkjbpjvm
+        password: arIvxTSwjek_ZoZyPefKixVScu
     jpa:
         database-platform: com.mycompany.myapp.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
