@@ -18,10 +18,10 @@ spring:
         livereload:
             enabled: false
     datasource:
-        url: postgres://iamrrvtkjbpjvm:arIvxTSwjek_ZoZyPefKixVScu@ec2-54-243-204-129.compute-1.amazonaws.com:5432/da2o0thglncf5b
-        name: da2o0thglncf5b
-        username: iamrrvtkjbpjvm
-        password: arIvxTSwjek_ZoZyPefKixVScu
+        url: postgres://yxlshsbwfwlbuv:jGj-QzfOBPWt7MwgYRusBkMd0W@ec2-54-221-234-118.compute-1.amazonaws.com:5432/dcfl6rfsr27rc9
+        name: dcfl6rfsr27rc9
+        username: yxlshsbwfwlbuv
+        password: jGj-QzfOBPWt7MwgYRusBkMd0W
     jpa:
         database-platform: com.mycompany.myapp.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
