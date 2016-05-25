@@ -19,7 +19,7 @@ spring:
             enabled: false
     datasource:
         url: postgres://iamrrvtkjbpjvm:arIvxTSwjek_ZoZyPefKixVScu@ec2-54-243-204-129.compute-1.amazonaws.com:5432/da2o0thglncf5b
-        name:
+        name: da2o0thglncf5b
         username: iamrrvtkjbpjvm
         password: arIvxTSwjek_ZoZyPefKixVScu
     jpa:
