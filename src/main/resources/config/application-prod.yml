@@ -26,6 +26,7 @@ spring:
         database-platform: com.mycompany.myapp.domain.util.FixedH2Dialect
         database: H2
         show_sql: false
+        hibernate.hbm2ddl.auto: update
         properties:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
@@ -34,7 +35,11 @@ spring:
     data:
         elasticsearch:
             cluster-name:
-            cluster-nodes: localhost:9300
+            cluster-nodes:
+            properties:
+                path:
+                  logs: target/elasticsearch/log
+                  data: target/elasticsearch/data
     mail:
         host: localhost
         port: 25
