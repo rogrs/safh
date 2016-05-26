@@ -1,9 +1,11 @@
 
-  ${AnsiColor.GREEN}      ██ ${AnsiColor.RED} ██    ██  ████████  ███████    ██████  ████████  ████████  ███████
-  ${AnsiColor.GREEN}      ██ ${AnsiColor.RED} ██    ██     ██     ██    ██  ██          ██     ██        ██    ██
-  ${AnsiColor.GREEN}      ██ ${AnsiColor.RED} ████████     ██     ███████    █████      ██     ██████    ███████
-  ${AnsiColor.GREEN}██    ██ ${AnsiColor.RED} ██    ██     ██     ██             ██     ██     ██        ██   ██
-  ${AnsiColor.GREEN} ██████  ${AnsiColor.RED} ██    ██  ████████  ██        ██████      ██     ████████  ██    ██
+  ${AnsiColor.GREEN}███████╗ ${AnsiColor.RED}  █████╗  ${AnsiColor.BLUE} ███████╗ ${AnsiColor.YELLOW} ██╗  ██╗
+  ${AnsiColor.GREEN}██╔════╝ ${AnsiColor.RED} ██╔══██╗ ${AnsiColor.BLUE} ██╔════╝ ${AnsiColor.YELLOW} ██║  ██║
+  ${AnsiColor.GREEN}███████╗ ${AnsiColor.RED} ███████║ ${AnsiColor.BLUE} █████╗   ${AnsiColor.YELLOW} ███████║
+  ${AnsiColor.GREEN}╚════██║ ${AnsiColor.RED} ██╔══██║ ${AnsiColor.BLUE} ██╔══╝   ${AnsiColor.YELLOW} ██╔══██║
+  ${AnsiColor.GREEN}███████║ ${AnsiColor.RED} ██║  ██║ ${AnsiColor.BLUE} ██║      ${AnsiColor.YELLOW} ██║  ██║
+  ${AnsiColor.GREEN}╚══════╝ ${AnsiColor.RED} ╚═╝  ╚═╝ ${AnsiColor.BLUE} ╚═╝      ${AnsiColor.YELLOW} ╚═╝  ╚═╝
+
 
 ${AnsiColor.BRIGHT_BLUE}:: SAFH 🤓  :: Running Spring Boot ${spring-boot.version} ::
 :: http://52.67.11.231:8080 ::${AnsiColor.DEFAULT}
