@@ -46,10 +46,10 @@ public class MedicosResourceIntTest {
     private static final String UPDATED_NOME = "BBBBB";
     private static final String DEFAULT_CRM = "AAAAA";
     private static final String UPDATED_CRM = "BBBBB";
-    private static final String DEFAULT_CPF = "158.846.893-30";
-    private static final String UPDATED_CPF = "198.698.414-14";
-    private static final String DEFAULT_EMAIL = "teste@teste.com.br";
-    private static final String UPDATED_EMAIL = "teste2@teste.com.br";
+    private static final String DEFAULT_CPF = "AAAAA";
+    private static final String UPDATED_CPF = "BBBBB";
+    private static final String DEFAULT_EMAIL = "AAAAA";
+    private static final String UPDATED_EMAIL = "BBBBB";
 
     @Inject
     private MedicosRepository medicosRepository;
