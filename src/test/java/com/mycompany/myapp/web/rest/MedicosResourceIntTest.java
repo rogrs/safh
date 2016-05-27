@@ -1,20 +1,29 @@
 package com.mycompany.myapp.web.rest;
 
-import com.mycompany.myapp.SafhApp;
-import com.mycompany.myapp.domain.Medicos;
-import com.mycompany.myapp.repository.MedicosRepository;
-import com.mycompany.myapp.repository.search.MedicosSearchRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -22,13 +31,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.mycompany.myapp.SafhApp;
+import com.mycompany.myapp.domain.Medicos;
+import com.mycompany.myapp.repository.MedicosRepository;
+import com.mycompany.myapp.repository.search.MedicosSearchRepository;
 
 
 /**
@@ -46,10 +52,10 @@ public class MedicosResourceIntTest {
     private static final String UPDATED_NOME = "BBBBB";
     private static final String DEFAULT_CRM = "AAAAA";
     private static final String UPDATED_CRM = "BBBBB";
-    private static final String DEFAULT_CPF = "AAAAA";
-    private static final String UPDATED_CPF = "BBBBB";
-    private static final String DEFAULT_EMAIL = "AAAAA";
-    private static final String UPDATED_EMAIL = "BBBBB";
+    private static final String DEFAULT_CPF = "158.846.893-30";
+    private static final String UPDATED_CPF = "198.698.414-14";
+    private static final String DEFAULT_EMAIL = "teste@teste.com.br";
+    private static final String UPDATED_EMAIL = "teste2@teste.com.br";
 
     @Inject
     private MedicosRepository medicosRepository;
