@@ -1,4 +1,3 @@
 #!/bin/bash
 git pull
-mvn -Pprod
-mvn -Pprod package
+mvn package -Pprod -DskipTests

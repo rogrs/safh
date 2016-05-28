@@ -1,4 +1,7 @@
 #!/bin/bash
-git pull
-mvn -Pprod
-mvn -Pprod package
+mvn package -Pprod -DskipTests
+heroku login
+yo jhipster:heroku
+heroku deploy:jar --jar target/*.war --app safh
+
+
