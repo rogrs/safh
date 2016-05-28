@@ -38,7 +38,6 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="dataEntrada"><span translate="safhApp.prescricaoPaciente.dataEntrada">Data Entrada</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="quant"><span translate="safhApp.prescricaoPaciente.quant">Quant</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="obse"><span translate="safhApp.prescricaoPaciente.obse">Obse</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="pacientes.nome"><span translate="safhApp.prescricaoPaciente.pacientes">Pacientes</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="medicamentos.descricao"><span translate="safhApp.prescricaoPaciente.medicamentos">Medicamentos</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="posologias.descricao"><span translate="safhApp.prescricaoPaciente.posologias">Posologias</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -51,7 +50,6 @@
                     <td><a ui-sref="prescricao-paciente-detail({id:prescricaoPaciente.id})">{{prescricaoPaciente.id}}</a></td>
                         <td>{{prescricaoPaciente.dataEntrada | date:'mediumDate'}}</td>
                     <td>{{prescricaoPaciente.quant}}</td>
-                    <td>{{prescricaoPaciente.obse}}</td>
                     <td>
                         <a ui-sref="pacientes-detail({id:prescricaoPaciente.pacientes.id})">{{prescricaoPaciente.pacientes.nome}}</a>
                     </td>

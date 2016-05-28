@@ -73,7 +73,6 @@
                             return {
                                 dataEntrada: null,
                                 quant: null,
-                                obse: null,
                                 id: null
                             };
                         }

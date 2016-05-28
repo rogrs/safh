@@ -2,22 +2,22 @@
     "safhApp": {
         "evolucaoPaciente" : {
             "home": {
-                "title": "Evolucao Pacientes",
-                "createLabel": "Criar novo Evolucao Paciente",
-                "createOrEditLabel": "Criar ou editar Evolucao Paciente",
-                "search": "Pesquisar por Evolucao Paciente"
+                "title": "Evolução de Pacientes",
+                "createLabel": "Criar nova Evolução Paciente",
+                "createOrEditLabel": "Criar ou editar Evolução Paciente",
+                "search": "Pesquisar por Evolução de Paciente"
             },
-            "created": "Um novo Evolucao Paciente é criado com o identificador {{ param }}",
-            "updated": "Um Evolucao Paciente é atualizado com o identificador {{ param }}",
-            "deleted": "Um Evolucao Paciente é deletado com o identificador {{ param }}",
+            "created": "Uma nova Evolução de Paciente foi criado com o identificador {{ param }}",
+            "updated": "Uma Evolução de Paciente foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Evolução de Paciente foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Evolucao Paciente {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Evolução de Paciente {{ id }}?"
             },
             "detail": {
-                "title": "Evolucao Paciente"
+                "title": "Evolução de Paciente"
             },
-            "dataEvolucao": "Data Evolucao",
-            "descricao": "Descricao",
+            "dataEvolucao": "Data de Evolução",
+            "descricao": "Descrição",
             "pacientes": "Pacientes"
         }
     }

@@ -8,7 +8,7 @@
             "entities": {
                 "main": "Cadastros",
                 "dietas": "Dietas",
-                "medicos": "Medicos",
+                "medicos": "Médicos",
                 "pacientes": "Pacientes",
                 "leitos": "Leitos",
                 "enfermarias": "Enfermarias",
@@ -19,8 +19,9 @@
                 "medicamentos": "Medicamentos",
                 "medicacao": "Medicação",
                 "prescricaoPaciente": "Prescrição do Paciente",
-                "evolucaoPaciente": "Evolucao Paciente",
-                "internacaoPaciente": "Internacao Paciente",
+                "evolucaoPaciente": "Evolução Paciente",
+                "internacaoPaciente": "Internação Paciente",
+                "prescricaoPaciente": "Prescrição Paciente",
                 "jhipster-needle-menu-add-entry": "SAFH will add additional entities here (do not translate!)"
             },
             "account": {
@@ -43,7 +44,7 @@
                 "audits": "Auditorias",
                 "apidocs": "API",
                 "database": "Banco de dados",
-                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+                "jhipster-needle-menu-add-admin-element": "SAFH will add additional menu entries here (do not translate!)"
             },
             "language": "Idioma"
         },

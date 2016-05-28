@@ -2,24 +2,24 @@
     "safhApp": {
         "medicacao" : {
             "home": {
-                "title": "Medicacaos",
-                "createLabel": "Criar novo Medicacao",
-                "createOrEditLabel": "Criar ou editar Medicacao",
-                "search": "Pesquisar por Medicacao"
+                "title": "Medicações",
+                "createLabel": "Criar nova Medicação",
+                "createOrEditLabel": "Criar ou editar Medicação",
+                "search": "Pesquisar por Medicação"
             },
-            "created": "Um novo Medicacao é criado com o identificador {{ param }}",
-            "updated": "Um Medicacao é atualizado com o identificador {{ param }}",
-            "deleted": "Um Medicacao é deletado com o identificador {{ param }}",
+            "created": "Uma nova Medicação foi criado com o identificador {{ param }}",
+            "updated": "Uma Medicação foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Medicação foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Medicacao {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Medicação {{ id }}?"
             },
             "detail": {
-                "title": "Medicacao"
+                "title": "Medicações"
             },
-            "dataMedicacao": "Data Medicacao",
+            "dataMedicacao": "Data de Medicação",
             "valor": "Valor",
             "verificar": "Verificar",
-            "horario": "Horario",
+            "horario": "Horário",
             "pacientes": "Pacientes"
         }
     }

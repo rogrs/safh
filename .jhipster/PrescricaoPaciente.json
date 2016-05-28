@@ -39,10 +39,6 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "obse",
-            "fieldType": "String"
         }
     ],
     "changelogDate": "20160518042950",

@@ -3,20 +3,20 @@
         "especialidades" : {
             "home": {
                 "title": "Especialidades",
-                "createLabel": "Criar novo Especialidades",
-                "createOrEditLabel": "Criar ou editar Especialidades",
+                "createLabel": "Criar nova Especialidade",
+                "createOrEditLabel": "Criar ou editar Especialidade",
                 "search": "Pesquisar por Especialidades"
             },
-            "created": "Um novo Especialidades é criado com o identificador {{ param }}",
-            "updated": "Um Especialidades é atualizado com o identificador {{ param }}",
-            "deleted": "Um Especialidades é deletado com o identificador {{ param }}",
+            "created": "Uma nova Especialidade foi criado com o identificador {{ param }}",
+            "updated": "Uma Especialidade foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Especialidade foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Especialidades {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Especialidade {{ id }}?"
             },
             "detail": {
                 "title": "Especialidades"
             },
-            "descricao": "Descricao"
+            "descricao": "Descrição"
         }
     }
 }

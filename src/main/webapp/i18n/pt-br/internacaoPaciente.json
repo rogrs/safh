@@ -2,24 +2,24 @@
     "safhApp": {
         "internacaoPaciente" : {
             "home": {
-                "title": "Internacao Pacientes",
-                "createLabel": "Criar novo Internacao Paciente",
-                "createOrEditLabel": "Criar ou editar Internacao Paciente",
-                "search": "Pesquisar por Internacao Paciente"
+                "title": "Internação de Pacientes",
+                "createLabel": "Criar nova Internação de Paciente",
+                "createOrEditLabel": "Criar ou editar Internação de Paciente",
+                "search": "Pesquisar por Internação de Paciente"
             },
-            "created": "Um novo Internacao Paciente é criado com o identificador {{ param }}",
-            "updated": "Um Internacao Paciente é atualizado com o identificador {{ param }}",
-            "deleted": "Um Internacao Paciente é deletado com o identificador {{ param }}",
+            "created": "Uma nova Internação de Paciente foi criado com o identificador {{ param }}",
+            "updated": "Uma Internação de Paciente foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Internação de Paciente foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Internacao Paciente {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Internação de Paciente {{ id }}?"
             },
             "detail": {
-                "title": "Internacao Paciente"
+                "title": "Internação de Paciente"
             },
-            "dataInternacao": "Data Internacao",
+            "dataInternacao": "Data Internação",
             "pacientes": "Pacientes",
-            "nome": "Nome",
-            "evolucaoPaciente": "Evolucao Paciente"
+            "nome": "Medico",
+            "evolucaoPaciente": "Evolução de Paciente"
         }
     }
 }

@@ -3,27 +3,27 @@
         "medicamentos" : {
             "home": {
                 "title": "Medicamentos",
-                "createLabel": "Criar novo Medicamentos",
-                "createOrEditLabel": "Criar ou editar Medicamentos",
+                "createLabel": "Criar novo Medicamento",
+                "createOrEditLabel": "Criar ou editar Medicamento",
                 "search": "Pesquisar por Medicamentos"
             },
-            "created": "Um novo Medicamentos é criado com o identificador {{ param }}",
-            "updated": "Um Medicamentos é atualizado com o identificador {{ param }}",
-            "deleted": "Um Medicamentos é deletado com o identificador {{ param }}",
+            "created": "Um novo Medicamento foi criado com o identificador {{ param }}",
+            "updated": "Um Medicamento foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Medicamento foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Medicamentos {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Medicamento {{ id }}?"
             },
             "detail": {
                 "title": "Medicamentos"
             },
-            "descricao": "Descricao",
-            "registroMinisterioSaude": "Registro Ministerio Saude",
+            "descricao": "Descrição",
+            "registroMinisterioSaude": "Registro do Ministerio da Saúde",
             "codigoBarras": "Codigo Barras",
             "qtdAtual": "Qtd Atual",
             "qtdMin": "Qtd Min",
             "qtdMax": "Qtd Max",
-            "observacoes": "Observacoes",
-            "apresentacao": "Apresentacao",
+            "observacoes": "Observações",
+            "apresentacao": "Apresentação",
             "fabricantes": "Fabricantes",
             "posologias": "Posologias"
         }

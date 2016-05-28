@@ -3,15 +3,15 @@
         "pacientes" : {
             "home": {
                 "title": "Pacientes",
-                "createLabel": "Criar novo Pacientes",
-                "createOrEditLabel": "Criar ou editar Pacientes",
+                "createLabel": "Criar novo Paciente",
+                "createOrEditLabel": "Criar ou editar Paciente",
                 "search": "Pesquisar por Pacientes"
             },
-            "created": "Um novo Pacientes é criado com o identificador {{ param }}",
-            "updated": "Um Pacientes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Pacientes é deletado com o identificador {{ param }}",
+            "created": "Um novo Paciente foi criado com o identificador {{ param }}",
+            "updated": "Um Paciente foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Paciente foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Pacientes {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Paciente {{ id }}?"
             },
             "detail": {
                 "title": "Pacientes"
@@ -22,15 +22,15 @@
             "telefone": "Telefone",
             "celular": "Celular",
             "peso": "Peso",
-            "observacao": "Observacao",
+            "observacao": "Observação",
             "nascimento": "Nascimento",
-            "endereco": "Endereco",
-            "numero": "Numero",
+            "endereco": "Endereço",
+            "numero": "Número",
             "complemento": "Complemento",
             "bairro": "Bairro",
             "cidade": "Cidade",
-            "uf": "Uf",
-            "cpf": "Cpf",
+            "uf": "UF",
+            "cpf": "CPF",
             "email": "Email",
             "cep": "Cep",
             "clinicas": "Clinicas"
