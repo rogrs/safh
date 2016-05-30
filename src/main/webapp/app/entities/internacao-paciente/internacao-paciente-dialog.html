@@ -48,6 +48,12 @@
                 <option value=""></option>
             </select>
         </div>
+        <div class="form-group">
+            <label translate="safhApp.internacaoPaciente.prescricaoPaciente" for="field_prescricaoPaciente">Prescricao Paciente</label>
+            <select class="form-control" id="field_prescricaoPaciente" name="prescricaoPaciente" ng-model="vm.internacaoPaciente.prescricaoPaciente" ng-options="prescricaoPaciente as prescricaoPaciente.dataEntrada for prescricaoPaciente in vm.prescricaopacientes track by prescricaoPaciente.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

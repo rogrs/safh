@@ -17,6 +17,12 @@
             "otherEntityName": "evolucaoPaciente",
             "relationshipType": "many-to-one",
             "otherEntityField": "descricao"
+        },
+        {
+            "relationshipName": "prescricaoPaciente",
+            "otherEntityName": "prescricaoPaciente",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "dataEntrada"
         }
     ],
     "fields": [

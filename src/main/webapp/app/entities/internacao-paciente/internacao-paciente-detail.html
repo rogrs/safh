@@ -19,6 +19,10 @@
         <dd>
             <a ui-sref="evolucao-paciente-detail({id:vm.internacaoPaciente.evolucaoPaciente.id})">{{vm.internacaoPaciente.evolucaoPaciente.descricao}}</a>
         </dd>
+        <dt><span translate="safhApp.internacaoPaciente.prescricaoPaciente">Prescricao Paciente</span></dt>
+        <dd>
+            <a ui-sref="prescricao-paciente-detail({id:vm.internacaoPaciente.prescricaoPaciente.id})">{{vm.internacaoPaciente.prescricaoPaciente.dataEntrada}}</a>
+        </dd>
     </dl>
 
     <button type="submit"

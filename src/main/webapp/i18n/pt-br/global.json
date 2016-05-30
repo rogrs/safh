@@ -17,11 +17,11 @@
                 "posologias": "Posologias",
                 "fabricantes": "Fabricantes",
                 "medicamentos": "Medicamentos",
-                "medicacao": "Medicação",
                 "prescricaoPaciente": "Prescrição do Paciente",
                 "evolucaoPaciente": "Evolução Paciente",
                 "internacaoPaciente": "Internação Paciente",
                 "prescricaoPaciente": "Prescrição Paciente",
+                "internacaoPaciente": "Internacao Paciente",
                 "jhipster-needle-menu-add-entry": "SAFH will add additional entities here (do not translate!)"
             },
             "account": {

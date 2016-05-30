@@ -40,6 +40,7 @@
                     <th jh-sort-by="pacientes.nome"><span translate="safhApp.internacaoPaciente.pacientes">Pacientes</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="nome.nome"><span translate="safhApp.internacaoPaciente.nome">Nome</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="evolucaoPaciente.descricao"><span translate="safhApp.internacaoPaciente.evolucaoPaciente">Evolucao Paciente</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="prescricaoPaciente.dataEntrada"><span translate="safhApp.internacaoPaciente.prescricaoPaciente">Prescricao Paciente</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -55,6 +56,9 @@
                     </td>
                     <td>
                         <a ui-sref="evolucao-paciente-detail({id:internacaoPaciente.evolucaoPaciente.id})">{{internacaoPaciente.evolucaoPaciente.descricao}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="prescricao-paciente-detail({id:internacaoPaciente.prescricaoPaciente.id})">{{internacaoPaciente.prescricaoPaciente.dataEntrada}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
