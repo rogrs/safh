@@ -19,7 +19,8 @@
             "dataInternacao": "Data Internação",
             "pacientes": "Pacientes",
             "nome": "Médico",
-            "evolucaoPaciente": "Evolução de Paciente"
+            "evolucaoPaciente": "Evolução de Paciente",
+            "prescricaoPaciente": "Prescrição de Paciente"
         }
     }
 }

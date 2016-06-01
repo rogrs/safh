@@ -26,5 +26,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="evolucao_paciente"/>
 
+        <addForeignKeyConstraint baseColumnNames="prescricao_paciente_id"
+                                 baseTableName="internacao_paciente"
+                                 constraintName="fk_internacaopaciente_prescricaopaciente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prescricao_paciente"/>
+
     </changeSet>
 </databaseChangeLog>

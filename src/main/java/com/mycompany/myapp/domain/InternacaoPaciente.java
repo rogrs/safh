@@ -38,6 +38,9 @@ public class InternacaoPaciente implements Serializable {
     @ManyToOne
     private EvolucaoPaciente evolucaoPaciente;
 
+    @ManyToOne
+    private PrescricaoPaciente prescricaoPaciente;
+
     public Long getId() {
         return id;
     }
@@ -76,6 +79,14 @@ public class InternacaoPaciente implements Serializable {
 
     public void setEvolucaoPaciente(EvolucaoPaciente evolucaoPaciente) {
         this.evolucaoPaciente = evolucaoPaciente;
+    }
+
+    public PrescricaoPaciente getPrescricaoPaciente() {
+        return prescricaoPaciente;
+    }
+
+    public void setPrescricaoPaciente(PrescricaoPaciente prescricaoPaciente) {
+        this.prescricaoPaciente = prescricaoPaciente;
     }
 
     @Override
