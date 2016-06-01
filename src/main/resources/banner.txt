@@ -8,4 +8,4 @@
 
 
 ${AnsiColor.BRIGHT_BLUE}:: SAFH 🤓  :: Running Spring Boot ${spring-boot.version} ::
-:: http://52.67.11.231:8080 ::${AnsiColor.DEFAULT}
+:: http://52.67.61.182:8080 ::${AnsiColor.DEFAULT}

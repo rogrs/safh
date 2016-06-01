@@ -16,7 +16,7 @@
     <name>SAFH</name>
     <description>Sistema de Acompanhamento para Faturamento Hospitalar</description>
 
-    <url>http://52.67.11.231:8080/</url>
+    <url>http://52.67.61.182:8080/</url>
 
     <prerequisites>
         <maven>3.0.0</maven>
@@ -229,6 +229,10 @@
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>${javax.inject.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <!-- Spring Cloud -->
         <dependency>

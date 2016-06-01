@@ -5,7 +5,7 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>1.3.4.RELEASE</version>
+        <version>1.3.5.RELEASE</version>
         <relativePath />
     </parent>
 
@@ -13,7 +13,10 @@
     <artifactId>safh</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Sistema de Acompanhamento para Faturamento Hospitalar</name>
+    <name>SAFH</name>
+    <description>Sistema de Acompanhamento para Faturamento Hospitalar</description>
+
+    <url>http://52.67.11.231:8080/</url>
 
     <prerequisites>
         <maven>3.0.0</maven>
@@ -289,6 +292,10 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -827,7 +834,4 @@
             </dependencies>
         </profile>
     </profiles>
-
-    <url>http://52.67.11.231:8080/</url>
-    <description>Sistema de Acompanhamento para Faturamento Hospitalar</description>
 </project>
