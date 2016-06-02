@@ -1,25 +1,12 @@
-# ===================================================================
-# Spring Boot configuration for the "prod" profile.
-#
-# This configuration overrides the application.yml file.
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
-
 spring:
     devtools:
         restart:
             enabled: false
         livereload:
             enabled: false
-    d    datasource:
+    datasource:
         url: jdbc:mysql://localhost:3306/safh?useUnicode=true&characterEncoding=utf8&useSSL=false
-        name:
+        name: safh
         username: safh
         password: safh2016
         hikari:
@@ -32,6 +19,7 @@ spring:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
         show_sql: false
+        hibernate.hbm2ddl.auto: update
         properties:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
@@ -80,7 +68,7 @@ jhipster:
     security:
         rememberMe:
             # security key (this key should be unique for your application, and kept secret)
-            key: a959a753e1edf2cce638cfb08be1a27d4cb0174c
+            key: 5d8ae3c35aa6fc5f274431b3de203edd8e5a3748
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: safh@localhost
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
@@ -93,7 +81,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: safh
+            prefix: teste
         logs: # Reports Dropwizard metrics in the logs
             enabled: false
             reportFrequency: 60 # in seconds
