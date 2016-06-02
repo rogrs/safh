@@ -1,0 +1,14 @@
+version: '2'
+services:
+    safh-mysql:
+        container_name: safh-mysql
+        image: mysql:5.7.12
+        # volumes:
+        #     - ~/volumes/jhipster/teste/mysql/:/var/lib/mysql/
+        environment:
+            - MYSQL_USER=safh
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=safh
+        ports:
+            - 3309:3309
+        command: mysqld --lower_case_table_names=1 --skip-ssl

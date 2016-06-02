@@ -1,21 +1,22 @@
 version: '2'
 services:
-    safh-app:
+    teste-app:
         image: safh
         external_links:
-            - safh-postgresql:postgresql
+            - safh-mysql:mysql
             - safh-elasticsearch:elasticsearch
         environment:
             - SPRING_PROFILES_ACTIVE=prod
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/safh
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/safh?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
             - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
         ports:
             - 8080:8080
-    safh-postgresql:
+    teste-mysql:
         extends:
-            file: postgresql.yml
-            service: safh-postgresql
-    safh-elasticsearch:
+            file: mysql.yml
+            service: safh-mysql
+    teste-elasticsearch:
         extends:
             file: elasticsearch.yml
             service: safh-elasticsearch
