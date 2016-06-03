@@ -6,7 +6,7 @@ spring:
             enabled: false
     datasource:
         url: jdbc:mysql://localhost:3306/safh?useUnicode=true&characterEncoding=utf8&useSSL=false
-        name: safh
+        name:
         username: safh
         password: safh2016
         hikari:
@@ -28,7 +28,11 @@ spring:
     data:
         elasticsearch:
             cluster-name:
-            cluster-nodes: localhost:9300
+            cluster-nodes:
+            properties:
+                path:
+                  logs: elasticsearch/log
+                  data: elasticsearch/data
     mail:
         host: smtp.gmail.com
         port: 587
