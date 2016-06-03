@@ -18,13 +18,13 @@ spring:
         livereload:
             enabled: false
     datasource:
-        url: jdbc:h2:file:../h2db/db/safh;DB_CLOSE_DELAY=-1
-        name: 
-        username: safh
-        password: 
+        url: postgres://yxlshsbwfwlbuv:jGj-QzfOBPWt7MwgYRusBkMd0W@ec2-54-221-234-118.compute-1.amazonaws.com:5432/dcfl6rfsr27rc9
+        name: dcfl6rfsr27rc9
+        username: yxlshsbwfwlbuv
+        password: jGj-QzfOBPWt7MwgYRusBkMd0W
     jpa:
-        database-platform: com.mycompany.myapp.domain.util.FixedH2Dialect
-        database: H2
+        database-platform: com.mycompany.myapp.domain.util.FixedPostgreSQL82Dialect
+        database: POSTGRESQL
         show_sql: false
         hibernate.hbm2ddl.auto: update
         properties:
