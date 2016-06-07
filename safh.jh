@@ -1,33 +1,48 @@
 
 entity Clinicas {
 	clinica String required maxlength(80),
-        descricao String maxlength(100)
+        descricao String maxlength(100),
+        ativo Boolean required
 }
 
 entity Dietas {
         dieta String required maxlength(40),  
-	descricao String maxlength(255)  
+	descricao String maxlength(255),
+        ativo Boolean required 
 }
 
 entity Enfermarias {
-        enfermaria String required maxlength(60)  
+        enfermaria String required maxlength(60),
+        ativo Boolean required  
 }
 
 entity Especialidades {
-        especialidade String required maxlength(60)  
+        especialidade String required maxlength(60),
+        ativo Boolean required  
+}
+
+
+entity EvolucaoPaciente {
+        dataEvolucao LocalDate required,
+        descricao String required,
+        ativo Boolean required
 }
 
 entity Fabricantes {
-        fabricante String required maxlength(60)  
+        fabricante String required maxlength(60),
+        ativo Boolean required  
 }
 
-entity Medicos {
-        nome String required maxlength(255),
-        crm String required maxlength(40),
-        cpf String maxlength(11),
-        email String maxlength(100)
+entity Internacoes {
+        dataInternacao LocalDate required,
+        ativo Boolean required
 }
 
+entity Leitos {
+        leito String required maxlength(60),
+        tipo Stringmaxlength(40),
+        ativo Boolean required  
+}
 
 entity Medicamentos {
 	descricao String required maxlength(100),
@@ -37,18 +52,49 @@ entity Medicamentos {
         qtdMin Float,
         qtdMax Float,
         observacoes String required maxlength(8000),
-        apresentacao String
+        apresentacao String,
+        ativo Boolean required
 }
+
+entity Medicos {
+        nome String required maxlength(255),
+        crm String required maxlength(40),
+        cpf String maxlength(11),
+        email String maxlength(100),
+        cep String maxlength(10),
+        logradouro String maxlength(80),
+        numero String maxlength(10),
+        complemento String maxlength(60),
+        bairro String maxlength(60),
+        cidade String maxlength(60),
+        UF String maxlength(2),
+        ativo Boolean required
+}
+
+entity Pacientes {
+        nome String required maxlength(255),
+        cpf String maxlength(11),
+        email String maxlength(100),
+        cep String maxlength(10),
+        logradouro String maxlength(80),
+        numero String maxlength(10),
+        complemento String maxlength(60),
+        bairro String maxlength(60),
+        cidade String maxlength(60),
+        UF String maxlength(2),
+        ativo Boolean required
+} 
 
 entity Posologias {
-	posologia String required maxlength(40)  
+       posologia String required maxlength(40),
+       ativo Boolean required 
 }
 
-
-
-
-
-
+entity Prescricoes {
+        prescricao String required maxlength(100),
+        observacao String maxlength(1000),
+        ativo Boolean required 
+}
 
 
 relationship OneToMany {
