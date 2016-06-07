@@ -97,7 +97,16 @@ entity Prescricoes {
 }
 
 relationship OneToMany {
+  Leitos{clinicas} to Clinicas{leitos(especialidade)}
+}
+
+
+relationship OneToMany {
   Especialidades{medicos} to Medicos{especialidades(especialidade)}
+}
+
+relationship OneToMany {
+  Posologias{medicamentos} to Medicamentos{posologiaPadrao(posologia)}
 }
 
 
