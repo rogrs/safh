@@ -40,7 +40,7 @@ entity Internacoes {
 
 entity Leitos {
         leito String required maxlength(60),
-        tipo Stringmaxlength(40),
+        tipo String maxlength(40),
         ativo Boolean required  
 }
 
@@ -96,12 +96,9 @@ entity Prescricoes {
         ativo Boolean required 
 }
 
-
 relationship OneToMany {
   Especialidades{medicos} to Medicos{especialidades(especialidade)}
 }
-
-
 
 
 paginate * with infinite-scroll
