@@ -22,10 +22,22 @@
         <maven>3.0.0</maven>
     </prerequisites>
 
+
+    <developers>
+      <developer>
+        <id>rogrs</id>
+        <name>Rogério Ribeiro</name>
+        <email>rogerio.rs@gmail.com</email>
+        <organization>rogrs</organization>
+        <url>http://...</url>
+        </developer>
+    </developers>
+
     <scm>
-        <connection>scm:git:git://github.com/rogrs/safh.git</connection>
-        <developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
-        <url>https://github.com/rogrs/safh.git</url>
+       <url>git@github.com/rogrs/safh.git</url>
+       <connection>scm:git:https://github.com/rogrs/safh</connection>
+       <developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
+       <tag>HEAD</tag>
     </scm>
 
     <properties>
