@@ -6,6 +6,10 @@ enum Verificar {
     12, 24, 18, 6
 }
 
+enum Estados {
+    AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO
+}
+
 
 entity Clinicas {
        clinica String required maxlength(80),
@@ -43,7 +47,7 @@ entity Internacoes {
 entity InternacoesDetalhes {
        dataDetalhe LocalDate required,
        horario LocalDate required,
-       qtd Boolean required,
+       qtd Float required,
        ativo Boolean required
 }
 
@@ -76,7 +80,7 @@ entity Medicos {
        complemento String maxlength(60),
        bairro String maxlength(60),
        cidade String maxlength(60),
-       UF String maxlength(2),
+       UF Estados,
        ativo Boolean required
 }
 
@@ -91,7 +95,7 @@ entity Pacientes {
        complemento String maxlength(60),
        bairro String maxlength(60),
        cidade String maxlength(60),
-       UF String maxlength(2),
+       UF Estados,
        ativo Boolean required
 } 
 

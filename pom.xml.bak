@@ -11,7 +11,7 @@
 
     <groupId>com.mycompany.myapp</groupId>
     <artifactId>safh</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>SAFH</name>
     <description>Sistema de Acompanhamento para Faturamento Hospitalar</description>
@@ -22,12 +22,23 @@
         <maven>3.0.0</maven>
     </prerequisites>
 
+
+    <developers>
+      <developer>
+        <id>rogrs</id>
+        <name>Rogério Ribeiro</name>
+        <email>rogerio.rs@gmail.com</email>
+        <organization>rogrs</organization>
+        <url>http://...</url>
+        </developer>
+    </developers>
+
     <scm>
-        <connection>scm:git:git://github.com/rogrs/safh.git</connection>
-        <developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
-        <url>https://github.com/rogrs/safh.git</url>
-      <tag>safh-0.0.1</tag>
-  </scm>
+       <url>git@github.com/rogrs/safh.git</url>
+       <connection>scm:git:https://github.com/rogrs/safh</connection>
+       <developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
+       <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <assertj-core.version>3.3.0</assertj-core.version>

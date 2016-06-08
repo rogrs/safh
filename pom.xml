@@ -18,20 +18,19 @@
 
     <url>http://52.67.61.182:8080/</url>
 
+    <developers>
+        <developer>
+            <id>rogrs</id>
+            <name>Rogério Ribeiro</name>
+            <email>rogerio.rs@gmail.com</email>
+            <url>http://...</url>
+            <organization>rogrs</organization>
+        </developer>
+    </developers>
+
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
-
-
-    <developers>
-      <developer>
-        <id>rogrs</id>
-        <name>Rogério Ribeiro</name>
-        <email>rogerio.rs@gmail.com</email>
-        <organization>rogrs</organization>
-        <url>http://...</url>
-        </developer>
-    </developers>
 
     <scm>
        <url>git@github.com/rogrs/safh.git</url>
