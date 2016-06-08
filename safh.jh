@@ -1,88 +1,98 @@
+enum Coletas {
+    PA, HGT, TAX, FC
+}
+
+enum Verificar {
+    12, 24, 18, 6
+}
+
 
 entity Clinicas {
-	clinica String required maxlength(80),
-        descricao String maxlength(100),
-        ativo Boolean required
+       clinica String required maxlength(80),
+       descricao String maxlength(100),
+       ativo Boolean required
 }
 
 entity Dietas {
-        dieta String required maxlength(40),  
-	descricao String maxlength(255),
-        ativo Boolean required 
+       dieta String required maxlength(40),  
+       descricao String maxlength(255),
+       ativo Boolean required 
 }
 
 entity Enfermarias {
-        enfermaria String required maxlength(60),
-        ativo Boolean required  
+       enfermaria String required maxlength(60),
+       ativo Boolean required  
 }
 
 entity Especialidades {
-        especialidade String required maxlength(60),
-        ativo Boolean required  
-}
-
-
-entity EvolucaoPaciente {
-        dataEvolucao LocalDate required,
-        descricao String required,
-        ativo Boolean required
+       especialidade String required maxlength(60),
+       ativo Boolean required  
 }
 
 entity Fabricantes {
-        fabricante String required maxlength(60),
-        ativo Boolean required  
+       fabricante String required maxlength(60),
+       ativo Boolean required  
 }
 
 entity Internacoes {
-        dataInternacao LocalDate required,
-        ativo Boolean required
+       dataInternacao LocalDate required,
+       descricao String required maxlength(200),
+       ativo Boolean required
+}
+
+entity InternacoesDetalhes {
+       dataDetalhe LocalDate required,
+       horario LocalDate required,
+       qtd Boolean required,
+       ativo Boolean required
 }
 
 entity Leitos {
-        leito String required maxlength(60),
-        tipo String maxlength(40),
-        ativo Boolean required  
+       leito String required maxlength(60),
+       tipo String maxlength(40),
+       ativo Boolean required  
 }
 
 entity Medicamentos {
-	descricao String required maxlength(100),
-        registroMinisterioSaude String required maxlength(60),
-        codigoBarras String maxlength(13),
-        qtdAtual Float,
-        qtdMin Float,
-        qtdMax Float,
-        observacoes String required maxlength(8000),
-        apresentacao String,
-        ativo Boolean required
+       descricao String required maxlength(100),
+       registroMinisterioSaude String required maxlength(60),
+       codigoBarras String maxlength(13),
+       qtdAtual Float,
+       qtdMin Float,
+       qtdMax Float,
+       observacoes String required maxlength(8000),
+       apresentacao String,
+       ativo Boolean required
 }
 
 entity Medicos {
-        nome String required maxlength(255),
-        crm String required maxlength(40),
-        cpf String maxlength(11),
-        email String maxlength(100),
-        cep String maxlength(10),
-        logradouro String maxlength(80),
-        numero String maxlength(10),
-        complemento String maxlength(60),
-        bairro String maxlength(60),
-        cidade String maxlength(60),
-        UF String maxlength(2),
-        ativo Boolean required
+       nome String required maxlength(255),
+       crm String required maxlength(40),
+       cpf String maxlength(11),
+       email String maxlength(100),
+       cep String maxlength(10),
+       logradouro String maxlength(80),
+       numero String maxlength(10),
+       complemento String maxlength(60),
+       bairro String maxlength(60),
+       cidade String maxlength(60),
+       UF String maxlength(2),
+       ativo Boolean required
 }
 
 entity Pacientes {
-        nome String required maxlength(255),
-        cpf String maxlength(11),
-        email String maxlength(100),
-        cep String maxlength(10),
-        logradouro String maxlength(80),
-        numero String maxlength(10),
-        complemento String maxlength(60),
-        bairro String maxlength(60),
-        cidade String maxlength(60),
-        UF String maxlength(2),
-        ativo Boolean required
+       prontuario Long required,
+       nome String required maxlength(255),
+       cpf String maxlength(11),
+       email String maxlength(100),
+       cep String maxlength(10),
+       logradouro String maxlength(80),
+       numero String maxlength(10),
+       complemento String maxlength(60),
+       bairro String maxlength(60),
+       cidade String maxlength(60),
+       UF String maxlength(2),
+       ativo Boolean required
 } 
 
 entity Posologias {
@@ -91,24 +101,61 @@ entity Posologias {
 }
 
 entity Prescricoes {
-        prescricao String required maxlength(100),
-        observacao String maxlength(1000),
-        ativo Boolean required 
+       prescricao String required maxlength(100),
+       ativo Boolean required 
 }
 
 relationship OneToMany {
-  Leitos{clinicas} to Clinicas{leitos(especialidade)}
-}
-
-
-relationship OneToMany {
-  Especialidades{medicos} to Medicos{especialidades(especialidade)}
+             Clinicas{pacientes} to Pacientes{clinicas(clinica)}
 }
 
 relationship OneToMany {
-  Posologias{medicamentos} to Medicamentos{posologiaPadrao(posologia)}
+             Enfermarias{pacientes} to Pacientes{enfermarias(enfermaria)}
+}
+
+relationship OneToMany {
+             Leitos{pacientes} to Pacientes{leitos(leito)}
+}
+
+relationship OneToMany {
+             Especialidades{medicos} to Medicos{especialidades(especialidade)}
+}
+
+relationship OneToMany {
+             Posologias{medicamentos} to Medicamentos{posologiaPadrao(posologia)}
+}
+
+relationship OneToMany {
+             Pacientes{internacoes} to Internacoes{internacao(nome)}
+}
+
+relationship OneToMany {
+             Clinicas{internacoes} to Internacoes{clinicas(clinica)}
+}
+
+relationship OneToMany {
+             Medicos{internacoes} to Internacoes{medicos(nome)}
+}
+
+relationship OneToMany {
+             Internacoes{internacoesDetalhes} to InternacoesDetalhes{internacoes(descricao)}
+}
+
+relationship OneToMany {
+             Dietas{internacoesDetalhes} to InternacoesDetalhes{dietas(dieta)}
+}
+
+relationship OneToMany {
+             Prescricoes{internacoesDetalhes} to InternacoesDetalhes{prescricoes(prescricao)}
+}
+
+relationship OneToMany {
+             Posologias{internacoesDetalhes} to InternacoesDetalhes{posologias(posologia)}
 }
 
 
-paginate * with infinite-scroll
+paginate Clinicas, Dietas, Enfermarias, Especialidades, Fabricantes, Internacoes, Leitos, Medicamentos, Pacientes, Posologias, Prescricoes  with infinite-scroll
 
+paginate InternacoesDetalhes with pagination
+
+service Clinicas, Dietas, Enfermarias, Especialidades, Fabricantes, Internacoes, Leitos, Medicamentos, Pacientes, Posologias, Prescricoes, InternacoesDetalhes with serviceClass
