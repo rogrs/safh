@@ -7,66 +7,57 @@ enum Verificar {
 }
 
 enum Estados {
-    AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO
+    AC, AL, AM, AP, BA, CE, DF, ES, GO, MA, MG, MS, MT, PA, PB, PE, PI, PR, RJ, RN, RO, RR, RS, SC, SE, SP, TO
 }
 
 
 entity Clinicas {
        clinica String required maxlength(80),
-       descricao String maxlength(100),
-       ativo Boolean required
+       descricao String maxlength(100)
 }
 
 entity Dietas {
        dieta String required maxlength(40),  
-       descricao String maxlength(255),
-       ativo Boolean required 
+       descricao String maxlength(255)
 }
 
 entity Enfermarias {
-       enfermaria String required maxlength(60),
-       ativo Boolean required  
+       enfermaria String required maxlength(60) 
 }
 
 entity Especialidades {
-       especialidade String required maxlength(60),
-       ativo Boolean required  
+       especialidade String required maxlength(60)
 }
 
 entity Fabricantes {
-       fabricante String required maxlength(60),
-       ativo Boolean required  
+       fabricante String required maxlength(60) 
 }
 
 entity Internacoes {
        dataInternacao LocalDate required,
-       descricao String required maxlength(200),
-       ativo Boolean required
+       descricao String required maxlength(200)
 }
 
 entity InternacoesDetalhes {
        dataDetalhe LocalDate required,
        horario LocalDate required,
-       qtd Float required,
-       ativo Boolean required
+       qtd Float required
 }
 
 entity Leitos {
        leito String required maxlength(60),
-       tipo String maxlength(40),
-       ativo Boolean required  
+       tipo String maxlength(40) 
 }
 
 entity Medicamentos {
        descricao String required maxlength(100),
        registroMinisterioSaude String required maxlength(60),
-       codigoBarras String maxlength(13),
+       codigoBarras String required maxlength(13),
        qtdAtual Float,
        qtdMin Float,
        qtdMax Float,
-       observacoes String required maxlength(8000),
-       apresentacao String,
-       ativo Boolean required
+       observacoes String maxlength(8000),
+       apresentacao String
 }
 
 entity Medicos {
@@ -80,8 +71,7 @@ entity Medicos {
        complemento String maxlength(60),
        bairro String maxlength(60),
        cidade String maxlength(60),
-       UF Estados,
-       ativo Boolean required
+       UF Estados
 }
 
 entity Pacientes {
@@ -95,71 +85,66 @@ entity Pacientes {
        complemento String maxlength(60),
        bairro String maxlength(60),
        cidade String maxlength(60),
-       UF Estados,
-       ativo Boolean required
+       UF Estados
 } 
 
 entity Posologias {
-       posologia String required maxlength(40),
-       ativo Boolean required 
+       posologia String required maxlength(40)
 }
 
 entity Prescricoes {
-       prescricao String required maxlength(100),
-       ativo Boolean required 
+       prescricao String required maxlength(100)
 }
 
-relationship OneToMany {
-             Clinicas{pacientes} to Pacientes{clinicas(clinica)}
+relationship ManyToOne {
+             Pacientes{clinicas(clinica)} to Clinicas
 }
 
-relationship OneToMany {
-             Enfermarias{pacientes} to Pacientes{enfermarias(enfermaria)}
+relationship ManyToOne {
+             Pacientes{enfermarias(enfermaria)} to Enfermarias 
 }
 
-relationship OneToMany {
-             Leitos{pacientes} to Pacientes{leitos(leito)}
+relationship ManyToOne {
+             Pacientes{leitos(leito)} to Leitos
 }
 
-relationship OneToMany {
-             Especialidades{medicos} to Medicos{especialidades(especialidade)}
+relationship ManyToOne {
+             Medicos{especialidades(especialidade)} to Especialidades 
 }
 
-relationship OneToMany {
-             Posologias{medicamentos} to Medicamentos{posologiaPadrao(posologia)}
+relationship ManyToOne {
+             Medicamentos{posologiaPadrao(posologia)} to Posologias
 }
 
-relationship OneToMany {
-             Pacientes{internacoes} to Internacoes{internacao(nome)}
+relationship ManyToOne {
+             Internacoes{internacao(nome)} to Pacientes
 }
 
-relationship OneToMany {
-             Clinicas{internacoes} to Internacoes{clinicas(clinica)}
+relationship ManyToOne {
+              Internacoes{clinicas(clinica)} to Clinicas
 }
 
-relationship OneToMany {
-             Medicos{internacoes} to Internacoes{medicos(nome)}
+relationship ManyToOne {
+             Internacoes{medicos(nome)} to Medicos
 }
 
-relationship OneToMany {
-             Internacoes{internacoesDetalhes} to InternacoesDetalhes{internacoes(descricao)}
+relationship ManyToOne {
+             InternacoesDetalhes{internacoes(descricao)} to Internacoes
 }
 
-relationship OneToMany {
-             Dietas{internacoesDetalhes} to InternacoesDetalhes{dietas(dieta)}
+relationship ManyToOne {
+             InternacoesDetalhes{dietas(dieta)} to Dietas
 }
 
-relationship OneToMany {
-             Prescricoes{internacoesDetalhes} to InternacoesDetalhes{prescricoes(prescricao)}
+relationship ManyToOne {
+             InternacoesDetalhes{prescricoes(prescricao)} to Prescricoes
 }
 
-relationship OneToMany {
-             Posologias{internacoesDetalhes} to InternacoesDetalhes{posologias(posologia)}
+relationship ManyToOne {
+             InternacoesDetalhes{posologias(posologia)} to Posologias
 }
 
 
-paginate Clinicas, Dietas, Enfermarias, Especialidades, Fabricantes, Internacoes, Leitos, Medicamentos, Pacientes, Posologias, Prescricoes  with infinite-scroll
+paginate *  with infinite-scroll
 
-paginate InternacoesDetalhes with pagination
-
-service Clinicas, Dietas, Enfermarias, Especialidades, Fabricantes, Internacoes, Leitos, Medicamentos, Pacientes, Posologias, Prescricoes, InternacoesDetalhes with serviceClass
+service InternacoesDetalhes with serviceClass
