@@ -9,7 +9,7 @@
 /node/
 /node/**
 /node_modules/**
-
+/elasticsearch/
 ######################
 # SASS
 ######################
