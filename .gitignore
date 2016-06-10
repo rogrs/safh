@@ -10,6 +10,7 @@
 /node/**
 /node_modules/**
 /elasticsearch/
+/logs/
 ######################
 # SASS
 ######################

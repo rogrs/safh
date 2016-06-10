@@ -40,8 +40,8 @@ spring:
             cluster-nodes: 
             properties:
                 path:
-                  logs: elasticsearch/log
-                  data: elasticsearch/data
+                  logs: target/elasticsearch/log
+                  data: target/elasticsearch/data
     mail:
         host: smtp.gmail.com
         port: 587
