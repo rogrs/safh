@@ -5,39 +5,43 @@
         .module('safhApp')
         .controller('MedicamentosDialogController', MedicamentosDialogController);
 
-    MedicamentosDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Medicamentos', 'Fabricantes', 'Posologias'];
+    MedicamentosDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Medicamentos', 'Posologias'];
 
-    function MedicamentosDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Medicamentos, Fabricantes, Posologias) {
+    function MedicamentosDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Medicamentos, Posologias) {
         var vm = this;
+
         vm.medicamentos = entity;
-        vm.fabricantes = Fabricantes.query();
+        vm.clear = clear;
+        vm.save = save;
         vm.posologias = Posologias.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('safhApp:medicamentosUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.medicamentos.id !== null) {
                 Medicamentos.update(vm.medicamentos, onSaveSuccess, onSaveError);
             } else {
                 Medicamentos.save(vm.medicamentos, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('safhApp:medicamentosUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
+
     }
 })();

@@ -67,7 +67,7 @@ class PosologiasGatlingTest extends Simulation {
             .exec(http("Create new posologias")
             .post("/api/posologias")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "descricao":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "posologia":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_posologias_url"))).exitHereIfFailed
             .pause(10)

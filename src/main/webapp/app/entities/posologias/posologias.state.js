@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Posologias', function($stateParams, Posologias) {
-                    return Posologias.get({id : $stateParams.id});
+                    return Posologias.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -71,7 +71,7 @@
                     resolve: {
                         entity: function () {
                             return {
-                                descricao: null,
+                                posologia: null,
                                 id: null
                             };
                         }
@@ -98,7 +98,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Posologias', function(Posologias) {
-                            return Posologias.get({id : $stateParams.id});
+                            return Posologias.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -122,7 +122,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Posologias', function(Posologias) {
-                            return Posologias.get({id : $stateParams.id});
+                            return Posologias.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

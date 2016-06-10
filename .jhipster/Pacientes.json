@@ -1,97 +1,127 @@
 {
-    "relationships": [
-        {
-            "relationshipName": "clinicas",
-            "otherEntityName": "clinicas",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "clinica"
-        }
-    ],
-    "fields": [
-        {
-            "fieldName": "nome",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "sobrenome",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "naturalidade",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "telefone",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "celular",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "peso",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "observacao",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "nascimento",
-            "fieldType": "LocalDate"
-        },
-        {
-            "fieldName": "endereco",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "numero",
-            "fieldType": "String",
-            "fieldValidateRules": []
-        },
-        {
-            "fieldName": "complemento",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "bairro",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "cidade",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "uf",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": "2"
-        },
-        {
-            "fieldName": "cpf",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "email",
-            "fieldType": "String",
-            "fieldValidateRules": []
-        },
-        {
-            "fieldName": "cep",
-            "fieldType": "String"
-        }
-    ],
-    "changelogDate": "20160513115344",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "pacientes",
-    "pagination": "infinite-scroll"
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "clinicas",
+      "otherEntityName": "clinicas",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "clinica"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "enfermarias",
+      "otherEntityName": "enfermarias",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "enfermaria"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipName": "leitos",
+      "otherEntityName": "leitos",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "leito"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "prontuario",
+      "fieldType": "Long",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 255
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "cpf",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 11
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 100
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "cep",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 10
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "logradouro",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 80
+    },
+    {
+      "fieldId": 7,
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 10
+    },
+    {
+      "fieldId": 8,
+      "fieldName": "complemento",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 9,
+      "fieldName": "bairro",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 10,
+      "fieldName": "cidade",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 11,
+      "fieldName": "uF",
+      "fieldType": "Estados",
+      "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
+    }
+  ],
+  "changelogDate": "20160610015602",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }

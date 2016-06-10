@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('medicos');
+                    $translatePartialLoader.addPart('estados');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,10 +49,11 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('medicos');
+                    $translatePartialLoader.addPart('estados');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Medicos', function($stateParams, Medicos) {
-                    return Medicos.get({id : $stateParams.id});
+                    return Medicos.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -75,6 +77,13 @@
                                 crm: null,
                                 cpf: null,
                                 email: null,
+                                cep: null,
+                                logradouro: null,
+                                numero: null,
+                                complemento: null,
+                                bairro: null,
+                                cidade: null,
+                                uF: null,
                                 id: null
                             };
                         }
@@ -101,7 +110,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Medicos', function(Medicos) {
-                            return Medicos.get({id : $stateParams.id});
+                            return Medicos.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -125,7 +134,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Medicos', function(Medicos) {
-                            return Medicos.get({id : $stateParams.id});
+                            return Medicos.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

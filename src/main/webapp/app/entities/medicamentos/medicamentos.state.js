@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Medicamentos', function($stateParams, Medicamentos) {
-                    return Medicamentos.get({id : $stateParams.id});
+                    return Medicamentos.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -105,7 +105,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Medicamentos', function(Medicamentos) {
-                            return Medicamentos.get({id : $stateParams.id});
+                            return Medicamentos.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -129,7 +129,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Medicamentos', function(Medicamentos) {
-                            return Medicamentos.get({id : $stateParams.id});
+                            return Medicamentos.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

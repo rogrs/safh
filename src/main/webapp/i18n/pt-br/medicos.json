@@ -2,24 +2,31 @@
     "safhApp": {
         "medicos" : {
             "home": {
-                "title": "Médicos",
-                "createLabel": "Criar novo Médico",
-                "createOrEditLabel": "Criar ou editar Médico",
-                "search": "Pesquisar por Médicos"
+                "title": "Medicos",
+                "createLabel": "Criar novo Medicos",
+                "createOrEditLabel": "Criar ou editar Medicos",
+                "search": "Pesquisar por Medicos"
             },
-            "created": "Um novo Médico foi criado com o identificador {{ param }}",
-            "updated": "Um Médico foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Médico foi deletado com o identificador {{ param }}",
+            "created": "Um novo Medicos é criado com o identificador {{ param }}",
+            "updated": "Um Medicos é atualizado com o identificador {{ param }}",
+            "deleted": "Um Medicos é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Médico {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Medicos {{ id }}?"
             },
             "detail": {
-                "title": "Médicos"
+                "title": "Medicos"
             },
             "nome": "Nome",
             "crm": "Crm",
             "cpf": "Cpf",
-            "email": "E-mail",
+            "email": "Email",
+            "cep": "Cep",
+            "logradouro": "Logradouro",
+            "numero": "Numero",
+            "complemento": "Complemento",
+            "bairro": "Bairro",
+            "cidade": "Cidade",
+            "uF": "U F",
             "especialidades": "Especialidades"
         }
     }

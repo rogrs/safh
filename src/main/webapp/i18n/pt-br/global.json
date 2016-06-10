@@ -4,25 +4,23 @@
         "browsehappy": "Você está usando um navegador <strong>desatualizado</strong>. Favor <a href=\"http://browsehappy.com/?locale=pt_BR\">atualizar o seu navegador</a> para ter uma experiência melhor.",
         "menu": {
             "home": "Início",
-            "jhipster-needle-menu-add-element": "SAFH will add additional menu cadastros here (do not translate!)",
+            "jhipster-needle-menu-add-element": "SAFH will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Cadastros",
-                "dietas": "Dietas",
-                "medicos": "Médicos",
-                "pacientes": "Pacientes",
-                "leitos": "Leitos",
-                "enfermarias": "Enfermarias",
-                "clinicas": "Clinicas",
-                "especialidades": "Especialidades",
-                "posologias": "Posologias",
-                "fabricantes": "Fabricantes",
                 "medicamentos": "Medicamentos",
-                "prescricaoPaciente": "Prescrição do Paciente",
-                "evolucaoPaciente": "Evolução Paciente",
-                "internacaoPaciente": "Internação Paciente",
-                "prescricaoPaciente": "Prescrição Paciente",
-                "internacaoPaciente": "Internacao Paciente",
-                "jhipster-needle-menu-add-entry": "SAFH will add additional entities here (do not translate!)"
+                "medicos": "Medicos",
+                "pacientes": "Pacientes",
+                "posologias": "Posologias",
+                "prescricoes": "Prescrições",
+                "clinicas": "Clinicas",
+                "dietas": "Dietas",
+                "enfermarias": "Enfermarias",
+                "especialidades": "Especialidades",
+                "fabricantes": "Fabricantes",
+                "internacoes": "Internações",
+                "internacoesDetalhes": "Internações Detalhes",
+                "leitos": "Leitos",
+                "jhipster-needle-menu-add-entry": "SAFH will add additional cadastros here (do not translate!)"
             },
             "account": {
                 "main": "Conta",
@@ -44,7 +42,7 @@
                 "audits": "Auditorias",
                 "apidocs": "API",
                 "database": "Banco de dados",
-                "jhipster-needle-menu-add-admin-element": "SAFH will add additional menu entries here (do not translate!)"
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Idioma"
         },
@@ -127,6 +125,7 @@
     },
     "error": {
         "server.not.reachable": "Servidor indisponível",
+        "url.not.found": "Not found",
         "NotNull": "O Campo {{fieldName}} não pode ser vazio!",
         "Size": "O campo {{fieldName}} não obedece os requisitos de tamanho mínimo ou máximo!",
         "userexists": "Usuário já existente!",

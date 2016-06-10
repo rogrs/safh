@@ -67,7 +67,7 @@ class FabricantesGatlingTest extends Simulation {
             .exec(http("Create new fabricantes")
             .post("/api/fabricantes")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "descricao":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "fabricante":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_fabricantes_url"))).exitHereIfFailed
             .pause(10)

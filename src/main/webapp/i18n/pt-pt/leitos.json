@@ -16,7 +16,7 @@
             "detail": {
                 "title": "Leitos"
             },
-            "descricao": "Descricao",
+            "leito": "Leito",
             "tipo": "Tipo"
         }
     }

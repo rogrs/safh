@@ -1,0 +1,42 @@
+
+<div>
+    <h2><span translate="safhApp.internacoesDetalhes.detail.title">Internacoes Detalhes</span> {{vm.internacoesDetalhes.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="safhApp.internacoesDetalhes.dataDetalhe">Data Detalhe</span></dt>
+        <dd>
+            <span>{{vm.internacoesDetalhes.dataDetalhe | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="safhApp.internacoesDetalhes.horario">Horario</span></dt>
+        <dd>
+            <span>{{vm.internacoesDetalhes.horario | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="safhApp.internacoesDetalhes.qtd">Qtd</span></dt>
+        <dd>
+            <span>{{vm.internacoesDetalhes.qtd}}</span>
+        </dd>
+        <dt><span translate="safhApp.internacoesDetalhes.internacoes">Internacoes</span></dt>
+        <dd>
+            <a ui-sref="internacoes-detail({id:vm.internacoesDetalhes.internacoes.id})">{{vm.internacoesDetalhes.internacoes.descricao}}</a>
+        </dd>
+        <dt><span translate="safhApp.internacoesDetalhes.dietas">Dietas</span></dt>
+        <dd>
+            <a ui-sref="dietas-detail({id:vm.internacoesDetalhes.dietas.id})">{{vm.internacoesDetalhes.dietas.dieta}}</a>
+        </dd>
+        <dt><span translate="safhApp.internacoesDetalhes.prescricoes">Prescricoes</span></dt>
+        <dd>
+            <a ui-sref="prescricoes-detail({id:vm.internacoesDetalhes.prescricoes.id})">{{vm.internacoesDetalhes.prescricoes.prescricao}}</a>
+        </dd>
+        <dt><span translate="safhApp.internacoesDetalhes.posologias">Posologias</span></dt>
+        <dd>
+            <a ui-sref="posologias-detail({id:vm.internacoesDetalhes.posologias.id})">{{vm.internacoesDetalhes.posologias.posologia}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

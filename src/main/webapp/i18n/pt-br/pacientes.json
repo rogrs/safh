@@ -3,37 +3,33 @@
         "pacientes" : {
             "home": {
                 "title": "Pacientes",
-                "createLabel": "Criar novo Paciente",
-                "createOrEditLabel": "Criar ou editar Paciente",
+                "createLabel": "Criar novo Pacientes",
+                "createOrEditLabel": "Criar ou editar Pacientes",
                 "search": "Pesquisar por Pacientes"
             },
-            "created": "Um novo Paciente foi criado com o identificador {{ param }}",
-            "updated": "Um Paciente foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Paciente foi deletado com o identificador {{ param }}",
+            "created": "Um novo Pacientes é criado com o identificador {{ param }}",
+            "updated": "Um Pacientes é atualizado com o identificador {{ param }}",
+            "deleted": "Um Pacientes é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Paciente {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Pacientes {{ id }}?"
             },
             "detail": {
                 "title": "Pacientes"
             },
+            "prontuario": "Prontuario",
             "nome": "Nome",
-            "sobrenome": "Sobrenome",
-            "naturalidade": "Naturalidade",
-            "telefone": "Telefone",
-            "celular": "Celular",
-            "peso": "Peso",
-            "observacao": "Observação",
-            "nascimento": "Nascimento",
-            "endereco": "Endereço",
-            "numero": "Número",
+            "cpf": "Cpf",
+            "email": "Email",
+            "cep": "Cep",
+            "logradouro": "Logradouro",
+            "numero": "Numero",
             "complemento": "Complemento",
             "bairro": "Bairro",
             "cidade": "Cidade",
-            "uf": "UF",
-            "cpf": "CPF",
-            "email": "Email",
-            "cep": "Cep",
-            "clinicas": "Clinicas"
+            "uF": "U F",
+            "clinicas": "Clinicas",
+            "enfermarias": "Enfermarias",
+            "leitos": "Leitos"
         }
     }
 }

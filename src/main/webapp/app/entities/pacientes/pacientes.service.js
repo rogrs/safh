@@ -4,9 +4,9 @@
         .module('safhApp')
         .factory('Pacientes', Pacientes);
 
-    Pacientes.$inject = ['$resource', 'DateUtils'];
+    Pacientes.$inject = ['$resource'];
 
-    function Pacientes ($resource, DateUtils) {
+    function Pacientes ($resource) {
         var resourceUrl =  'api/pacientes/:id';
 
         return $resource(resourceUrl, {}, {
@@ -14,25 +14,13 @@
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
-                    data = angular.fromJson(data);
-                    data.nascimento = DateUtils.convertLocalDateFromServer(data.nascimento);
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
                     return data;
                 }
             },
-            'update': {
-                method: 'PUT',
-                transformRequest: function (data) {
-                    data.nascimento = DateUtils.convertLocalDateToServer(data.nascimento);
-                    return angular.toJson(data);
-                }
-            },
-            'save': {
-                method: 'POST',
-                transformRequest: function (data) {
-                    data.nascimento = DateUtils.convertLocalDateToServer(data.nascimento);
-                    return angular.toJson(data);
-                }
-            }
+            'update': { method:'PUT' }
         });
     }
 })();

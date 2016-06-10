@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="content/css/main.css">
     <!-- endbuild -->
 </head>
-<body ng-app="safhApp">
+<body ng-app="safhApp" ng-strict-di>
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -94,13 +94,13 @@
     <script src="app/layouts/error/error.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente-dialog.controller.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente-detail.controller.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente-delete-dialog.controller.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente.state.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente.service.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente.search.service.js"></script>
-    <script src="app/entities/prescricao-paciente/prescricao-paciente.controller.js"></script>
+    <script src="app/entities/prescricoes/prescricoes-dialog.controller.js"></script>
+    <script src="app/entities/prescricoes/prescricoes-detail.controller.js"></script>
+    <script src="app/entities/prescricoes/prescricoes-delete-dialog.controller.js"></script>
+    <script src="app/entities/prescricoes/prescricoes.state.js"></script>
+    <script src="app/entities/prescricoes/prescricoes.service.js"></script>
+    <script src="app/entities/prescricoes/prescricoes.search.service.js"></script>
+    <script src="app/entities/prescricoes/prescricoes.controller.js"></script>
     <script src="app/entities/posologias/posologias-dialog.controller.js"></script>
     <script src="app/entities/posologias/posologias-detail.controller.js"></script>
     <script src="app/entities/posologias/posologias-delete-dialog.controller.js"></script>
@@ -136,13 +136,20 @@
     <script src="app/entities/leitos/leitos.service.js"></script>
     <script src="app/entities/leitos/leitos.search.service.js"></script>
     <script src="app/entities/leitos/leitos.controller.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente-dialog.controller.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente-detail.controller.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente-delete-dialog.controller.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente.state.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente.service.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente.search.service.js"></script>
-    <script src="app/entities/internacao-paciente/internacao-paciente.controller.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes-dialog.controller.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes-detail.controller.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes-delete-dialog.controller.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes.state.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes.service.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes.search.service.js"></script>
+    <script src="app/entities/internacoes-detalhes/internacoes-detalhes.controller.js"></script>
+    <script src="app/entities/internacoes/internacoes-dialog.controller.js"></script>
+    <script src="app/entities/internacoes/internacoes-detail.controller.js"></script>
+    <script src="app/entities/internacoes/internacoes-delete-dialog.controller.js"></script>
+    <script src="app/entities/internacoes/internacoes.state.js"></script>
+    <script src="app/entities/internacoes/internacoes.service.js"></script>
+    <script src="app/entities/internacoes/internacoes.search.service.js"></script>
+    <script src="app/entities/internacoes/internacoes.controller.js"></script>
     <script src="app/entities/fabricantes/fabricantes-dialog.controller.js"></script>
     <script src="app/entities/fabricantes/fabricantes-detail.controller.js"></script>
     <script src="app/entities/fabricantes/fabricantes-delete-dialog.controller.js"></script>
@@ -150,13 +157,6 @@
     <script src="app/entities/fabricantes/fabricantes.service.js"></script>
     <script src="app/entities/fabricantes/fabricantes.search.service.js"></script>
     <script src="app/entities/fabricantes/fabricantes.controller.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente-dialog.controller.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente-detail.controller.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente-delete-dialog.controller.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente.state.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente.service.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente.search.service.js"></script>
-    <script src="app/entities/evolucao-paciente/evolucao-paciente.controller.js"></script>
     <script src="app/entities/especialidades/especialidades-dialog.controller.js"></script>
     <script src="app/entities/especialidades/especialidades-detail.controller.js"></script>
     <script src="app/entities/especialidades/especialidades-delete-dialog.controller.js"></script>

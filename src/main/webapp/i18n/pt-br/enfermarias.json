@@ -3,15 +3,15 @@
         "enfermarias" : {
             "home": {
                 "title": "Enfermarias",
-                "createLabel": "Criar nova Enfermaria",
-                "createOrEditLabel": "Criar ou editar Enfermaria",
+                "createLabel": "Criar novo Enfermarias",
+                "createOrEditLabel": "Criar ou editar Enfermarias",
                 "search": "Pesquisar por Enfermarias"
             },
-            "created": "Uma nova Enfermaria foi criado com o identificador {{ param }}",
-            "updated": "Uma Enfermaria foi atualizado com o identificador {{ param }}",
-            "deleted": "Uma Enfermaria foi deletado com o identificador {{ param }}",
+            "created": "Um novo Enfermarias é criado com o identificador {{ param }}",
+            "updated": "Um Enfermarias é atualizado com o identificador {{ param }}",
+            "deleted": "Um Enfermarias é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Enfermaria {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Enfermarias {{ id }}?"
             },
             "detail": {
                 "title": "Enfermarias"

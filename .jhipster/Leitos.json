@@ -1,21 +1,28 @@
 {
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "descricao",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "tipo",
-            "fieldType": "String"
-        }
-    ],
-    "changelogDate": "20160514124716",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "leitos",
-    "pagination": "infinite-scroll"
+  "relationships": [],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "leito",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "tipo",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 40
+    }
+  ],
+  "changelogDate": "20160610015659",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }

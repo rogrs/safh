@@ -36,7 +36,7 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="descricao"><span translate="safhApp.leitos.descricao">Descricao</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="leito"><span translate="safhApp.leitos.leito">Leito</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="tipo"><span translate="safhApp.leitos.tipo">Tipo</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -44,7 +44,7 @@
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="leitos in vm.leitos track by leitos.id">
                     <td><a ui-sref="leitos-detail({id:leitos.id})">{{leitos.id}}</a></td>
-                    <td>{{leitos.descricao}}</td>
+                    <td>{{leitos.leito}}</td>
                     <td>{{leitos.tipo}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

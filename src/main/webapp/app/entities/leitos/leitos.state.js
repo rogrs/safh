@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Leitos', function($stateParams, Leitos) {
-                    return Leitos.get({id : $stateParams.id});
+                    return Leitos.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -71,7 +71,7 @@
                     resolve: {
                         entity: function () {
                             return {
-                                descricao: null,
+                                leito: null,
                                 tipo: null,
                                 id: null
                             };
@@ -99,7 +99,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Leitos', function(Leitos) {
-                            return Leitos.get({id : $stateParams.id});
+                            return Leitos.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -123,7 +123,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Leitos', function(Leitos) {
-                            return Leitos.get({id : $stateParams.id});
+                            return Leitos.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

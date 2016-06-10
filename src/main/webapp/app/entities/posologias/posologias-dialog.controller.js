@@ -9,33 +9,38 @@
 
     function PosologiasDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Posologias) {
         var vm = this;
+
         vm.posologias = entity;
+        vm.clear = clear;
+        vm.save = save;
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('safhApp:posologiasUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.posologias.id !== null) {
                 Posologias.update(vm.posologias, onSaveSuccess, onSaveError);
             } else {
                 Posologias.save(vm.posologias, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('safhApp:posologiasUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
+
     }
 })();

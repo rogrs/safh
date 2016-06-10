@@ -17,11 +17,7 @@
                 "title": "Clinicas"
             },
             "clinica": "Clinica",
-            "descricao": "Descricao",
-            "qtdLeitos": "Qtd Leitos",
-            "numeroLeito": "Numero Leito",
-            "leitos": "Leitos",
-            "enfermarias": "Enfermarias"
+            "descricao": "Descricao"
         }
     }
 }

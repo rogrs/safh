@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Enfermarias', function($stateParams, Enfermarias) {
-                    return Enfermarias.get({id : $stateParams.id});
+                    return Enfermarias.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -98,7 +98,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Enfermarias', function(Enfermarias) {
-                            return Enfermarias.get({id : $stateParams.id});
+                            return Enfermarias.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -122,7 +122,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Enfermarias', function(Enfermarias) {
-                            return Enfermarias.get({id : $stateParams.id});
+                            return Enfermarias.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

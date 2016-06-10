@@ -1,0 +1,98 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myInternacoesDetalhesLabel" translate="safhApp.internacoesDetalhes.home.createOrEditLabel">Create or edit a Internacoes Detalhes</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.internacoesDetalhes.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.internacoesDetalhes.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.internacoesDetalhes.dataDetalhe" for="field_dataDetalhe">Data Detalhe</label>
+                <div class="input-group">
+                    <input id="field_dataDetalhe" type="text" class="form-control" name="dataDetalhe" uib-datepicker-popup="{{dateformat}}" ng-model="vm.internacoesDetalhes.dataDetalhe" is-open="vm.datePickerOpenStatus.dataDetalhe"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataDetalhe')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.dataDetalhe.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.dataDetalhe.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.internacoesDetalhes.horario" for="field_horario">Horario</label>
+                <div class="input-group">
+                    <input id="field_horario" type="text" class="form-control" name="horario" uib-datepicker-popup="{{dateformat}}" ng-model="vm.internacoesDetalhes.horario" is-open="vm.datePickerOpenStatus.horario"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('horario')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.horario.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.horario.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.internacoesDetalhes.qtd" for="field_qtd">Qtd</label>
+            <input type="number" class="form-control" name="qtd" id="field_qtd"
+                    ng-model="vm.internacoesDetalhes.qtd"
+                    required />
+            <div ng-show="editForm.qtd.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.qtd.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.qtd.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label translate="safhApp.internacoesDetalhes.internacoes" for="field_internacoes">Internacoes</label>
+            <select class="form-control" id="field_internacoes" name="internacoes" ng-model="vm.internacoesDetalhes.internacoes" ng-options="internacoes as internacoes.descricao for internacoes in vm.internacoes track by internacoes.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="safhApp.internacoesDetalhes.dietas" for="field_dietas">Dietas</label>
+            <select class="form-control" id="field_dietas" name="dietas" ng-model="vm.internacoesDetalhes.dietas" ng-options="dietas as dietas.dieta for dietas in vm.dietas track by dietas.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="safhApp.internacoesDetalhes.prescricoes" for="field_prescricoes">Prescricoes</label>
+            <select class="form-control" id="field_prescricoes" name="prescricoes" ng-model="vm.internacoesDetalhes.prescricoes" ng-options="prescricoes as prescricoes.prescricao for prescricoes in vm.prescricoes track by prescricoes.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="safhApp.internacoesDetalhes.posologias" for="field_posologias">Posologias</label>
+            <select class="form-control" id="field_posologias" name="posologias" ng-model="vm.internacoesDetalhes.posologias" ng-options="posologias as posologias.posologia for posologias in vm.posologias track by posologias.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

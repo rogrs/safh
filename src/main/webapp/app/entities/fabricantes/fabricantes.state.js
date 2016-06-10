@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Fabricantes', function($stateParams, Fabricantes) {
-                    return Fabricantes.get({id : $stateParams.id});
+                    return Fabricantes.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -71,7 +71,7 @@
                     resolve: {
                         entity: function () {
                             return {
-                                descricao: null,
+                                fabricante: null,
                                 id: null
                             };
                         }
@@ -98,7 +98,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Fabricantes', function(Fabricantes) {
-                            return Fabricantes.get({id : $stateParams.id});
+                            return Fabricantes.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -122,7 +122,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Fabricantes', function(Fabricantes) {
-                            return Fabricantes.get({id : $stateParams.id});
+                            return Fabricantes.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

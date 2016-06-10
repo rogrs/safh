@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Clinicas', function($stateParams, Clinicas) {
-                    return Clinicas.get({id : $stateParams.id});
+                    return Clinicas.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -73,8 +73,6 @@
                             return {
                                 clinica: null,
                                 descricao: null,
-                                qtdLeitos: null,
-                                numeroLeito: null,
                                 id: null
                             };
                         }
@@ -101,7 +99,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Clinicas', function(Clinicas) {
-                            return Clinicas.get({id : $stateParams.id});
+                            return Clinicas.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -125,7 +123,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Clinicas', function(Clinicas) {
-                            return Clinicas.get({id : $stateParams.id});
+                            return Clinicas.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

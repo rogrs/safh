@@ -7,20 +7,19 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entidades",
-                "dietas": "Dietas",
+                "medicamentos": "Medicamentos",
                 "medicos": "Medicos",
                 "pacientes": "Pacientes",
-                "leitos": "Leitos",
-                "enfermarias": "Enfermarias",
-                "clinicas": "Clinicas",
-                "especialidades": "Especialidades",
                 "posologias": "Posologias",
+                "prescricoes": "Prescricoes",
+                "clinicas": "Clinicas",
+                "dietas": "Dietas",
+                "enfermarias": "Enfermarias",
+                "especialidades": "Especialidades",
                 "fabricantes": "Fabricantes",
-                "medicamentos": "Medicamentos",
-                "medicacao": "Medicacao",
-                "prescricaoPaciente": "Prescricao Paciente",
-                "evolucaoPaciente": "Evolucao Paciente",
-                "internacaoPaciente": "Internacao Paciente",
+                "internacoes": "Internacoes",
+                "internacoesDetalhes": "Internacoes Detalhes",
+                "leitos": "Leitos",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -126,11 +125,12 @@
     },
     "error": {
         "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
         "NotNull": "Field {{fieldName}} cannot be empty!",
         "Size": "Field {{fieldName}} does not meet min/max size requirements!",
         "userexists": "Login name already used!",
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{entityName}} cannot already have an ID"
     },
-    "footer": "SAFH - Sistema de Acompanhamento para Faturamento Hospitalar"
+    "footer": "Este é o seu rodapé"
 }

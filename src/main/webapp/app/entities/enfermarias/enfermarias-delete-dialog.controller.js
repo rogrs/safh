@@ -9,15 +9,20 @@
 
     function EnfermariasDeleteController($uibModalInstance, entity, Enfermarias) {
         var vm = this;
+
         vm.enfermarias = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             Enfermarias.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

@@ -1,0 +1,62 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "internacoes",
+      "otherEntityName": "internacoes",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "descricao"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "dietas",
+      "otherEntityName": "dietas",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "dieta"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipName": "prescricoes",
+      "otherEntityName": "prescricoes",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "prescricao"
+    },
+    {
+      "relationshipId": 4,
+      "relationshipName": "posologias",
+      "otherEntityName": "posologias",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "posologia"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "dataDetalhe",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "horario",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "qtd",
+      "fieldType": "Float",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "changelogDate": "20160610015658",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "serviceClass"
+}

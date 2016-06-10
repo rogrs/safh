@@ -9,15 +9,20 @@
 
     function FabricantesDeleteController($uibModalInstance, entity, Fabricantes) {
         var vm = this;
+
         vm.fabricantes = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             Fabricantes.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

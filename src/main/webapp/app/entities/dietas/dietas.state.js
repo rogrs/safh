@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Dietas', function($stateParams, Dietas) {
-                    return Dietas.get({id : $stateParams.id});
+                    return Dietas.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -99,7 +99,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Dietas', function(Dietas) {
-                            return Dietas.get({id : $stateParams.id});
+                            return Dietas.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -123,7 +123,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Dietas', function(Dietas) {
-                            return Dietas.get({id : $stateParams.id});
+                            return Dietas.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

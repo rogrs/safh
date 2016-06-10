@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('pacientes');
+                    $translatePartialLoader.addPart('estados');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,10 +49,11 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('pacientes');
+                    $translatePartialLoader.addPart('estados');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Pacientes', function($stateParams, Pacientes) {
-                    return Pacientes.get({id : $stateParams.id});
+                    return Pacientes.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -71,23 +73,17 @@
                     resolve: {
                         entity: function () {
                             return {
+                                prontuario: null,
                                 nome: null,
-                                sobrenome: null,
-                                naturalidade: null,
-                                telefone: null,
-                                celular: null,
-                                peso: null,
-                                observacao: null,
-                                nascimento: null,
-                                endereco: null,
+                                cpf: null,
+                                email: null,
+                                cep: null,
+                                logradouro: null,
                                 numero: null,
                                 complemento: null,
                                 bairro: null,
                                 cidade: null,
-                                uf: null,
-                                cpf: null,
-                                email: null,
-                                cep: null,
+                                uF: null,
                                 id: null
                             };
                         }
@@ -114,7 +110,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Pacientes', function(Pacientes) {
-                            return Pacientes.get({id : $stateParams.id});
+                            return Pacientes.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -138,7 +134,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Pacientes', function(Pacientes) {
-                            return Pacientes.get({id : $stateParams.id});
+                            return Pacientes.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

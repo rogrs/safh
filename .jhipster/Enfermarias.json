@@ -1,17 +1,19 @@
 {
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "enfermaria",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        }
-    ],
-    "changelogDate": "20160514130128",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "enfermarias",
-    "pagination": "infinite-scroll"
+  "relationships": [],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "enfermaria",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    }
+  ],
+  "changelogDate": "20160610015654",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }

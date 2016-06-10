@@ -24,8 +24,7 @@
             "qtdMax": "Qtd Max",
             "observacoes": "Observacoes",
             "apresentacao": "Apresentacao",
-            "fabricantes": "Fabricantes",
-            "posologias": "Posologias"
+            "posologiaPadrao": "Posologia Padrao"
         }
     }
 }

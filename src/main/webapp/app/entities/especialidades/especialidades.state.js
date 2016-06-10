@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Especialidades', function($stateParams, Especialidades) {
-                    return Especialidades.get({id : $stateParams.id});
+                    return Especialidades.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -71,7 +71,7 @@
                     resolve: {
                         entity: function () {
                             return {
-                                descricao: null,
+                                especialidade: null,
                                 id: null
                             };
                         }
@@ -98,7 +98,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Especialidades', function(Especialidades) {
-                            return Especialidades.get({id : $stateParams.id});
+                            return Especialidades.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -122,7 +122,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Especialidades', function(Especialidades) {
-                            return Especialidades.get({id : $stateParams.id});
+                            return Especialidades.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

@@ -9,7 +9,7 @@
             </button>
             <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
                 <img class="logo-img" src="content/images/logo-jhipster.png"/>
-                <span translate="global.title">SAFH</span> <span class="navbar-version">v{{VERSION}}</span>
+                <span translate="global.title">Safh</span> <span class="navbar-version">v{{VERSION}}</span>
             </a>
         </div>
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
@@ -20,22 +20,22 @@
                         <span class="hidden-sm" translate="global.menu.home">Home</span>
                     </a>
                 </li>
-                <!-- jhipster-needle-add-element-to-menu - SAFH will add new menu items here -->
+                <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
                 <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
                             <span class="hidden-sm" translate="global.menu.entities.main">
-                                Cadastros
+                                Entities
                             </span>
                             <b class="caret"></b>
                         </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active" >
-                            <a ui-sref="dietas" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="medicamentos" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.dietas">Dietas</span>
+                                <span translate="global.menu.entities.medicamentos">Medicamentos</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
@@ -51,15 +51,15 @@
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="leitos" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="posologias" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.leitos">Leitos</span>
+                                <span translate="global.menu.entities.posologias">Posologias</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="enfermarias" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="prescricoes" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.enfermarias">Enfermarias</span>
+                                <span translate="global.menu.entities.prescricoes">Prescricoes</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
@@ -69,15 +69,21 @@
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="especialidades" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="dietas" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.especialidades">Especialidades</span>
+                                <span translate="global.menu.entities.dietas">Dietas</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="posologias" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="enfermarias" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.posologias">Posologias</span>
+                                <span translate="global.menu.entities.enfermarias">Enfermarias</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" >
+                            <a ui-sref="especialidades" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span translate="global.menu.entities.especialidades">Especialidades</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
@@ -87,27 +93,21 @@
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="medicamentos" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="internacoes" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.medicamentos">Medicamentos</span>
+                                <span translate="global.menu.entities.internacoes">Internacoes</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="prescricao-paciente" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="internacoes-detalhes" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.prescricaoPaciente">Prescricao Paciente</span>
+                                <span translate="global.menu.entities.internacoesDetalhes">Internacoes Detalhes</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
-                            <a ui-sref="evolucao-paciente" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="leitos" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.evolucaoPaciente">Evolucao Paciente</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active" >
-                            <a ui-sref="internacao-paciente" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span translate="global.menu.entities.internacaoPaciente">Internacao Paciente</span>
+                                <span translate="global.menu.entities.leitos">Leitos</span>
                             </a>
                         </li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

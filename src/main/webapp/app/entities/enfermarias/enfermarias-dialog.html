@@ -17,11 +17,15 @@
             <label class="control-label" translate="safhApp.enfermarias.enfermaria" for="field_enfermaria">Enfermaria</label>
             <input type="text" class="form-control" name="enfermaria" id="field_enfermaria"
                     ng-model="vm.enfermarias.enfermaria"
-                    required />
+                    required ng-maxlength="60" />
             <div ng-show="editForm.enfermaria.$invalid">
                 <p class="help-block"
                     ng-show="editForm.enfermaria.$error.required" translate="entity.validation.required">
                     This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.enfermaria.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="60">
+                    This field cannot be longer than 60 characters.
                 </p>
             </div>
         </div>
@@ -31,7 +35,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

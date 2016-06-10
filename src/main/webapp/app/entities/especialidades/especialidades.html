@@ -36,14 +36,14 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="descricao"><span translate="safhApp.especialidades.descricao">Descricao</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="especialidade"><span translate="safhApp.especialidades.especialidade">Especialidade</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="especialidades in vm.especialidades track by especialidades.id">
                     <td><a ui-sref="especialidades-detail({id:especialidades.id})">{{especialidades.id}}</a></td>
-                    <td>{{especialidades.descricao}}</td>
+                    <td>{{especialidades.especialidade}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

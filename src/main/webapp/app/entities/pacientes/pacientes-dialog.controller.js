@@ -5,45 +5,45 @@
         .module('safhApp')
         .controller('PacientesDialogController', PacientesDialogController);
 
-    PacientesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Pacientes', 'Clinicas'];
+    PacientesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Pacientes', 'Clinicas', 'Enfermarias', 'Leitos'];
 
-    function PacientesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Pacientes, Clinicas) {
+    function PacientesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Pacientes, Clinicas, Enfermarias, Leitos) {
         var vm = this;
+
         vm.pacientes = entity;
+        vm.clear = clear;
+        vm.save = save;
         vm.clinicas = Clinicas.query();
+        vm.enfermarias = Enfermarias.query();
+        vm.leitos = Leitos.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('safhApp:pacientesUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.pacientes.id !== null) {
                 Pacientes.update(vm.pacientes, onSaveSuccess, onSaveError);
             } else {
                 Pacientes.save(vm.pacientes, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('safhApp:pacientesUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
 
-        vm.datePickerOpenStatus = {};
-        vm.datePickerOpenStatus.nascimento = false;
+        function onSaveError () {
+            vm.isSaving = false;
+        }
 
-        vm.openCalendar = function(date) {
-            vm.datePickerOpenStatus[date] = true;
-        };
+
     }
 })();

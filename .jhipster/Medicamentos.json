@@ -1,65 +1,76 @@
 {
-    "relationships": [
-        {
-            "relationshipName": "fabricantes",
-            "otherEntityName": "fabricantes",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "descricao"
-        },
-        {
-            "relationshipName": "posologias",
-            "otherEntityName": "posologias",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "descricao"
-        }
-    ],
-    "fields": [
-        {
-            "fieldName": "descricao",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "registroMinisterioSaude",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "codigoBarras",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "qtdAtual",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "qtdMin",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "qtdMax",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "observacoes",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": "8000"
-        },
-        {
-            "fieldName": "apresentacao",
-            "fieldType": "String"
-        }
-    ],
-    "changelogDate": "20160516023458",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "medicamentos",
-    "pagination": "infinite-scroll"
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "posologiaPadrao",
+      "otherEntityName": "posologias",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "posologia"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 100
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "registroMinisterioSaude",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "codigoBarras",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 13
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "qtdAtual",
+      "fieldType": "Float"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "qtdMin",
+      "fieldType": "Float"
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "qtdMax",
+      "fieldType": "Float"
+    },
+    {
+      "fieldId": 7,
+      "fieldName": "observacoes",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 8000
+    },
+    {
+      "fieldId": 8,
+      "fieldName": "apresentacao",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160610015600",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }

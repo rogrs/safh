@@ -9,33 +9,38 @@
 
     function EspecialidadesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Especialidades) {
         var vm = this;
+
         vm.especialidades = entity;
+        vm.clear = clear;
+        vm.save = save;
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('safhApp:especialidadesUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.especialidades.id !== null) {
                 Especialidades.update(vm.especialidades, onSaveSuccess, onSaveError);
             } else {
                 Especialidades.save(vm.especialidades, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('safhApp:especialidadesUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
+
     }
 })();

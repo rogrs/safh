@@ -117,7 +117,7 @@ relationship ManyToOne {
 }
 
 relationship ManyToOne {
-             Internacoes{internacao(nome)} to Pacientes
+             Internacoes{pacientes(nome)} to Pacientes
 }
 
 relationship ManyToOne {

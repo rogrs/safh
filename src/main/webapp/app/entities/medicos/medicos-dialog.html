@@ -17,11 +17,15 @@
             <label class="control-label" translate="safhApp.medicos.nome" for="field_nome">Nome</label>
             <input type="text" class="form-control" name="nome" id="field_nome"
                     ng-model="vm.medicos.nome"
-                    required />
+                    required ng-maxlength="255" />
             <div ng-show="editForm.nome.$invalid">
                 <p class="help-block"
                     ng-show="editForm.nome.$error.required" translate="entity.validation.required">
                     This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.nome.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
@@ -29,17 +33,27 @@
             <label class="control-label" translate="safhApp.medicos.crm" for="field_crm">Crm</label>
             <input type="text" class="form-control" name="crm" id="field_crm"
                     ng-model="vm.medicos.crm"
-                     />
+                    required ng-maxlength="40" />
+            <div ng-show="editForm.crm.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.crm.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.crm.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="40">
+                    This field cannot be longer than 40 characters.
+                </p>
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label" translate="safhApp.medicos.cpf" for="field_cpf">Cpf</label>
             <input type="text" class="form-control" name="cpf" id="field_cpf"
                     ng-model="vm.medicos.cpf"
-                    ng-pattern="/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/" />
+                    ng-maxlength="11" />
             <div ng-show="editForm.cpf.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.cpf.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}">
-                    This field should follow pattern "[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}".
+                    ng-show="editForm.cpf.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="11">
+                    This field cannot be longer than 11 characters.
                 </p>
             </div>
         </div>
@@ -47,18 +61,122 @@
             <label class="control-label" translate="safhApp.medicos.email" for="field_email">Email</label>
             <input type="text" class="form-control" name="email" id="field_email"
                     ng-model="vm.medicos.email"
-                    ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" />
+                    ng-maxlength="100" />
             <div ng-show="editForm.email.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.email.$error.pattern" translate="entity.validation.pattern" translate-value-pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-                    This field should follow pattern "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$".
+                    ng-show="editForm.email.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="100">
+                    This field cannot be longer than 100 characters.
                 </p>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.cep" for="field_cep">Cep</label>
+            <input type="text" class="form-control" name="cep" id="field_cep"
+                    ng-model="vm.medicos.cep"
+                    ng-maxlength="10" />
+            <div ng-show="editForm.cep.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.cep.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="10">
+                    This field cannot be longer than 10 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.logradouro" for="field_logradouro">Logradouro</label>
+            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                    ng-model="vm.medicos.logradouro"
+                    ng-maxlength="80" />
+            <div ng-show="editForm.logradouro.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.logradouro.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="80">
+                    This field cannot be longer than 80 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.numero" for="field_numero">Numero</label>
+            <input type="text" class="form-control" name="numero" id="field_numero"
+                    ng-model="vm.medicos.numero"
+                    ng-maxlength="10" />
+            <div ng-show="editForm.numero.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.numero.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="10">
+                    This field cannot be longer than 10 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.complemento" for="field_complemento">Complemento</label>
+            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                    ng-model="vm.medicos.complemento"
+                    ng-maxlength="60" />
+            <div ng-show="editForm.complemento.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.complemento.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="60">
+                    This field cannot be longer than 60 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.bairro" for="field_bairro">Bairro</label>
+            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                    ng-model="vm.medicos.bairro"
+                    ng-maxlength="60" />
+            <div ng-show="editForm.bairro.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.bairro.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="60">
+                    This field cannot be longer than 60 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.cidade" for="field_cidade">Cidade</label>
+            <input type="text" class="form-control" name="cidade" id="field_cidade"
+                    ng-model="vm.medicos.cidade"
+                    ng-maxlength="60" />
+            <div ng-show="editForm.cidade.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.cidade.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="60">
+                    This field cannot be longer than 60 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="safhApp.medicos.uF" for="field_uF">U F</label>
+            <select class="form-control" name="uF" ng-model="vm.medicos.uF" id="field_uF">
+                <option value="AC" translate="safhApp.Estados.AC">AC</option>
+                <option value="AL" translate="safhApp.Estados.AL">AL</option>
+                <option value="AM" translate="safhApp.Estados.AM">AM</option>
+                <option value="AP" translate="safhApp.Estados.AP">AP</option>
+                <option value="BA" translate="safhApp.Estados.BA">BA</option>
+                <option value="CE" translate="safhApp.Estados.CE">CE</option>
+                <option value="DF" translate="safhApp.Estados.DF">DF</option>
+                <option value="ES" translate="safhApp.Estados.ES">ES</option>
+                <option value="GO" translate="safhApp.Estados.GO">GO</option>
+                <option value="MA" translate="safhApp.Estados.MA">MA</option>
+                <option value="MG" translate="safhApp.Estados.MG">MG</option>
+                <option value="MS" translate="safhApp.Estados.MS">MS</option>
+                <option value="MT" translate="safhApp.Estados.MT">MT</option>
+                <option value="PA" translate="safhApp.Estados.PA">PA</option>
+                <option value="PB" translate="safhApp.Estados.PB">PB</option>
+                <option value="PE" translate="safhApp.Estados.PE">PE</option>
+                <option value="PI" translate="safhApp.Estados.PI">PI</option>
+                <option value="PR" translate="safhApp.Estados.PR">PR</option>
+                <option value="RJ" translate="safhApp.Estados.RJ">RJ</option>
+                <option value="RN" translate="safhApp.Estados.RN">RN</option>
+                <option value="RO" translate="safhApp.Estados.RO">RO</option>
+                <option value="RR" translate="safhApp.Estados.RR">RR</option>
+                <option value="RS" translate="safhApp.Estados.RS">RS</option>
+                <option value="SC" translate="safhApp.Estados.SC">SC</option>
+                <option value="SE" translate="safhApp.Estados.SE">SE</option>
+                <option value="SP" translate="safhApp.Estados.SP">SP</option>
+                <option value="TO" translate="safhApp.Estados.TO">TO</option>
+            </select>
         </div>
 
         <div class="form-group">
             <label translate="safhApp.medicos.especialidades" for="field_especialidades">Especialidades</label>
-            <select class="form-control" id="field_especialidades" name="especialidades" ng-model="vm.medicos.especialidades" ng-options="especialidades as especialidades.descricao for especialidades in vm.especialidades track by especialidades.id">
+            <select class="form-control" id="field_especialidades" name="especialidades" ng-model="vm.medicos.especialidades" ng-options="especialidades as especialidades.especialidade for especialidades in vm.especialidades track by especialidades.id">
                 <option value=""></option>
             </select>
         </div>
@@ -67,7 +185,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

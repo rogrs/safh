@@ -17,11 +17,15 @@
             <label class="control-label" translate="safhApp.dietas.dieta" for="field_dieta">Dieta</label>
             <input type="text" class="form-control" name="dieta" id="field_dieta"
                     ng-model="vm.dietas.dieta"
-                    required />
+                    required ng-maxlength="40" />
             <div ng-show="editForm.dieta.$invalid">
                 <p class="help-block"
                     ng-show="editForm.dieta.$error.required" translate="entity.validation.required">
                     This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.dieta.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="40">
+                    This field cannot be longer than 40 characters.
                 </p>
             </div>
         </div>
@@ -29,7 +33,13 @@
             <label class="control-label" translate="safhApp.dietas.descricao" for="field_descricao">Descricao</label>
             <input type="text" class="form-control" name="descricao" id="field_descricao"
                     ng-model="vm.dietas.descricao"
-                     />
+                    ng-maxlength="255" />
+            <div ng-show="editForm.descricao.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.descricao.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="255">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
         </div>
 
     </div>
@@ -37,7 +47,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

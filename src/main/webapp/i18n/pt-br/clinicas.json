@@ -3,25 +3,21 @@
         "clinicas" : {
             "home": {
                 "title": "Clinicas",
-                "createLabel": "Criar nova Clinica",
-                "createOrEditLabel": "Criar ou editar Clinica",
+                "createLabel": "Criar novo Clinicas",
+                "createOrEditLabel": "Criar ou editar Clinicas",
                 "search": "Pesquisar por Clinicas"
             },
-            "created": "Uma nova Clinica foi criado com o identificador {{ param }}",
-            "updated": "Uma Clinica foi atualizado com o identificador {{ param }}",
-            "deleted": "Uma Clinica foi deletado com o identificador {{ param }}",
+            "created": "Um novo Clinicas é criado com o identificador {{ param }}",
+            "updated": "Um Clinicas é atualizado com o identificador {{ param }}",
+            "deleted": "Um Clinicas é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Clinica {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Clinicas {{ id }}?"
             },
             "detail": {
                 "title": "Clinicas"
             },
             "clinica": "Clinica",
-            "descricao": "Descrição",
-            "qtdLeitos": "Qtd Leitos",
-            "numeroLeito": "Número de Leito",
-            "leitos": "Leitos",
-            "enfermarias": "Enfermarias"
+            "descricao": "Descricao"
         }
     }
 }

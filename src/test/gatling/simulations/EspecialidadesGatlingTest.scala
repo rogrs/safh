@@ -67,7 +67,7 @@ class EspecialidadesGatlingTest extends Simulation {
             .exec(http("Create new especialidades")
             .post("/api/especialidades")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "descricao":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "especialidade":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_especialidades_url"))).exitHereIfFailed
             .pause(10)

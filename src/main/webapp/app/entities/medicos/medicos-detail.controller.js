@@ -9,12 +9,12 @@
 
     function MedicosDetailController($scope, $rootScope, $stateParams, entity, Medicos, Especialidades) {
         var vm = this;
+
         vm.medicos = entity;
-        
+
         var unsubscribe = $rootScope.$on('safhApp:medicosUpdate', function(event, result) {
             vm.medicos = result;
         });
         $scope.$on('$destroy', unsubscribe);
-
     }
 })();

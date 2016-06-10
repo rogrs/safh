@@ -26,7 +26,7 @@ spring:
         console:
             enabled: false
     jpa:
-        database-platform: com.mycompany.myapp.domain.util.FixedH2Dialect
+        database-platform: br.com.rogrs.safh.domain.util.FixedH2Dialect
         database: H2
         show_sql: true
         properties:
@@ -37,7 +37,11 @@ spring:
     data:
         elasticsearch:
             cluster-name:
-            cluster-nodes: localhost:9300
+            cluster-nodes: 
+            properties:
+                path:
+                  logs: elasticsearch/log
+                  data: elasticsearch/data
     mail:
         host: smtp.gmail.com
         port: 587

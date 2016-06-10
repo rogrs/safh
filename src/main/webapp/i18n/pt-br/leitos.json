@@ -3,20 +3,20 @@
         "leitos" : {
             "home": {
                 "title": "Leitos",
-                "createLabel": "Criar novo Leito",
-                "createOrEditLabel": "Criar ou editar Leito",
+                "createLabel": "Criar novo Leitos",
+                "createOrEditLabel": "Criar ou editar Leitos",
                 "search": "Pesquisar por Leitos"
             },
-            "created": "Um novo Leito foi criado com o identificador {{ param }}",
-            "updated": "Um Leito foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Leito foi deletado com o identificador {{ param }}",
+            "created": "Um novo Leitos é criado com o identificador {{ param }}",
+            "updated": "Um Leitos é atualizado com o identificador {{ param }}",
+            "deleted": "Um Leitos é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Leito {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Leitos {{ id }}?"
             },
             "detail": {
                 "title": "Leitos"
             },
-            "descricao": "Descrição",
+            "leito": "Leito",
             "tipo": "Tipo"
         }
     }

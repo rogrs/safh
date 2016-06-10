@@ -3,21 +3,21 @@
         "dietas" : {
             "home": {
                 "title": "Dietas",
-                "createLabel": "Criar nova Dieta",
-                "createOrEditLabel": "Criar ou editar Dieta",
+                "createLabel": "Criar novo Dietas",
+                "createOrEditLabel": "Criar ou editar Dietas",
                 "search": "Pesquisar por Dietas"
             },
-            "created": "Uma nova Dietas foi criado com o identificador {{ param }}",
-            "updated": "Uma Dieta foi atualizado com o identificador {{ param }}",
-            "deleted": "Uma Dieta foi deletado com o identificador {{ param }}",
+            "created": "Um novo Dietas é criado com o identificador {{ param }}",
+            "updated": "Um Dietas é atualizado com o identificador {{ param }}",
+            "deleted": "Um Dietas é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Dieta {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Dietas {{ id }}?"
             },
             "detail": {
                 "title": "Dietas"
             },
             "dieta": "Dieta",
-            "descricao": "Descrição"
+            "descricao": "Descricao"
         }
     }
 }

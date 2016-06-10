@@ -9,11 +9,19 @@
 
     function EspecialidadesController ($scope, $state, Especialidades, EspecialidadesSearch, ParseLinks, AlertService) {
         var vm = this;
+        
         vm.especialidades = [];
-        vm.predicate = 'id';
-        vm.reverse = true;
+        vm.loadPage = loadPage;
         vm.page = 0;
-        vm.loadAll = function() {
+        vm.predicate = 'id';
+        vm.reset = reset;
+        vm.reverse = true;
+        vm.clear = clear;
+        vm.search = search;
+
+        loadAll();
+
+        function loadAll () {
             if (vm.currentSearch) {
                 EspecialidadesSearch.query({
                     query: vm.currentSearch,
@@ -45,18 +53,31 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-        };
-        vm.reset = function() {
+        }
+
+        function reset () {
             vm.page = 0;
             vm.especialidades = [];
-            vm.loadAll();
-        };
-        vm.loadPage = function(page) {
-            vm.page = page;
-            vm.loadAll();
-        };
+            loadAll();
+        }
 
-        vm.search = function (searchQuery) {
+        function loadPage(page) {
+            vm.page = page;
+            loadAll();
+        }
+
+        function clear () {
+            vm.especialidades = [];
+            vm.links = null;
+            vm.page = 0;
+            vm.predicate = 'id';
+            vm.reverse = true;
+            vm.searchQuery = null;
+            vm.currentSearch = null;
+            vm.loadAll();
+        }
+
+        function search (searchQuery) {
             if (!searchQuery){
                 return vm.clear();
             }
@@ -67,20 +88,6 @@
             vm.reverse = false;
             vm.currentSearch = searchQuery;
             vm.loadAll();
-        };
-
-        vm.clear = function () {
-            vm.especialidades = [];
-            vm.links = null;
-            vm.page = 0;
-            vm.predicate = 'id';
-            vm.reverse = true;
-            vm.searchQuery = null;
-            vm.currentSearch = null;
-            vm.loadAll();
-        };
-
-        vm.loadAll();
-
+        }
     }
 })();

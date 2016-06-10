@@ -1,6 +1,6 @@
 version: '2'
 services:
-    teste-app:
+    safh-app:
         image: safh
         external_links:
             - safh-mysql:mysql
@@ -12,11 +12,11 @@ services:
             - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
         ports:
             - 8080:8080
-    teste-mysql:
+    safh-mysql:
         extends:
             file: mysql.yml
             service: safh-mysql
-    teste-elasticsearch:
+    safh-elasticsearch:
         extends:
             file: elasticsearch.yml
             service: safh-elasticsearch

@@ -1,17 +1,19 @@
 {
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "descricao",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        }
-    ],
-    "changelogDate": "20160516015203",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "fabricantes",
-    "pagination": "infinite-scroll"
+  "relationships": [],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "fabricante",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    }
+  ],
+  "changelogDate": "20160610015656",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }

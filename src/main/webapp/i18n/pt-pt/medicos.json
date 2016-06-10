@@ -20,6 +20,13 @@
             "crm": "Crm",
             "cpf": "Cpf",
             "email": "Email",
+            "cep": "Cep",
+            "logradouro": "Logradouro",
+            "numero": "Numero",
+            "complemento": "Complemento",
+            "bairro": "Bairro",
+            "cidade": "Cidade",
+            "uF": "U F",
             "especialidades": "Especialidades"
         }
     }

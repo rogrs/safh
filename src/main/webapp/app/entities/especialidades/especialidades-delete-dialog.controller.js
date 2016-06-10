@@ -9,15 +9,20 @@
 
     function EspecialidadesDeleteController($uibModalInstance, entity, Especialidades) {
         var vm = this;
+
         vm.especialidades = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             Especialidades.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

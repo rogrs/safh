@@ -1,0 +1,19 @@
+{
+  "relationships": [],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "prescricao",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 100
+    }
+  ],
+  "changelogDate": "20160610015604",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
+}

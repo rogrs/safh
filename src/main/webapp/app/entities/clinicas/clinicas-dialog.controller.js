@@ -5,39 +5,42 @@
         .module('safhApp')
         .controller('ClinicasDialogController', ClinicasDialogController);
 
-    ClinicasDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Clinicas', 'Leitos', 'Enfermarias'];
+    ClinicasDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Clinicas'];
 
-    function ClinicasDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Clinicas, Leitos, Enfermarias) {
+    function ClinicasDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Clinicas) {
         var vm = this;
+
         vm.clinicas = entity;
-        vm.leitos = Leitos.query();
-        vm.enfermarias = Enfermarias.query();
+        vm.clear = clear;
+        vm.save = save;
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('safhApp:clinicasUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.clinicas.id !== null) {
                 Clinicas.update(vm.clinicas, onSaveSuccess, onSaveError);
             } else {
                 Clinicas.save(vm.clinicas, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('safhApp:clinicasUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
+
     }
 })();

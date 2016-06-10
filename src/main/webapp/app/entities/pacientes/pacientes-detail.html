@@ -2,42 +2,31 @@
 <div>
     <h2><span translate="safhApp.pacientes.detail.title">Pacientes</span> {{vm.pacientes.id}}</h2>
     <hr>
+    <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="safhApp.pacientes.prontuario">Prontuario</span></dt>
+        <dd>
+            <span>{{vm.pacientes.prontuario}}</span>
+        </dd>
         <dt><span translate="safhApp.pacientes.nome">Nome</span></dt>
         <dd>
             <span>{{vm.pacientes.nome}}</span>
         </dd>
-        <dt><span translate="safhApp.pacientes.sobrenome">Sobrenome</span></dt>
+        <dt><span translate="safhApp.pacientes.cpf">Cpf</span></dt>
         <dd>
-            <span>{{vm.pacientes.sobrenome}}</span>
+            <span>{{vm.pacientes.cpf}}</span>
         </dd>
-        <dt><span translate="safhApp.pacientes.naturalidade">Naturalidade</span></dt>
+        <dt><span translate="safhApp.pacientes.email">Email</span></dt>
         <dd>
-            <span>{{vm.pacientes.naturalidade}}</span>
+            <span>{{vm.pacientes.email}}</span>
         </dd>
-        <dt><span translate="safhApp.pacientes.telefone">Telefone</span></dt>
+        <dt><span translate="safhApp.pacientes.cep">Cep</span></dt>
         <dd>
-            <span>{{vm.pacientes.telefone}}</span>
+            <span>{{vm.pacientes.cep}}</span>
         </dd>
-        <dt><span translate="safhApp.pacientes.celular">Celular</span></dt>
+        <dt><span translate="safhApp.pacientes.logradouro">Logradouro</span></dt>
         <dd>
-            <span>{{vm.pacientes.celular}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.peso">Peso</span></dt>
-        <dd>
-            <span>{{vm.pacientes.peso}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.observacao">Observacao</span></dt>
-        <dd>
-            <span>{{vm.pacientes.observacao}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.nascimento">Nascimento</span></dt>
-        <dd>
-            <span>{{vm.pacientes.nascimento | date:'mediumDate'}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.endereco">Endereco</span></dt>
-        <dd>
-            <span>{{vm.pacientes.endereco}}</span>
+            <span>{{vm.pacientes.logradouro}}</span>
         </dd>
         <dt><span translate="safhApp.pacientes.numero">Numero</span></dt>
         <dd>
@@ -55,25 +44,21 @@
         <dd>
             <span>{{vm.pacientes.cidade}}</span>
         </dd>
-        <dt><span translate="safhApp.pacientes.uf">Uf</span></dt>
+        <dt><span translate="safhApp.pacientes.uF">U F</span></dt>
         <dd>
-            <span>{{vm.pacientes.uf}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.cpf">Cpf</span></dt>
-        <dd>
-            <span>{{vm.pacientes.cpf}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.email">Email</span></dt>
-        <dd>
-            <span>{{vm.pacientes.email}}</span>
-        </dd>
-        <dt><span translate="safhApp.pacientes.cep">Cep</span></dt>
-        <dd>
-            <span>{{vm.pacientes.cep}}</span>
+            <span translate="{{'safhApp.Estados.' + vm.pacientes.uF}}">{{vm.pacientes.uF}}</span>
         </dd>
         <dt><span translate="safhApp.pacientes.clinicas">Clinicas</span></dt>
         <dd>
             <a ui-sref="clinicas-detail({id:vm.pacientes.clinicas.id})">{{vm.pacientes.clinicas.clinica}}</a>
+        </dd>
+        <dt><span translate="safhApp.pacientes.enfermarias">Enfermarias</span></dt>
+        <dd>
+            <a ui-sref="enfermarias-detail({id:vm.pacientes.enfermarias.id})">{{vm.pacientes.enfermarias.enfermaria}}</a>
+        </dd>
+        <dt><span translate="safhApp.pacientes.leitos">Leitos</span></dt>
+        <dd>
+            <a ui-sref="leitos-detail({id:vm.pacientes.leitos.id})">{{vm.pacientes.leitos.leito}}</a>
         </dd>
     </dl>
 

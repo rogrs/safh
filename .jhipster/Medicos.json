@@ -1,46 +1,115 @@
 {
-    "relationships": [
-        {
-            "relationshipName": "especialidades",
-            "otherEntityName": "especialidades",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "descricao"
-        }
-    ],
-    "fields": [
-        {
-            "fieldName": "nome",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "crm",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "cpf",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}",
-            "fieldValidateRulesPatternJava": "[0-9]{3}\\\\.?[0-9]{3}\\\\.?[0-9]{3}\\\\-?[0-9]{2}"
-        },
-        {
-            "fieldName": "email",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$",
-            "fieldValidateRulesPatternJava": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,4}$"
-        }
-    ],
-    "changelogDate": "20160513113940",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "medicos",
-    "pagination": "infinite-scroll"
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "especialidades",
+      "otherEntityName": "especialidades",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "especialidade"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 255
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "crm",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 40
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "cpf",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 11
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 100
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "cep",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 10
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "logradouro",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 80
+    },
+    {
+      "fieldId": 7,
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 10
+    },
+    {
+      "fieldId": 8,
+      "fieldName": "complemento",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 9,
+      "fieldName": "bairro",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 10,
+      "fieldName": "cidade",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 60
+    },
+    {
+      "fieldId": 11,
+      "fieldName": "uF",
+      "fieldType": "Estados",
+      "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
+    }
+  ],
+  "changelogDate": "20160610015601",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }

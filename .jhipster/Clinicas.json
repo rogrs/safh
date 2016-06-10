@@ -1,46 +1,28 @@
 {
-    "relationships": [
-        {
-            "relationshipName": "leitos",
-            "otherEntityName": "leitos",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "descricao"
-        },
-        {
-            "relationshipName": "enfermarias",
-            "otherEntityName": "enfermarias",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "enfermaria"
-        }
-    ],
-    "fields": [
-        {
-            "fieldName": "clinica",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "descricao",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "qtdLeitos",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "max"
-            ],
-            "fieldValidateRulesMax": "9999"
-        },
-        {
-            "fieldName": "numeroLeito",
-            "fieldType": "String"
-        }
-    ],
-    "changelogDate": "20160514131751",
-    "dto": "no",
-    "service": "no",
-    "entityTableName": "clinicas",
-    "pagination": "infinite-scroll"
+  "relationships": [],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "clinica",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 80
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": 100
+    }
+  ],
+  "changelogDate": "20160610015652",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
 }
