@@ -2,21 +2,21 @@
     "safhApp": {
         "prescricoes" : {
             "home": {
-                "title": "Prescricoes",
-                "createLabel": "Criar novo Prescricoes",
-                "createOrEditLabel": "Criar ou editar Prescricoes",
-                "search": "Pesquisar por Prescricoes"
+                "title": "Prescrições",
+                "createLabel": "Criar nova Prescrição",
+                "createOrEditLabel": "Criar ou editar Prescrição",
+                "search": "Pesquisar por Prescrição"
             },
-            "created": "Um novo Prescricoes é criado com o identificador {{ param }}",
-            "updated": "Um Prescricoes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Prescricoes é deletado com o identificador {{ param }}",
+            "created": "Uma nova Prescrição foi criado com o identificador {{ param }}",
+            "updated": "Uma Prescrição foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Prescrição foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Prescricoes {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Prescrição {{ id }}?"
             },
             "detail": {
-                "title": "Prescricoes"
+                "title": "Prescrições"
             },
-            "prescricao": "Prescricao"
+            "prescricao": "Prescrição"
         }
     }
 }

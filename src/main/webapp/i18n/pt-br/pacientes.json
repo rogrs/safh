@@ -16,20 +16,20 @@
             "detail": {
                 "title": "Pacientes"
             },
-            "prontuario": "Prontuario",
-            "nome": "Nome",
+            "prontuario": "Nº Prontuário",
+            "nome": "Nome Completo",
             "cpf": "Cpf",
             "email": "Email",
             "cep": "Cep",
             "logradouro": "Logradouro",
-            "numero": "Numero",
+            "numero": "Número",
             "complemento": "Complemento",
             "bairro": "Bairro",
             "cidade": "Cidade",
-            "uF": "U F",
-            "clinicas": "Clinicas",
-            "enfermarias": "Enfermarias",
-            "leitos": "Leitos"
+            "uF": "UF",
+            "clinicas": "Clinica",
+            "enfermarias": "Enfermaria",
+            "leitos": "Leito"
         }
     }
 }

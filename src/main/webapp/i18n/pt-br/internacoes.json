@@ -2,25 +2,25 @@
     "safhApp": {
         "internacoes" : {
             "home": {
-                "title": "Internacoes",
-                "createLabel": "Criar novo Internacoes",
-                "createOrEditLabel": "Criar ou editar Internacoes",
-                "search": "Pesquisar por Internacoes"
+                "title": "Internações",
+                "createLabel": "Criar nova Internação",
+                "createOrEditLabel": "Criar ou editar Internação",
+                "search": "Pesquisar por Internações"
             },
-            "created": "Um novo Internacoes é criado com o identificador {{ param }}",
-            "updated": "Um Internacoes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Internacoes é deletado com o identificador {{ param }}",
+            "created": "Uma nova Internação foi criada com o identificador {{ param }}",
+            "updated": "Uma Internação foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Internação foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Internacoes {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Internação {{ id }}?"
             },
             "detail": {
-                "title": "Internacoes"
+                "title": "Internação"
             },
-            "dataInternacao": "Data Internacao",
-            "descricao": "Descricao",
+            "dataInternacao": "Data Internação",
+            "descricao": "Descrição",
             "pacientes": "Pacientes",
             "clinicas": "Clinicas",
-            "medicos": "Medicos"
+            "medicos": "Médicos"
         }
     }
 }
