@@ -50,7 +50,8 @@ Unit tests are run by [Karma][] and written with [Jasmine][]. They're located in
 
     gulp test
 
-
+## Modelo UML
+![alt tag](https://github.com/rogrs/safh/blob/master/safh.png)
 
 ## Continuous Integration
 
