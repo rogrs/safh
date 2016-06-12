@@ -17,7 +17,9 @@
                 "title": "Clinicas"
             },
             "clinica": "Clinica",
-            "descricao": "Descricao"
+            "descricao": "Descricao",
+            "pacientes": "Pacientes",
+            "internacoes": "Internacoes"
         }
     }
 }

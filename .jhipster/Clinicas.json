@@ -1,5 +1,20 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "pacientes",
+      "otherEntityName": "pacientes",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "clinicas"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "internacoes",
+      "otherEntityName": "internacoes",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "clinicas"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,

@@ -5,9 +5,9 @@
         .module('safhApp')
         .controller('LeitosDetailController', LeitosDetailController);
 
-    LeitosDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Leitos'];
+    LeitosDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Leitos', 'Pacientes'];
 
-    function LeitosDetailController($scope, $rootScope, $stateParams, entity, Leitos) {
+    function LeitosDetailController($scope, $rootScope, $stateParams, entity, Leitos, Pacientes) {
         var vm = this;
 
         vm.leitos = entity;

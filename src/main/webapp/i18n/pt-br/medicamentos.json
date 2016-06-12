@@ -16,15 +16,16 @@
             "detail": {
                 "title": "Medicamentos"
             },
-            "descricao": "Descrição",
-            "registroMinisterioSaude": "Registro Ministério Saúde",
-            "codigoBarras": "Código Barras",
-            "qtdAtual": "Qtde Atual",
-            "qtdMin": "Qtde Min",
-            "qtdMax": "Qtde Max",
-            "observacoes": "Observações",
-            "apresentacao": "Apresentação",
-            "posologiaPadrao": "Posologia Padrão"
+            "descricao": "Descricao",
+            "registroMinisterioSaude": "Registro Ministerio Saude",
+            "codigoBarras": "Codigo Barras",
+            "qtdAtual": "Qtd Atual",
+            "qtdMin": "Qtd Min",
+            "qtdMax": "Qtd Max",
+            "observacoes": "Observacoes",
+            "apresentacao": "Apresentacao",
+            "posologiaPadrao": "Posologia Padrao",
+            "fabricantes": "Fabricantes"
         }
     }
 }

@@ -96,52 +96,58 @@ entity Prescricoes {
        prescricao String required maxlength(100)
 }
 
-relationship ManyToOne {
-             Pacientes{clinicas(clinica)} to Clinicas
+relationship OneToMany {
+             Clinicas to Pacientes{clinicas(clinica)}
 }
 
-relationship ManyToOne {
-             Pacientes{enfermarias(enfermaria)} to Enfermarias 
+relationship OneToMany {
+             Enfermarias to Pacientes{enfermarias(enfermaria)}
 }
 
-relationship ManyToOne {
-             Pacientes{leitos(leito)} to Leitos
+relationship OneToMany {
+             Leitos to Pacientes{leitos(leito)}
 }
 
-relationship ManyToOne {
-             Medicos{especialidades(especialidade)} to Especialidades 
+relationship OneToMany {
+             Especialidades to Medicos{especialidades(especialidade)}
 }
 
-relationship ManyToOne {
-             Medicamentos{posologiaPadrao(posologia)} to Posologias
+relationship OneToMany {
+             Posologias to Medicamentos{posologiaPadrao(posologia)}
 }
 
-relationship ManyToOne {
-             Internacoes{pacientes(nome)} to Pacientes
+relationship OneToMany {
+             Fabricantes to Medicamentos{fabricantes(fabricante)}
 }
 
-relationship ManyToOne {
-              Internacoes{clinicas(clinica)} to Clinicas
+
+relationship OneToMany {
+             Pacientes to Internacoes{pacientes(nome)}
 }
 
-relationship ManyToOne {
-             Internacoes{medicos(nome)} to Medicos
+relationship OneToMany {
+             Clinicas to Internacoes{clinicas(clinica)}
 }
 
-relationship ManyToOne {
-             InternacoesDetalhes{internacoes(descricao)} to Internacoes
+relationship OneToMany {
+             Medicos to Internacoes{medicos(nome)}
 }
 
-relationship ManyToOne {
-             InternacoesDetalhes{dietas(dieta)} to Dietas
+
+relationship OneToMany {
+            Internacoes to InternacoesDetalhes{internacoes(descricao)}
 }
 
-relationship ManyToOne {
-             InternacoesDetalhes{prescricoes(prescricao)} to Prescricoes
+relationship OneToMany {
+             Dietas to InternacoesDetalhes{dietas(dieta)}
 }
 
-relationship ManyToOne {
-             InternacoesDetalhes{posologias(posologia)} to Posologias
+relationship OneToMany {
+             Prescricoes to InternacoesDetalhes{prescricoes(prescricao)}
+}
+
+relationship OneToMany {
+             Posologias to InternacoesDetalhes{posologias(posologia)}
 }
 
 

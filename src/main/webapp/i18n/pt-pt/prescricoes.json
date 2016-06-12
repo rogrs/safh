@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Prescricoes"
             },
-            "prescricao": "Prescricao"
+            "prescricao": "Prescricao",
+            "internacoesDetalhes": "Internacoes Detalhes"
         }
     }
 }

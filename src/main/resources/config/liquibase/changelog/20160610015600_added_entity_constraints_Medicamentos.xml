@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="posologias"/>
 
+        <addForeignKeyConstraint baseColumnNames="fabricantes_id"
+                                 baseTableName="medicamentos"
+                                 constraintName="fk_medicamentos_fabricantes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fabricantes"/>
+
     </changeSet>
 </databaseChangeLog>

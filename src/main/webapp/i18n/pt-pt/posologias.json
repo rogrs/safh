@@ -16,7 +16,9 @@
             "detail": {
                 "title": "Posologias"
             },
-            "posologia": "Posologia"
+            "posologia": "Posologia",
+            "medicamentos": "Medicamentos",
+            "internacoesDetalhes": "Internacoes Detalhes"
         }
     }
 }

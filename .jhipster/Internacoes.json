@@ -2,20 +2,27 @@
   "relationships": [
     {
       "relationshipId": 1,
+      "relationshipName": "internacoesDetalhes",
+      "otherEntityName": "internacoesDetalhes",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "internacoes"
+    },
+    {
+      "relationshipId": 2,
       "relationshipName": "pacientes",
       "otherEntityName": "pacientes",
       "relationshipType": "many-to-one",
       "otherEntityField": "nome"
     },
     {
-      "relationshipId": 2,
+      "relationshipId": 3,
       "relationshipName": "clinicas",
       "otherEntityName": "clinicas",
       "relationshipType": "many-to-one",
       "otherEntityField": "clinica"
     },
     {
-      "relationshipId": 3,
+      "relationshipId": 4,
       "relationshipName": "medicos",
       "otherEntityName": "medicos",
       "relationshipType": "many-to-one",

@@ -6,6 +6,13 @@
       "otherEntityName": "posologias",
       "relationshipType": "many-to-one",
       "otherEntityField": "posologia"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "fabricantes",
+      "otherEntityName": "fabricantes",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "fabricante"
     }
   ],
   "fields": [

@@ -1,5 +1,13 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "pacientes",
+      "otherEntityName": "pacientes",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "leitos"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,

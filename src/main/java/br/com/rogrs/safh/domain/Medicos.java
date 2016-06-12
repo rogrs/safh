@@ -1,12 +1,17 @@
 package br.com.rogrs.safh.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 import br.com.rogrs.safh.domain.enumeration.Estados;
@@ -71,6 +76,11 @@ public class Medicos implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "u_f")
     private Estados uF;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "medicos")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Internacoes> internacoes = new HashSet<>();
 
     @ManyToOne
     private Especialidades especialidades;
@@ -169,6 +179,14 @@ public class Medicos implements Serializable {
 
     public void setuF(Estados uF) {
         this.uF = uF;
+    }
+
+    public Set<Internacoes> getInternacoes() {
+        return internacoes;
+    }
+
+    public void setInternacoes(Set<Internacoes> internacoes) {
+        this.internacoes = internacoes;
     }
 
     public Especialidades getEspecialidades() {

@@ -1,12 +1,17 @@
 package br.com.rogrs.safh.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,6 +38,11 @@ public class Dietas implements Serializable {
     @Column(name = "descricao", length = 255)
     private String descricao;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "dietas")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -55,6 +65,14 @@ public class Dietas implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Set<InternacoesDetalhes> getInternacoesDetalhes() {
+        return internacoesDetalhes;
+    }
+
+    public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        this.internacoesDetalhes = internacoesDetalhes;
     }
 
     @Override

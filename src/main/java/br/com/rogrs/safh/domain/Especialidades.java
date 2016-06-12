@@ -1,5 +1,6 @@
 package br.com.rogrs.safh.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -7,6 +8,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -29,6 +32,11 @@ public class Especialidades implements Serializable {
     @Column(name = "especialidade", length = 60, nullable = false)
     private String especialidade;
 
+    @OneToMany(mappedBy = "especialidades")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Medicos> medicos = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -43,6 +51,14 @@ public class Especialidades implements Serializable {
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
+    }
+
+    public Set<Medicos> getMedicos() {
+        return medicos;
+    }
+
+    public void setMedicos(Set<Medicos> medicos) {
+        this.medicos = medicos;
     }
 
     @Override

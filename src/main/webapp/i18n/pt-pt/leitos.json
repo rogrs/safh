@@ -17,7 +17,8 @@
                 "title": "Leitos"
             },
             "leito": "Leito",
-            "tipo": "Tipo"
+            "tipo": "Tipo",
+            "pacientes": "Pacientes"
         }
     }
 }

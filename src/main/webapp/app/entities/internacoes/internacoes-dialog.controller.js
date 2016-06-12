@@ -5,9 +5,9 @@
         .module('safhApp')
         .controller('InternacoesDialogController', InternacoesDialogController);
 
-    InternacoesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Internacoes', 'Pacientes', 'Clinicas', 'Medicos'];
+    InternacoesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Internacoes', 'InternacoesDetalhes', 'Pacientes', 'Clinicas', 'Medicos'];
 
-    function InternacoesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Internacoes, Pacientes, Clinicas, Medicos) {
+    function InternacoesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Internacoes, InternacoesDetalhes, Pacientes, Clinicas, Medicos) {
         var vm = this;
 
         vm.internacoes = entity;
@@ -15,6 +15,7 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
+        vm.internacoesdetalhes = InternacoesDetalhes.query();
         vm.pacientes = Pacientes.query();
         vm.clinicas = Clinicas.query();
         vm.medicos = Medicos.query();

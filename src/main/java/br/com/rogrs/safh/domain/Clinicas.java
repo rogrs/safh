@@ -1,12 +1,17 @@
 package br.com.rogrs.safh.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,6 +38,16 @@ public class Clinicas implements Serializable {
     @Column(name = "descricao", length = 100)
     private String descricao;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "clinicas")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Pacientes> pacientes = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "clinicas")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Internacoes> internacoes = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -55,6 +70,22 @@ public class Clinicas implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Set<Pacientes> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(Set<Pacientes> pacientes) {
+        this.pacientes = pacientes;
+    }
+
+    public Set<Internacoes> getInternacoes() {
+        return internacoes;
+    }
+
+    public void setInternacoes(Set<Internacoes> internacoes) {
+        this.internacoes = internacoes;
     }
 
     @Override

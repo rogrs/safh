@@ -1,19 +1,21 @@
 package br.com.rogrs.safh.service;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-
-import javax.inject.Inject;
-
+import br.com.rogrs.safh.domain.InternacoesDetalhes;
+import br.com.rogrs.safh.repository.InternacoesDetalhesRepository;
+import br.com.rogrs.safh.repository.search.InternacoesDetalhesSearchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import br.com.rogrs.safh.domain.InternacoesDetalhes;
-import br.com.rogrs.safh.repository.InternacoesDetalhesRepository;
-import br.com.rogrs.safh.repository.search.InternacoesDetalhesSearchRepository;
+import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing InternacoesDetalhes.

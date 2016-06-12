@@ -5,14 +5,15 @@
         .module('safhApp')
         .controller('PacientesDialogController', PacientesDialogController);
 
-    PacientesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Pacientes', 'Clinicas', 'Enfermarias', 'Leitos'];
+    PacientesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Pacientes', 'Internacoes', 'Clinicas', 'Enfermarias', 'Leitos'];
 
-    function PacientesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Pacientes, Clinicas, Enfermarias, Leitos) {
+    function PacientesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Pacientes, Internacoes, Clinicas, Enfermarias, Leitos) {
         var vm = this;
 
         vm.pacientes = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.internacoes = Internacoes.query();
         vm.clinicas = Clinicas.query();
         vm.enfermarias = Enfermarias.query();
         vm.leitos = Leitos.query();

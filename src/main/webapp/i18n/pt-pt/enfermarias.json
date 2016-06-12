@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Enfermarias"
             },
-            "enfermaria": "Enfermaria"
+            "enfermaria": "Enfermaria",
+            "pacientes": "Pacientes"
         }
     }
 }

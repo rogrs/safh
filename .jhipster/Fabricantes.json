@@ -1,5 +1,13 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "medicamentos",
+      "otherEntityName": "medicamentos",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "fabricantes"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,

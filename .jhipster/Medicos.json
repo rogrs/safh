@@ -2,6 +2,13 @@
   "relationships": [
     {
       "relationshipId": 1,
+      "relationshipName": "internacoes",
+      "otherEntityName": "internacoes",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "medicos"
+    },
+    {
+      "relationshipId": 2,
       "relationshipName": "especialidades",
       "otherEntityName": "especialidades",
       "relationshipType": "many-to-one",

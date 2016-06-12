@@ -5,14 +5,15 @@
         .module('safhApp')
         .controller('LeitosDialogController', LeitosDialogController);
 
-    LeitosDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Leitos'];
+    LeitosDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Leitos', 'Pacientes'];
 
-    function LeitosDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Leitos) {
+    function LeitosDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Leitos, Pacientes) {
         var vm = this;
 
         vm.leitos = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.pacientes = Pacientes.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

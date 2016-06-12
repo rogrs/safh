@@ -1,5 +1,13 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "internacoesDetalhes",
+      "otherEntityName": "internacoesDetalhes",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "prescricoes"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,

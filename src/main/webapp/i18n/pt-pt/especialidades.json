@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Especialidades"
             },
-            "especialidade": "Especialidade"
+            "especialidade": "Especialidade",
+            "medicos": "Medicos"
         }
     }
 }

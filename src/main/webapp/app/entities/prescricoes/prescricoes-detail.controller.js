@@ -5,9 +5,9 @@
         .module('safhApp')
         .controller('PrescricoesDetailController', PrescricoesDetailController);
 
-    PrescricoesDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Prescricoes'];
+    PrescricoesDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Prescricoes', 'InternacoesDetalhes'];
 
-    function PrescricoesDetailController($scope, $rootScope, $stateParams, entity, Prescricoes) {
+    function PrescricoesDetailController($scope, $rootScope, $stateParams, entity, Prescricoes, InternacoesDetalhes) {
         var vm = this;
 
         vm.prescricoes = entity;

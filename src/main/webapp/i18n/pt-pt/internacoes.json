@@ -18,6 +18,7 @@
             },
             "dataInternacao": "Data Internacao",
             "descricao": "Descricao",
+            "internacoesDetalhes": "Internacoes Detalhes",
             "pacientes": "Pacientes",
             "clinicas": "Clinicas",
             "medicos": "Medicos"

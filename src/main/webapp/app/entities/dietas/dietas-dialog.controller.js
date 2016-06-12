@@ -5,14 +5,15 @@
         .module('safhApp')
         .controller('DietasDialogController', DietasDialogController);
 
-    DietasDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Dietas'];
+    DietasDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Dietas', 'InternacoesDetalhes'];
 
-    function DietasDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Dietas) {
+    function DietasDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Dietas, InternacoesDetalhes) {
         var vm = this;
 
         vm.dietas = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.internacoesdetalhes = InternacoesDetalhes.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

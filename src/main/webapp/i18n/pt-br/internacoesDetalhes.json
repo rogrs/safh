@@ -2,27 +2,27 @@
     "safhApp": {
         "internacoesDetalhes" : {
             "home": {
-                "title": "Detalhes da Internação",
-                "createLabel": "Criar novo Detalhe da Internação",
-                "createOrEditLabel": "Criar ou editar Detalhes da Internação",
-                "search": "Pesquisar por Detalhes das Internações"
+                "title": "Internacoes Detalhes",
+                "createLabel": "Criar novo Internacoes Detalhes",
+                "createOrEditLabel": "Criar ou editar Internacoes Detalhes",
+                "search": "Pesquisar por Internacoes Detalhes"
             },
-            "created": "Um novo Detalhe da Internação foi criado com o identificador {{ param }}",
-            "updated": "Um Detalhe da Internação foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Detalhe da Internação foi deletado com o identificador {{ param }}",
+            "created": "Um novo Internacoes Detalhes é criado com o identificador {{ param }}",
+            "updated": "Um Internacoes Detalhes é atualizado com o identificador {{ param }}",
+            "deleted": "Um Internacoes Detalhes é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Detalhes da Internação {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Internacoes Detalhes {{ id }}?"
             },
             "detail": {
-                "title": "Detalhes da Internação"
+                "title": "Internacoes Detalhes"
             },
             "dataDetalhe": "Data Detalhe",
-            "horario": "Horário",
-            "qtd": "Qtde",
-            "internacoes": "Internação",
-            "dietas": "Dieta",
-            "prescricoes": "Prescrição",
-            "posologias": "Posologia"
+            "horario": "Horario",
+            "qtd": "Qtd",
+            "internacoes": "Internacoes",
+            "dietas": "Dietas",
+            "prescricoes": "Prescricoes",
+            "posologias": "Posologias"
         }
     }
 }

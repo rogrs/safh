@@ -1,9 +1,12 @@
 package br.com.rogrs.safh.web.rest;
 
-import br.com.rogrs.safh.SafhApp;
-import br.com.rogrs.safh.domain.User;
-import br.com.rogrs.safh.repository.UserRepository;
-import br.com.rogrs.safh.service.UserService;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,12 +19,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.rogrs.safh.SafhApp;
+import br.com.rogrs.safh.repository.UserRepository;
+import br.com.rogrs.safh.service.UserService;
 
 /**
  * Test class for the UserResource REST controller.

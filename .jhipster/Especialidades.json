@@ -1,5 +1,13 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "medicos",
+      "otherEntityName": "medicos",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "especialidades"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,
