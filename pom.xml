@@ -17,9 +17,9 @@
     <url>http://rogrs.github.io/safh</url>
 
     <scm>
-		<url>https://github.com/rogrs/safh</url>
-		<connection>scm:git:git://github.com/rogrs/safh.git</connection>
-		<developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
+	<url>https://rogrs.github.io/safh</url>
+	<connection>scm:git:git://github.com/rogrs/safh.git</connection>
+	<developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
     </scm>
 
 
