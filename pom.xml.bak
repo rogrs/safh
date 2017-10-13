@@ -15,7 +15,22 @@
     <packaging>war</packaging>
     <name>SAFH</name>
     <url>http://rogrs.github.io/safh</url>
-     
+
+    <scm>
+	<url>https://rogrs.github.io/safh</url>
+	<connection>scm:git:git://github.com/rogrs/safh.git</connection>
+	<developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
+    </scm>
+
+
+    <developers>
+        <developer>
+            <id>rogrs</id>
+            <name>Rogerio Ribeiro</name>
+            <email>rogerio.rs@gmail.com</email>
+        </developer>
+    </developers>
+
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
@@ -834,13 +849,5 @@
             </dependencies>
         </profile>
     </profiles>
-
-   <developers>
-    <developer>
-      <id>rogrs</id>
-      <name>Rogerio Ribeiro</name>
-      <email>rogerio.rs@gmail.com</email>
-    </developer>
-  </developers>
 
 </project>

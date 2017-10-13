@@ -1,4 +1,4 @@
-# safh
+# safh [![Build Status](https://travis-ci.org/rogrs/safh.svg?branch=master)](https://travis-ci.org/rogrs/safh) [![Dependency Status](https://david-dm.org/rogrs/safh.svg)](https://david-dm.org/rogrs/safh) [![devDependency Status](https://david-dm.org/rogrs/safh/dev-status.svg)](https://david-dm.org/rogrs/safh#info=devDependencies) [![peerDependency Status](https://david-dm.org/rogrs/safh/peer-status.svg)](https://david-dm.org/rogrs/safh#info=peerDependencies)
 
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 

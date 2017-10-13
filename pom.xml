@@ -16,13 +16,6 @@
     <name>SAFH</name>
     <url>http://rogrs.github.io/safh</url>
 
-    <scm>
-	<url>https://rogrs.github.io/safh</url>
-	<connection>scm:git:git://github.com/rogrs/safh.git</connection>
-	<developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
-    </scm>
-
-
     <developers>
         <developer>
             <id>rogrs</id>
@@ -34,6 +27,12 @@
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
+
+    <scm>
+        <connection>scm:git:git://github.com/rogrs/safh.git</connection>
+        <developerConnection>scm:git:git@github.com:rogrs/safh.git</developerConnection>
+        <url>https://rogrs.github.io/safh</url>
+    </scm>
 
     <properties>
         <assertj-core.version>3.3.0</assertj-core.version>
