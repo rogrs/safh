@@ -1,83 +1,76 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "posologiaPadrao",
-      "otherEntityName": "posologias",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "posologia"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipName": "fabricantes",
-      "otherEntityName": "fabricantes",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "fabricante"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "descricao",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 100
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "registroMinisterioSaude",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 60
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "codigoBarras",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 13
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "qtdAtual",
-      "fieldType": "Float"
-    },
-    {
-      "fieldId": 5,
-      "fieldName": "qtdMin",
-      "fieldType": "Float"
-    },
-    {
-      "fieldId": 6,
-      "fieldName": "qtdMax",
-      "fieldType": "Float"
-    },
-    {
-      "fieldId": 7,
-      "fieldName": "observacoes",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 8000
-    },
-    {
-      "fieldId": 8,
-      "fieldName": "apresentacao",
-      "fieldType": "String"
-    }
-  ],
-  "changelogDate": "20160610015600",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "posologiaPadrao",
+            "otherEntityName": "posologias",
+            "otherEntityField": "posologia"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "fabricantes",
+            "otherEntityName": "fabricantes",
+            "otherEntityField": "fabricante"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "registroMinisterioSaude",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        },
+        {
+            "fieldName": "codigoBarras",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 13
+        },
+        {
+            "fieldName": "qtdAtual",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "qtdMin",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "qtdMax",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "observacoes",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 8000
+        },
+        {
+            "fieldName": "apresentacao",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171019202214",
+    "entityTableName": "medicamentos",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

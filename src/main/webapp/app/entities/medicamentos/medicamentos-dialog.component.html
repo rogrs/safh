@@ -1,0 +1,115 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMedicamentosLabel" jhiTranslate="safhApp.medicamentos.home.createOrEditLabel">Create or edit a Medicamentos</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!medicamentos.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="medicamentos.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.descricao" for="field_descricao">Descricao</label>
+            <input type="text" class="form-control" name="descricao" id="field_descricao"
+                [(ngModel)]="medicamentos.descricao" required maxlength="100" />
+            <div [hidden]="!(editForm.controls.descricao?.dirty && editForm.controls.descricao?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.descricao?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.descricao?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 100 }">
+                   This field cannot be longer than 100 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.registroMinisterioSaude" for="field_registroMinisterioSaude">Registro Ministerio Saude</label>
+            <input type="text" class="form-control" name="registroMinisterioSaude" id="field_registroMinisterioSaude"
+                [(ngModel)]="medicamentos.registroMinisterioSaude" required maxlength="60" />
+            <div [hidden]="!(editForm.controls.registroMinisterioSaude?.dirty && editForm.controls.registroMinisterioSaude?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.registroMinisterioSaude?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.registroMinisterioSaude?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 60 }">
+                   This field cannot be longer than 60 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.codigoBarras" for="field_codigoBarras">Codigo Barras</label>
+            <input type="text" class="form-control" name="codigoBarras" id="field_codigoBarras"
+                [(ngModel)]="medicamentos.codigoBarras" required maxlength="13" />
+            <div [hidden]="!(editForm.controls.codigoBarras?.dirty && editForm.controls.codigoBarras?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.codigoBarras?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.codigoBarras?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 13 }">
+                   This field cannot be longer than 13 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.qtdAtual" for="field_qtdAtual">Qtd Atual</label>
+            <input type="number" class="form-control" name="qtdAtual" id="field_qtdAtual"
+                [(ngModel)]="medicamentos.qtdAtual"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.qtdMin" for="field_qtdMin">Qtd Min</label>
+            <input type="number" class="form-control" name="qtdMin" id="field_qtdMin"
+                [(ngModel)]="medicamentos.qtdMin"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.qtdMax" for="field_qtdMax">Qtd Max</label>
+            <input type="number" class="form-control" name="qtdMax" id="field_qtdMax"
+                [(ngModel)]="medicamentos.qtdMax"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.observacoes" for="field_observacoes">Observacoes</label>
+            <input type="text" class="form-control" name="observacoes" id="field_observacoes"
+                [(ngModel)]="medicamentos.observacoes" maxlength="8000" />
+            <div [hidden]="!(editForm.controls.observacoes?.dirty && editForm.controls.observacoes?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.observacoes?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 8000 }">
+                   This field cannot be longer than 8000 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.apresentacao" for="field_apresentacao">Apresentacao</label>
+            <input type="text" class="form-control" name="apresentacao" id="field_apresentacao"
+                [(ngModel)]="medicamentos.apresentacao"  />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.posologiaPadrao" for="field_posologiaPadrao">Posologia Padrao</label>
+            <select class="form-control" id="field_posologiaPadrao" name="posologiaPadrao" [(ngModel)]="medicamentos.posologiaPadrao" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="posologiasOption.id === medicamentos.posologiaPadrao?.id ? medicamentos.posologiaPadrao : posologiasOption" *ngFor="let posologiasOption of posologias; trackBy: trackPosologiasById">{{posologiasOption.posologia}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="safhApp.medicamentos.fabricantes" for="field_fabricantes">Fabricantes</label>
+            <select class="form-control" id="field_fabricantes" name="fabricantes" [(ngModel)]="medicamentos.fabricantes" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="fabricantesOption.id === medicamentos.fabricantes?.id ? medicamentos.fabricantes : fabricantesOption" *ngFor="let fabricantesOption of fabricantes; trackBy: trackFabricantesById">{{fabricantesOption.fabricante}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

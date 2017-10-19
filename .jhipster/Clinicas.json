@@ -1,43 +1,42 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "pacientes",
-      "otherEntityName": "pacientes",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "clinicas"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipName": "internacoes",
-      "otherEntityName": "internacoes",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "clinicas"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "clinica",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 80
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "descricao",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 100
-    }
-  ],
-  "changelogDate": "20160610015652",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "pacientes",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "clinicas"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "internacoes",
+            "otherEntityName": "internacoes",
+            "otherEntityRelationshipName": "clinicas"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "clinica",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 80
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "changelogDate": "20171019202206",
+    "entityTableName": "clinicas",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

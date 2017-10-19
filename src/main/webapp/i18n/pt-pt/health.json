@@ -12,7 +12,7 @@
         },
         "indicator": {
             "diskSpace": "Espaço em disco",
-            "mail": "E-mail",
+            "mail": "Email",
             "elasticsearch": "Elasticsearch",
             "db": "Base de dados"
         },

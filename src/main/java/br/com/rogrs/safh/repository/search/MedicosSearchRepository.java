@@ -4,7 +4,7 @@ import br.com.rogrs.safh.domain.Medicos;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data ElasticSearch repository for the Medicos entity.
+ * Spring Data Elasticsearch repository for the Medicos entity.
  */
 public interface MedicosSearchRepository extends ElasticsearchRepository<Medicos, Long> {
 }

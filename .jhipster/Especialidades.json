@@ -1,27 +1,28 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "medicos",
-      "otherEntityName": "medicos",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "especialidades"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "especialidade",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 60
-    }
-  ],
-  "changelogDate": "20160610015655",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "medicos",
+            "otherEntityName": "medicos",
+            "otherEntityRelationshipName": "especialidades"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "especialidade",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        }
+    ],
+    "changelogDate": "20171019202209",
+    "entityTableName": "especialidades",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

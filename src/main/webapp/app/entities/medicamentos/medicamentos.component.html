@@ -1,0 +1,95 @@
+<div>
+    <h2>
+        <span jhiTranslate="safhApp.medicamentos.home.title">Medicamentos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-medicamentos" [routerLink]="['/', { outlets: { popup: ['medicamentos-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="safhApp.medicamentos.home.createLabel">
+            Create new Medicamentos
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'safhApp.medicamentos.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="medicamentos">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="descricao"><span jhiTranslate="safhApp.medicamentos.descricao">Descricao</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="registroMinisterioSaude"><span jhiTranslate="safhApp.medicamentos.registroMinisterioSaude">Registro Ministerio Saude</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="codigoBarras"><span jhiTranslate="safhApp.medicamentos.codigoBarras">Codigo Barras</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="qtdAtual"><span jhiTranslate="safhApp.medicamentos.qtdAtual">Qtd Atual</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="qtdMin"><span jhiTranslate="safhApp.medicamentos.qtdMin">Qtd Min</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="qtdMax"><span jhiTranslate="safhApp.medicamentos.qtdMax">Qtd Max</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="observacoes"><span jhiTranslate="safhApp.medicamentos.observacoes">Observacoes</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="apresentacao"><span jhiTranslate="safhApp.medicamentos.apresentacao">Apresentacao</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="posologiaPadrao.posologia"><span jhiTranslate="safhApp.medicamentos.posologiaPadrao">Posologia Padrao</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="fabricantes.fabricante"><span jhiTranslate="safhApp.medicamentos.fabricantes">Fabricantes</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let medicamentos of medicamentos ;trackBy: trackId">
+                <td><a [routerLink]="['../medicamentos', medicamentos.id ]">{{medicamentos.id}}</a></td>
+                <td>{{medicamentos.descricao}}</td>
+                <td>{{medicamentos.registroMinisterioSaude}}</td>
+                <td>{{medicamentos.codigoBarras}}</td>
+                <td>{{medicamentos.qtdAtual}}</td>
+                <td>{{medicamentos.qtdMin}}</td>
+                <td>{{medicamentos.qtdMax}}</td>
+                <td>{{medicamentos.observacoes}}</td>
+                <td>{{medicamentos.apresentacao}}</td>
+                <td>
+                    <div *ngIf="medicamentos.posologiaPadrao">
+                        <a [routerLink]="['../posologias', medicamentos.posologiaPadrao?.id ]" >{{medicamentos.posologiaPadrao?.posologia}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="medicamentos.fabricantes">
+                        <a [routerLink]="['../fabricantes', medicamentos.fabricantes?.id ]" >{{medicamentos.fabricantes?.fabricante}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../medicamentos', medicamentos.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'medicamentos/'+ medicamentos.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'medicamentos/'+ medicamentos.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

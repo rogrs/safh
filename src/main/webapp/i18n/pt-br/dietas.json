@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Dietas",
                 "search": "Pesquisar por Dietas"
             },
-            "created": "Um novo Dietas é criado com o identificador {{ param }}",
-            "updated": "Um Dietas é atualizado com o identificador {{ param }}",
-            "deleted": "Um Dietas é deletado com o identificador {{ param }}",
+            "created": "Um novo Dietas foi criado com o identificador {{ param }}",
+            "updated": "Um Dietas foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Dietas foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Dietas {{ id }}?"
             },

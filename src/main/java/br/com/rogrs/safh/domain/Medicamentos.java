@@ -21,7 +21,8 @@ public class Medicamentos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -61,6 +62,7 @@ public class Medicamentos implements Serializable {
     @ManyToOne
     private Fabricantes fabricantes;
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -73,12 +75,22 @@ public class Medicamentos implements Serializable {
         return descricao;
     }
 
+    public Medicamentos descricao(String descricao) {
+        this.descricao = descricao;
+        return this;
+    }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
     public String getRegistroMinisterioSaude() {
         return registroMinisterioSaude;
+    }
+
+    public Medicamentos registroMinisterioSaude(String registroMinisterioSaude) {
+        this.registroMinisterioSaude = registroMinisterioSaude;
+        return this;
     }
 
     public void setRegistroMinisterioSaude(String registroMinisterioSaude) {
@@ -89,12 +101,22 @@ public class Medicamentos implements Serializable {
         return codigoBarras;
     }
 
+    public Medicamentos codigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+        return this;
+    }
+
     public void setCodigoBarras(String codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 
     public Float getQtdAtual() {
         return qtdAtual;
+    }
+
+    public Medicamentos qtdAtual(Float qtdAtual) {
+        this.qtdAtual = qtdAtual;
+        return this;
     }
 
     public void setQtdAtual(Float qtdAtual) {
@@ -105,12 +127,22 @@ public class Medicamentos implements Serializable {
         return qtdMin;
     }
 
+    public Medicamentos qtdMin(Float qtdMin) {
+        this.qtdMin = qtdMin;
+        return this;
+    }
+
     public void setQtdMin(Float qtdMin) {
         this.qtdMin = qtdMin;
     }
 
     public Float getQtdMax() {
         return qtdMax;
+    }
+
+    public Medicamentos qtdMax(Float qtdMax) {
+        this.qtdMax = qtdMax;
+        return this;
     }
 
     public void setQtdMax(Float qtdMax) {
@@ -121,12 +153,22 @@ public class Medicamentos implements Serializable {
         return observacoes;
     }
 
+    public Medicamentos observacoes(String observacoes) {
+        this.observacoes = observacoes;
+        return this;
+    }
+
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
 
     public String getApresentacao() {
         return apresentacao;
+    }
+
+    public Medicamentos apresentacao(String apresentacao) {
+        this.apresentacao = apresentacao;
+        return this;
     }
 
     public void setApresentacao(String apresentacao) {
@@ -137,6 +179,11 @@ public class Medicamentos implements Serializable {
         return posologiaPadrao;
     }
 
+    public Medicamentos posologiaPadrao(Posologias posologias) {
+        this.posologiaPadrao = posologias;
+        return this;
+    }
+
     public void setPosologiaPadrao(Posologias posologias) {
         this.posologiaPadrao = posologias;
     }
@@ -145,9 +192,15 @@ public class Medicamentos implements Serializable {
         return fabricantes;
     }
 
+    public Medicamentos fabricantes(Fabricantes fabricantes) {
+        this.fabricantes = fabricantes;
+        return this;
+    }
+
     public void setFabricantes(Fabricantes fabricantes) {
         this.fabricantes = fabricantes;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -158,29 +211,29 @@ public class Medicamentos implements Serializable {
             return false;
         }
         Medicamentos medicamentos = (Medicamentos) o;
-        if(medicamentos.id == null || id == null) {
+        if (medicamentos.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, medicamentos.id);
+        return Objects.equals(getId(), medicamentos.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Medicamentos{" +
-            "id=" + id +
-            ", descricao='" + descricao + "'" +
-            ", registroMinisterioSaude='" + registroMinisterioSaude + "'" +
-            ", codigoBarras='" + codigoBarras + "'" +
-            ", qtdAtual='" + qtdAtual + "'" +
-            ", qtdMin='" + qtdMin + "'" +
-            ", qtdMax='" + qtdMax + "'" +
-            ", observacoes='" + observacoes + "'" +
-            ", apresentacao='" + apresentacao + "'" +
-            '}';
+            "id=" + getId() +
+            ", descricao='" + getDescricao() + "'" +
+            ", registroMinisterioSaude='" + getRegistroMinisterioSaude() + "'" +
+            ", codigoBarras='" + getCodigoBarras() + "'" +
+            ", qtdAtual='" + getQtdAtual() + "'" +
+            ", qtdMin='" + getQtdMin() + "'" +
+            ", qtdMax='" + getQtdMax() + "'" +
+            ", observacoes='" + getObservacoes() + "'" +
+            ", apresentacao='" + getApresentacao() + "'" +
+            "}";
     }
 }

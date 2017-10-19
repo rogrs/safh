@@ -1,82 +1,94 @@
 package br.com.rogrs.safh.web.rest;
 
 import br.com.rogrs.safh.SafhApp;
+
 import br.com.rogrs.safh.domain.Fabricantes;
 import br.com.rogrs.safh.repository.FabricantesRepository;
 import br.com.rogrs.safh.repository.search.FabricantesSearchRepository;
+import br.com.rogrs.safh.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 /**
  * Test class for the FabricantesResource REST controller.
  *
  * @see FabricantesResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SafhApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SafhApp.class)
 public class FabricantesResourceIntTest {
 
-    private static final String DEFAULT_FABRICANTE = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_FABRICANTE = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+    private static final String DEFAULT_FABRICANTE = "AAAAAAAAAA";
+    private static final String UPDATED_FABRICANTE = "BBBBBBBBBB";
 
-    @Inject
+    @Autowired
     private FabricantesRepository fabricantesRepository;
 
-    @Inject
+    @Autowired
     private FabricantesSearchRepository fabricantesSearchRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Autowired
+    private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private EntityManager em;
 
     private MockMvc restFabricantesMockMvc;
 
     private Fabricantes fabricantes;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        FabricantesResource fabricantesResource = new FabricantesResource();
-        ReflectionTestUtils.setField(fabricantesResource, "fabricantesSearchRepository", fabricantesSearchRepository);
-        ReflectionTestUtils.setField(fabricantesResource, "fabricantesRepository", fabricantesRepository);
+        final FabricantesResource fabricantesResource = new FabricantesResource(fabricantesRepository, fabricantesSearchRepository);
         this.restFabricantesMockMvc = MockMvcBuilders.standaloneSetup(fabricantesResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter).build();
+    }
+
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Fabricantes createEntity(EntityManager em) {
+        Fabricantes fabricantes = new Fabricantes()
+            .fabricante(DEFAULT_FABRICANTE);
+        return fabricantes;
     }
 
     @Before
     public void initTest() {
         fabricantesSearchRepository.deleteAll();
-        fabricantes = new Fabricantes();
-        fabricantes.setFabricante(DEFAULT_FABRICANTE);
+        fabricantes = createEntity(em);
     }
 
     @Test
@@ -85,21 +97,39 @@ public class FabricantesResourceIntTest {
         int databaseSizeBeforeCreate = fabricantesRepository.findAll().size();
 
         // Create the Fabricantes
-
         restFabricantesMockMvc.perform(post("/api/fabricantes")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(fabricantes)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(fabricantes)))
+            .andExpect(status().isCreated());
 
         // Validate the Fabricantes in the database
-        List<Fabricantes> fabricantes = fabricantesRepository.findAll();
-        assertThat(fabricantes).hasSize(databaseSizeBeforeCreate + 1);
-        Fabricantes testFabricantes = fabricantes.get(fabricantes.size() - 1);
+        List<Fabricantes> fabricantesList = fabricantesRepository.findAll();
+        assertThat(fabricantesList).hasSize(databaseSizeBeforeCreate + 1);
+        Fabricantes testFabricantes = fabricantesList.get(fabricantesList.size() - 1);
         assertThat(testFabricantes.getFabricante()).isEqualTo(DEFAULT_FABRICANTE);
 
-        // Validate the Fabricantes in ElasticSearch
+        // Validate the Fabricantes in Elasticsearch
         Fabricantes fabricantesEs = fabricantesSearchRepository.findOne(testFabricantes.getId());
         assertThat(fabricantesEs).isEqualToComparingFieldByField(testFabricantes);
+    }
+
+    @Test
+    @Transactional
+    public void createFabricantesWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = fabricantesRepository.findAll().size();
+
+        // Create the Fabricantes with an existing ID
+        fabricantes.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restFabricantesMockMvc.perform(post("/api/fabricantes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(fabricantes)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Fabricantes in the database
+        List<Fabricantes> fabricantesList = fabricantesRepository.findAll();
+        assertThat(fabricantesList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -112,12 +142,12 @@ public class FabricantesResourceIntTest {
         // Create the Fabricantes, which fails.
 
         restFabricantesMockMvc.perform(post("/api/fabricantes")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(fabricantes)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(fabricantes)))
+            .andExpect(status().isBadRequest());
 
-        List<Fabricantes> fabricantes = fabricantesRepository.findAll();
-        assertThat(fabricantes).hasSize(databaseSizeBeforeTest);
+        List<Fabricantes> fabricantesList = fabricantesRepository.findAll();
+        assertThat(fabricantesList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -126,12 +156,12 @@ public class FabricantesResourceIntTest {
         // Initialize the database
         fabricantesRepository.saveAndFlush(fabricantes);
 
-        // Get all the fabricantes
+        // Get all the fabricantesList
         restFabricantesMockMvc.perform(get("/api/fabricantes?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(fabricantes.getId().intValue())))
-                .andExpect(jsonPath("$.[*].fabricante").value(hasItem(DEFAULT_FABRICANTE.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(fabricantes.getId().intValue())))
+            .andExpect(jsonPath("$.[*].fabricante").value(hasItem(DEFAULT_FABRICANTE.toString())));
     }
 
     @Test
@@ -143,7 +173,7 @@ public class FabricantesResourceIntTest {
         // Get the fabricantes
         restFabricantesMockMvc.perform(get("/api/fabricantes/{id}", fabricantes.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(fabricantes.getId().intValue()))
             .andExpect(jsonPath("$.fabricante").value(DEFAULT_FABRICANTE.toString()));
     }
@@ -153,7 +183,7 @@ public class FabricantesResourceIntTest {
     public void getNonExistingFabricantes() throws Exception {
         // Get the fabricantes
         restFabricantesMockMvc.perform(get("/api/fabricantes/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -165,24 +195,42 @@ public class FabricantesResourceIntTest {
         int databaseSizeBeforeUpdate = fabricantesRepository.findAll().size();
 
         // Update the fabricantes
-        Fabricantes updatedFabricantes = new Fabricantes();
-        updatedFabricantes.setId(fabricantes.getId());
-        updatedFabricantes.setFabricante(UPDATED_FABRICANTE);
+        Fabricantes updatedFabricantes = fabricantesRepository.findOne(fabricantes.getId());
+        updatedFabricantes
+            .fabricante(UPDATED_FABRICANTE);
 
         restFabricantesMockMvc.perform(put("/api/fabricantes")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedFabricantes)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedFabricantes)))
+            .andExpect(status().isOk());
 
         // Validate the Fabricantes in the database
-        List<Fabricantes> fabricantes = fabricantesRepository.findAll();
-        assertThat(fabricantes).hasSize(databaseSizeBeforeUpdate);
-        Fabricantes testFabricantes = fabricantes.get(fabricantes.size() - 1);
+        List<Fabricantes> fabricantesList = fabricantesRepository.findAll();
+        assertThat(fabricantesList).hasSize(databaseSizeBeforeUpdate);
+        Fabricantes testFabricantes = fabricantesList.get(fabricantesList.size() - 1);
         assertThat(testFabricantes.getFabricante()).isEqualTo(UPDATED_FABRICANTE);
 
-        // Validate the Fabricantes in ElasticSearch
+        // Validate the Fabricantes in Elasticsearch
         Fabricantes fabricantesEs = fabricantesSearchRepository.findOne(testFabricantes.getId());
         assertThat(fabricantesEs).isEqualToComparingFieldByField(testFabricantes);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingFabricantes() throws Exception {
+        int databaseSizeBeforeUpdate = fabricantesRepository.findAll().size();
+
+        // Create the Fabricantes
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restFabricantesMockMvc.perform(put("/api/fabricantes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(fabricantes)))
+            .andExpect(status().isCreated());
+
+        // Validate the Fabricantes in the database
+        List<Fabricantes> fabricantesList = fabricantesRepository.findAll();
+        assertThat(fabricantesList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -195,16 +243,16 @@ public class FabricantesResourceIntTest {
 
         // Get the fabricantes
         restFabricantesMockMvc.perform(delete("/api/fabricantes/{id}", fabricantes.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
-        // Validate ElasticSearch is empty
+        // Validate Elasticsearch is empty
         boolean fabricantesExistsInEs = fabricantesSearchRepository.exists(fabricantes.getId());
         assertThat(fabricantesExistsInEs).isFalse();
 
         // Validate the database is empty
-        List<Fabricantes> fabricantes = fabricantesRepository.findAll();
-        assertThat(fabricantes).hasSize(databaseSizeBeforeDelete - 1);
+        List<Fabricantes> fabricantesList = fabricantesRepository.findAll();
+        assertThat(fabricantesList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
@@ -217,8 +265,23 @@ public class FabricantesResourceIntTest {
         // Search the fabricantes
         restFabricantesMockMvc.perform(get("/api/_search/fabricantes?query=id:" + fabricantes.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(fabricantes.getId().intValue())))
             .andExpect(jsonPath("$.[*].fabricante").value(hasItem(DEFAULT_FABRICANTE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Fabricantes.class);
+        Fabricantes fabricantes1 = new Fabricantes();
+        fabricantes1.setId(1L);
+        Fabricantes fabricantes2 = new Fabricantes();
+        fabricantes2.setId(fabricantes1.getId());
+        assertThat(fabricantes1).isEqualTo(fabricantes2);
+        fabricantes2.setId(2L);
+        assertThat(fabricantes1).isNotEqualTo(fabricantes2);
+        fabricantes1.setId(null);
+        assertThat(fabricantes1).isNotEqualTo(fabricantes2);
     }
 }

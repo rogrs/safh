@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Especialidades",
                 "search": "Pesquisar por Especialidades"
             },
-            "created": "Um novo Especialidades é criado com o identificador {{ param }}",
-            "updated": "Um Especialidades é atualizado com o identificador {{ param }}",
-            "deleted": "Um Especialidades é deletado com o identificador {{ param }}",
+            "created": "Um novo Especialidades foi criado com o identificador {{ param }}",
+            "updated": "Um Especialidades foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Especialidades foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Especialidades {{ id }}?"
             },

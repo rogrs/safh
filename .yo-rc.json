@@ -1,22 +1,31 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.4.0",
+    "promptValues": {
+      "packageName": "br.com.rogrs.safh",
+      "nativeLanguage": "pt-br"
+    },
+    "jhipsterVersion": "4.10.0",
     "baseName": "safh",
     "packageName": "br.com.rogrs.safh",
     "packageFolder": "br/com/rogrs/safh",
     "serverPort": "8080",
-    "authenticationType": "session",
+    "authenticationType": "jwt",
     "hibernateCache": "ehcache",
-    "clusteredHttpSession": "no",
-    "websocket": "no",
+    "clusteredHttpSession": false,
+    "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "mysql",
+    "prodDatabaseType": "postgresql",
     "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "a16e7aece4615047eba0b9c85014c90a81f64a15",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "1b5e32f41c30ee7103ac60685b3ed908b563eacd",
+    "clientFramework": "angularX",
     "useSass": false,
+    "clientPackageManager": "yarn",
     "applicationType": "monolith",
     "testFrameworks": [
       "gatling"

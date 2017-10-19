@@ -1,0 +1,65 @@
+
+<div *ngIf="medicamentos">
+    <h2><span jhiTranslate="safhApp.medicamentos.detail.title">Medicamentos</span> {{medicamentos.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="safhApp.medicamentos.descricao">Descricao</span></dt>
+        <dd>
+            <span>{{medicamentos.descricao}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.registroMinisterioSaude">Registro Ministerio Saude</span></dt>
+        <dd>
+            <span>{{medicamentos.registroMinisterioSaude}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.codigoBarras">Codigo Barras</span></dt>
+        <dd>
+            <span>{{medicamentos.codigoBarras}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.qtdAtual">Qtd Atual</span></dt>
+        <dd>
+            <span>{{medicamentos.qtdAtual}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.qtdMin">Qtd Min</span></dt>
+        <dd>
+            <span>{{medicamentos.qtdMin}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.qtdMax">Qtd Max</span></dt>
+        <dd>
+            <span>{{medicamentos.qtdMax}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.observacoes">Observacoes</span></dt>
+        <dd>
+            <span>{{medicamentos.observacoes}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.apresentacao">Apresentacao</span></dt>
+        <dd>
+            <span>{{medicamentos.apresentacao}}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.posologiaPadrao">Posologia Padrao</span></dt>
+        <dd>
+            <div *ngIf="medicamentos.posologiaPadrao">
+                <a [routerLink]="['/posologias', medicamentos.posologiaPadrao?.id]">{{medicamentos.posologiaPadrao?.posologia}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.medicamentos.fabricantes">Fabricantes</span></dt>
+        <dd>
+            <div *ngIf="medicamentos.fabricantes">
+                <a [routerLink]="['/fabricantes', medicamentos.fabricantes?.id]">{{medicamentos.fabricantes?.fabricante}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'medicamentos/'+ medicamentos.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

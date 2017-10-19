@@ -1,82 +1,94 @@
 package br.com.rogrs.safh.web.rest;
 
 import br.com.rogrs.safh.SafhApp;
+
 import br.com.rogrs.safh.domain.Especialidades;
 import br.com.rogrs.safh.repository.EspecialidadesRepository;
 import br.com.rogrs.safh.repository.search.EspecialidadesSearchRepository;
+import br.com.rogrs.safh.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 /**
  * Test class for the EspecialidadesResource REST controller.
  *
  * @see EspecialidadesResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SafhApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SafhApp.class)
 public class EspecialidadesResourceIntTest {
 
-    private static final String DEFAULT_ESPECIALIDADE = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_ESPECIALIDADE = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+    private static final String DEFAULT_ESPECIALIDADE = "AAAAAAAAAA";
+    private static final String UPDATED_ESPECIALIDADE = "BBBBBBBBBB";
 
-    @Inject
+    @Autowired
     private EspecialidadesRepository especialidadesRepository;
 
-    @Inject
+    @Autowired
     private EspecialidadesSearchRepository especialidadesSearchRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Autowired
+    private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private EntityManager em;
 
     private MockMvc restEspecialidadesMockMvc;
 
     private Especialidades especialidades;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        EspecialidadesResource especialidadesResource = new EspecialidadesResource();
-        ReflectionTestUtils.setField(especialidadesResource, "especialidadesSearchRepository", especialidadesSearchRepository);
-        ReflectionTestUtils.setField(especialidadesResource, "especialidadesRepository", especialidadesRepository);
+        final EspecialidadesResource especialidadesResource = new EspecialidadesResource(especialidadesRepository, especialidadesSearchRepository);
         this.restEspecialidadesMockMvc = MockMvcBuilders.standaloneSetup(especialidadesResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter).build();
+    }
+
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Especialidades createEntity(EntityManager em) {
+        Especialidades especialidades = new Especialidades()
+            .especialidade(DEFAULT_ESPECIALIDADE);
+        return especialidades;
     }
 
     @Before
     public void initTest() {
         especialidadesSearchRepository.deleteAll();
-        especialidades = new Especialidades();
-        especialidades.setEspecialidade(DEFAULT_ESPECIALIDADE);
+        especialidades = createEntity(em);
     }
 
     @Test
@@ -85,21 +97,39 @@ public class EspecialidadesResourceIntTest {
         int databaseSizeBeforeCreate = especialidadesRepository.findAll().size();
 
         // Create the Especialidades
-
         restEspecialidadesMockMvc.perform(post("/api/especialidades")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(especialidades)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(especialidades)))
+            .andExpect(status().isCreated());
 
         // Validate the Especialidades in the database
-        List<Especialidades> especialidades = especialidadesRepository.findAll();
-        assertThat(especialidades).hasSize(databaseSizeBeforeCreate + 1);
-        Especialidades testEspecialidades = especialidades.get(especialidades.size() - 1);
+        List<Especialidades> especialidadesList = especialidadesRepository.findAll();
+        assertThat(especialidadesList).hasSize(databaseSizeBeforeCreate + 1);
+        Especialidades testEspecialidades = especialidadesList.get(especialidadesList.size() - 1);
         assertThat(testEspecialidades.getEspecialidade()).isEqualTo(DEFAULT_ESPECIALIDADE);
 
-        // Validate the Especialidades in ElasticSearch
+        // Validate the Especialidades in Elasticsearch
         Especialidades especialidadesEs = especialidadesSearchRepository.findOne(testEspecialidades.getId());
         assertThat(especialidadesEs).isEqualToComparingFieldByField(testEspecialidades);
+    }
+
+    @Test
+    @Transactional
+    public void createEspecialidadesWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = especialidadesRepository.findAll().size();
+
+        // Create the Especialidades with an existing ID
+        especialidades.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restEspecialidadesMockMvc.perform(post("/api/especialidades")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(especialidades)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Especialidades in the database
+        List<Especialidades> especialidadesList = especialidadesRepository.findAll();
+        assertThat(especialidadesList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -112,12 +142,12 @@ public class EspecialidadesResourceIntTest {
         // Create the Especialidades, which fails.
 
         restEspecialidadesMockMvc.perform(post("/api/especialidades")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(especialidades)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(especialidades)))
+            .andExpect(status().isBadRequest());
 
-        List<Especialidades> especialidades = especialidadesRepository.findAll();
-        assertThat(especialidades).hasSize(databaseSizeBeforeTest);
+        List<Especialidades> especialidadesList = especialidadesRepository.findAll();
+        assertThat(especialidadesList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -126,12 +156,12 @@ public class EspecialidadesResourceIntTest {
         // Initialize the database
         especialidadesRepository.saveAndFlush(especialidades);
 
-        // Get all the especialidades
+        // Get all the especialidadesList
         restEspecialidadesMockMvc.perform(get("/api/especialidades?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(especialidades.getId().intValue())))
-                .andExpect(jsonPath("$.[*].especialidade").value(hasItem(DEFAULT_ESPECIALIDADE.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(especialidades.getId().intValue())))
+            .andExpect(jsonPath("$.[*].especialidade").value(hasItem(DEFAULT_ESPECIALIDADE.toString())));
     }
 
     @Test
@@ -143,7 +173,7 @@ public class EspecialidadesResourceIntTest {
         // Get the especialidades
         restEspecialidadesMockMvc.perform(get("/api/especialidades/{id}", especialidades.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(especialidades.getId().intValue()))
             .andExpect(jsonPath("$.especialidade").value(DEFAULT_ESPECIALIDADE.toString()));
     }
@@ -153,7 +183,7 @@ public class EspecialidadesResourceIntTest {
     public void getNonExistingEspecialidades() throws Exception {
         // Get the especialidades
         restEspecialidadesMockMvc.perform(get("/api/especialidades/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -165,24 +195,42 @@ public class EspecialidadesResourceIntTest {
         int databaseSizeBeforeUpdate = especialidadesRepository.findAll().size();
 
         // Update the especialidades
-        Especialidades updatedEspecialidades = new Especialidades();
-        updatedEspecialidades.setId(especialidades.getId());
-        updatedEspecialidades.setEspecialidade(UPDATED_ESPECIALIDADE);
+        Especialidades updatedEspecialidades = especialidadesRepository.findOne(especialidades.getId());
+        updatedEspecialidades
+            .especialidade(UPDATED_ESPECIALIDADE);
 
         restEspecialidadesMockMvc.perform(put("/api/especialidades")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedEspecialidades)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedEspecialidades)))
+            .andExpect(status().isOk());
 
         // Validate the Especialidades in the database
-        List<Especialidades> especialidades = especialidadesRepository.findAll();
-        assertThat(especialidades).hasSize(databaseSizeBeforeUpdate);
-        Especialidades testEspecialidades = especialidades.get(especialidades.size() - 1);
+        List<Especialidades> especialidadesList = especialidadesRepository.findAll();
+        assertThat(especialidadesList).hasSize(databaseSizeBeforeUpdate);
+        Especialidades testEspecialidades = especialidadesList.get(especialidadesList.size() - 1);
         assertThat(testEspecialidades.getEspecialidade()).isEqualTo(UPDATED_ESPECIALIDADE);
 
-        // Validate the Especialidades in ElasticSearch
+        // Validate the Especialidades in Elasticsearch
         Especialidades especialidadesEs = especialidadesSearchRepository.findOne(testEspecialidades.getId());
         assertThat(especialidadesEs).isEqualToComparingFieldByField(testEspecialidades);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingEspecialidades() throws Exception {
+        int databaseSizeBeforeUpdate = especialidadesRepository.findAll().size();
+
+        // Create the Especialidades
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restEspecialidadesMockMvc.perform(put("/api/especialidades")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(especialidades)))
+            .andExpect(status().isCreated());
+
+        // Validate the Especialidades in the database
+        List<Especialidades> especialidadesList = especialidadesRepository.findAll();
+        assertThat(especialidadesList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -195,16 +243,16 @@ public class EspecialidadesResourceIntTest {
 
         // Get the especialidades
         restEspecialidadesMockMvc.perform(delete("/api/especialidades/{id}", especialidades.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
-        // Validate ElasticSearch is empty
+        // Validate Elasticsearch is empty
         boolean especialidadesExistsInEs = especialidadesSearchRepository.exists(especialidades.getId());
         assertThat(especialidadesExistsInEs).isFalse();
 
         // Validate the database is empty
-        List<Especialidades> especialidades = especialidadesRepository.findAll();
-        assertThat(especialidades).hasSize(databaseSizeBeforeDelete - 1);
+        List<Especialidades> especialidadesList = especialidadesRepository.findAll();
+        assertThat(especialidadesList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
@@ -217,8 +265,23 @@ public class EspecialidadesResourceIntTest {
         // Search the especialidades
         restEspecialidadesMockMvc.perform(get("/api/_search/especialidades?query=id:" + especialidades.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(especialidades.getId().intValue())))
             .andExpect(jsonPath("$.[*].especialidade").value(hasItem(DEFAULT_ESPECIALIDADE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Especialidades.class);
+        Especialidades especialidades1 = new Especialidades();
+        especialidades1.setId(1L);
+        Especialidades especialidades2 = new Especialidades();
+        especialidades2.setId(especialidades1.getId());
+        assertThat(especialidades1).isEqualTo(especialidades2);
+        especialidades2.setId(2L);
+        assertThat(especialidades1).isNotEqualTo(especialidades2);
+        especialidades1.setId(null);
+        assertThat(especialidades1).isNotEqualTo(especialidades2);
     }
 }

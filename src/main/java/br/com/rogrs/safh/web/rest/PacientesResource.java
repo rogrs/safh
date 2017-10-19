@@ -1,37 +1,34 @@
 package br.com.rogrs.safh.web.rest;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import com.codahale.metrics.annotation.Timed;
+import br.com.rogrs.safh.domain.Pacientes;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-
+import br.com.rogrs.safh.repository.PacientesRepository;
+import br.com.rogrs.safh.repository.search.PacientesSearchRepository;
+import br.com.rogrs.safh.web.rest.errors.BadRequestAlertException;
+import br.com.rogrs.safh.web.rest.util.HeaderUtil;
+import br.com.rogrs.safh.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.rogrs.safh.domain.Pacientes;
-import br.com.rogrs.safh.repository.PacientesRepository;
-import br.com.rogrs.safh.repository.search.PacientesSearchRepository;
-import br.com.rogrs.safh.web.rest.util.HeaderUtil;
-import br.com.rogrs.safh.web.rest.util.PaginationUtil;
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import com.codahale.metrics.annotation.Timed;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Pacientes.
@@ -41,13 +38,18 @@ import com.codahale.metrics.annotation.Timed;
 public class PacientesResource {
 
     private final Logger log = LoggerFactory.getLogger(PacientesResource.class);
-        
-    @Inject
-    private PacientesRepository pacientesRepository;
-    
-    @Inject
-    private PacientesSearchRepository pacientesSearchRepository;
-    
+
+    private static final String ENTITY_NAME = "pacientes";
+
+    private final PacientesRepository pacientesRepository;
+
+    private final PacientesSearchRepository pacientesSearchRepository;
+
+    public PacientesResource(PacientesRepository pacientesRepository, PacientesSearchRepository pacientesSearchRepository) {
+        this.pacientesRepository = pacientesRepository;
+        this.pacientesSearchRepository = pacientesSearchRepository;
+    }
+
     /**
      * POST  /pacientes : Create a new pacientes.
      *
@@ -55,19 +57,17 @@ public class PacientesResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new pacientes, or with status 400 (Bad Request) if the pacientes has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/pacientes",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/pacientes")
     @Timed
     public ResponseEntity<Pacientes> createPacientes(@Valid @RequestBody Pacientes pacientes) throws URISyntaxException {
         log.debug("REST request to save Pacientes : {}", pacientes);
         if (pacientes.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pacientes", "idexists", "A new pacientes cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new pacientes cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Pacientes result = pacientesRepository.save(pacientes);
         pacientesSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/pacientes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("pacientes", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -77,12 +77,10 @@ public class PacientesResource {
      * @param pacientes the pacientes to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated pacientes,
      * or with status 400 (Bad Request) if the pacientes is not valid,
-     * or with status 500 (Internal Server Error) if the pacientes couldnt be updated
+     * or with status 500 (Internal Server Error) if the pacientes couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/pacientes",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/pacientes")
     @Timed
     public ResponseEntity<Pacientes> updatePacientes(@Valid @RequestBody Pacientes pacientes) throws URISyntaxException {
         log.debug("REST request to update Pacientes : {}", pacientes);
@@ -92,7 +90,7 @@ public class PacientesResource {
         Pacientes result = pacientesRepository.save(pacientes);
         pacientesSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("pacientes", pacientes.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, pacientes.getId().toString()))
             .body(result);
     }
 
@@ -101,16 +99,12 @@ public class PacientesResource {
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of pacientes in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/pacientes",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/pacientes")
     @Timed
-    public ResponseEntity<List<Pacientes>> getAllPacientes(Pageable pageable)
-        throws URISyntaxException {
+    public ResponseEntity<List<Pacientes>> getAllPacientes(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Pacientes");
-        Page<Pacientes> page = pacientesRepository.findAll(pageable); 
+        Page<Pacientes> page = pacientesRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pacientes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -121,18 +115,12 @@ public class PacientesResource {
      * @param id the id of the pacientes to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the pacientes, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/pacientes/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/pacientes/{id}")
     @Timed
     public ResponseEntity<Pacientes> getPacientes(@PathVariable Long id) {
         log.debug("REST request to get Pacientes : {}", id);
         Pacientes pacientes = pacientesRepository.findOne(id);
-        return Optional.ofNullable(pacientes)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(pacientes));
     }
 
     /**
@@ -141,15 +129,13 @@ public class PacientesResource {
      * @param id the id of the pacientes to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/pacientes/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/pacientes/{id}")
     @Timed
     public ResponseEntity<Void> deletePacientes(@PathVariable Long id) {
         log.debug("REST request to delete Pacientes : {}", id);
         pacientesRepository.delete(id);
         pacientesSearchRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("pacientes", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     /**
@@ -157,14 +143,12 @@ public class PacientesResource {
      * to the query.
      *
      * @param query the query of the pacientes search
+     * @param pageable the pagination information
      * @return the result of the search
      */
-    @RequestMapping(value = "/_search/pacientes",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/_search/pacientes")
     @Timed
-    public ResponseEntity<List<Pacientes>> searchPacientes(@RequestParam String query, Pageable pageable)
-        throws URISyntaxException {
+    public ResponseEntity<List<Pacientes>> searchPacientes(@RequestParam String query, @ApiParam Pageable pageable) {
         log.debug("REST request to search for a page of Pacientes for query {}", query);
         Page<Pacientes> page = pacientesSearchRepository.search(queryStringQuery(query), pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/pacientes");

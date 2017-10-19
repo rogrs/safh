@@ -1,114 +1,135 @@
 package br.com.rogrs.safh.web.rest;
 
 import br.com.rogrs.safh.SafhApp;
+
 import br.com.rogrs.safh.domain.Medicos;
 import br.com.rogrs.safh.repository.MedicosRepository;
 import br.com.rogrs.safh.repository.search.MedicosSearchRepository;
+import br.com.rogrs.safh.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import br.com.rogrs.safh.domain.enumeration.Estados;
-
 /**
  * Test class for the MedicosResource REST controller.
  *
  * @see MedicosResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SafhApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SafhApp.class)
 public class MedicosResourceIntTest {
 
-    private static final String DEFAULT_NOME = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_NOME = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
-    private static final String DEFAULT_CRM = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_CRM = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
-    private static final String DEFAULT_CPF = "AAAAAAAAAAA";
-    private static final String UPDATED_CPF = "BBBBBBBBBBB";
-    private static final String DEFAULT_EMAIL = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_EMAIL = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CRM = "AAAAAAAAAA";
+    private static final String UPDATED_CRM = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CPF = "AAAAAAAAAA";
+    private static final String UPDATED_CPF = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
     private static final String DEFAULT_CEP = "AAAAAAAAAA";
     private static final String UPDATED_CEP = "BBBBBBBBBB";
-    private static final String DEFAULT_LOGRADOURO = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_LOGRADOURO = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+
+    private static final String DEFAULT_LOGRADOURO = "AAAAAAAAAA";
+    private static final String UPDATED_LOGRADOURO = "BBBBBBBBBB";
+
     private static final String DEFAULT_NUMERO = "AAAAAAAAAA";
     private static final String UPDATED_NUMERO = "BBBBBBBBBB";
-    private static final String DEFAULT_COMPLEMENTO = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_COMPLEMENTO = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
-    private static final String DEFAULT_BAIRRO = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_BAIRRO = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
-    private static final String DEFAULT_CIDADE = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_CIDADE = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+
+    private static final String DEFAULT_COMPLEMENTO = "AAAAAAAAAA";
+    private static final String UPDATED_COMPLEMENTO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BAIRRO = "AAAAAAAAAA";
+    private static final String UPDATED_BAIRRO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CIDADE = "AAAAAAAAAA";
+    private static final String UPDATED_CIDADE = "BBBBBBBBBB";
 
     private static final Estados DEFAULT_U_F = Estados.AC;
     private static final Estados UPDATED_U_F = Estados.AL;
 
-    @Inject
+    @Autowired
     private MedicosRepository medicosRepository;
 
-    @Inject
+    @Autowired
     private MedicosSearchRepository medicosSearchRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Autowired
+    private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private EntityManager em;
 
     private MockMvc restMedicosMockMvc;
 
     private Medicos medicos;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        MedicosResource medicosResource = new MedicosResource();
-        ReflectionTestUtils.setField(medicosResource, "medicosSearchRepository", medicosSearchRepository);
-        ReflectionTestUtils.setField(medicosResource, "medicosRepository", medicosRepository);
+        final MedicosResource medicosResource = new MedicosResource(medicosRepository, medicosSearchRepository);
         this.restMedicosMockMvc = MockMvcBuilders.standaloneSetup(medicosResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter).build();
+    }
+
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Medicos createEntity(EntityManager em) {
+        Medicos medicos = new Medicos()
+            .nome(DEFAULT_NOME)
+            .crm(DEFAULT_CRM)
+            .cpf(DEFAULT_CPF)
+            .email(DEFAULT_EMAIL)
+            .cep(DEFAULT_CEP)
+            .logradouro(DEFAULT_LOGRADOURO)
+            .numero(DEFAULT_NUMERO)
+            .complemento(DEFAULT_COMPLEMENTO)
+            .bairro(DEFAULT_BAIRRO)
+            .cidade(DEFAULT_CIDADE)
+            .uF(DEFAULT_U_F);
+        return medicos;
     }
 
     @Before
     public void initTest() {
         medicosSearchRepository.deleteAll();
-        medicos = new Medicos();
-        medicos.setNome(DEFAULT_NOME);
-        medicos.setCrm(DEFAULT_CRM);
-        medicos.setCpf(DEFAULT_CPF);
-        medicos.setEmail(DEFAULT_EMAIL);
-        medicos.setCep(DEFAULT_CEP);
-        medicos.setLogradouro(DEFAULT_LOGRADOURO);
-        medicos.setNumero(DEFAULT_NUMERO);
-        medicos.setComplemento(DEFAULT_COMPLEMENTO);
-        medicos.setBairro(DEFAULT_BAIRRO);
-        medicos.setCidade(DEFAULT_CIDADE);
-        medicos.setuF(DEFAULT_U_F);
+        medicos = createEntity(em);
     }
 
     @Test
@@ -117,16 +138,15 @@ public class MedicosResourceIntTest {
         int databaseSizeBeforeCreate = medicosRepository.findAll().size();
 
         // Create the Medicos
-
         restMedicosMockMvc.perform(post("/api/medicos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(medicos)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(medicos)))
+            .andExpect(status().isCreated());
 
         // Validate the Medicos in the database
-        List<Medicos> medicos = medicosRepository.findAll();
-        assertThat(medicos).hasSize(databaseSizeBeforeCreate + 1);
-        Medicos testMedicos = medicos.get(medicos.size() - 1);
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeCreate + 1);
+        Medicos testMedicos = medicosList.get(medicosList.size() - 1);
         assertThat(testMedicos.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testMedicos.getCrm()).isEqualTo(DEFAULT_CRM);
         assertThat(testMedicos.getCpf()).isEqualTo(DEFAULT_CPF);
@@ -139,9 +159,28 @@ public class MedicosResourceIntTest {
         assertThat(testMedicos.getCidade()).isEqualTo(DEFAULT_CIDADE);
         assertThat(testMedicos.getuF()).isEqualTo(DEFAULT_U_F);
 
-        // Validate the Medicos in ElasticSearch
+        // Validate the Medicos in Elasticsearch
         Medicos medicosEs = medicosSearchRepository.findOne(testMedicos.getId());
         assertThat(medicosEs).isEqualToComparingFieldByField(testMedicos);
+    }
+
+    @Test
+    @Transactional
+    public void createMedicosWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = medicosRepository.findAll().size();
+
+        // Create the Medicos with an existing ID
+        medicos.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restMedicosMockMvc.perform(post("/api/medicos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(medicos)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Medicos in the database
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -154,12 +193,12 @@ public class MedicosResourceIntTest {
         // Create the Medicos, which fails.
 
         restMedicosMockMvc.perform(post("/api/medicos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(medicos)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(medicos)))
+            .andExpect(status().isBadRequest());
 
-        List<Medicos> medicos = medicosRepository.findAll();
-        assertThat(medicos).hasSize(databaseSizeBeforeTest);
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -172,12 +211,12 @@ public class MedicosResourceIntTest {
         // Create the Medicos, which fails.
 
         restMedicosMockMvc.perform(post("/api/medicos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(medicos)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(medicos)))
+            .andExpect(status().isBadRequest());
 
-        List<Medicos> medicos = medicosRepository.findAll();
-        assertThat(medicos).hasSize(databaseSizeBeforeTest);
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -186,22 +225,22 @@ public class MedicosResourceIntTest {
         // Initialize the database
         medicosRepository.saveAndFlush(medicos);
 
-        // Get all the medicos
+        // Get all the medicosList
         restMedicosMockMvc.perform(get("/api/medicos?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
-                .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-                .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM.toString())))
-                .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
-                .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-                .andExpect(jsonPath("$.[*].cep").value(hasItem(DEFAULT_CEP.toString())))
-                .andExpect(jsonPath("$.[*].logradouro").value(hasItem(DEFAULT_LOGRADOURO.toString())))
-                .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO.toString())))
-                .andExpect(jsonPath("$.[*].complemento").value(hasItem(DEFAULT_COMPLEMENTO.toString())))
-                .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO.toString())))
-                .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE.toString())))
-                .andExpect(jsonPath("$.[*].uF").value(hasItem(DEFAULT_U_F.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
+            .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM.toString())))
+            .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].cep").value(hasItem(DEFAULT_CEP.toString())))
+            .andExpect(jsonPath("$.[*].logradouro").value(hasItem(DEFAULT_LOGRADOURO.toString())))
+            .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO.toString())))
+            .andExpect(jsonPath("$.[*].complemento").value(hasItem(DEFAULT_COMPLEMENTO.toString())))
+            .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO.toString())))
+            .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE.toString())))
+            .andExpect(jsonPath("$.[*].uF").value(hasItem(DEFAULT_U_F.toString())));
     }
 
     @Test
@@ -213,7 +252,7 @@ public class MedicosResourceIntTest {
         // Get the medicos
         restMedicosMockMvc.perform(get("/api/medicos/{id}", medicos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(medicos.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
             .andExpect(jsonPath("$.crm").value(DEFAULT_CRM.toString()))
@@ -233,7 +272,7 @@ public class MedicosResourceIntTest {
     public void getNonExistingMedicos() throws Exception {
         // Get the medicos
         restMedicosMockMvc.perform(get("/api/medicos/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -245,29 +284,29 @@ public class MedicosResourceIntTest {
         int databaseSizeBeforeUpdate = medicosRepository.findAll().size();
 
         // Update the medicos
-        Medicos updatedMedicos = new Medicos();
-        updatedMedicos.setId(medicos.getId());
-        updatedMedicos.setNome(UPDATED_NOME);
-        updatedMedicos.setCrm(UPDATED_CRM);
-        updatedMedicos.setCpf(UPDATED_CPF);
-        updatedMedicos.setEmail(UPDATED_EMAIL);
-        updatedMedicos.setCep(UPDATED_CEP);
-        updatedMedicos.setLogradouro(UPDATED_LOGRADOURO);
-        updatedMedicos.setNumero(UPDATED_NUMERO);
-        updatedMedicos.setComplemento(UPDATED_COMPLEMENTO);
-        updatedMedicos.setBairro(UPDATED_BAIRRO);
-        updatedMedicos.setCidade(UPDATED_CIDADE);
-        updatedMedicos.setuF(UPDATED_U_F);
+        Medicos updatedMedicos = medicosRepository.findOne(medicos.getId());
+        updatedMedicos
+            .nome(UPDATED_NOME)
+            .crm(UPDATED_CRM)
+            .cpf(UPDATED_CPF)
+            .email(UPDATED_EMAIL)
+            .cep(UPDATED_CEP)
+            .logradouro(UPDATED_LOGRADOURO)
+            .numero(UPDATED_NUMERO)
+            .complemento(UPDATED_COMPLEMENTO)
+            .bairro(UPDATED_BAIRRO)
+            .cidade(UPDATED_CIDADE)
+            .uF(UPDATED_U_F);
 
         restMedicosMockMvc.perform(put("/api/medicos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedMedicos)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedMedicos)))
+            .andExpect(status().isOk());
 
         // Validate the Medicos in the database
-        List<Medicos> medicos = medicosRepository.findAll();
-        assertThat(medicos).hasSize(databaseSizeBeforeUpdate);
-        Medicos testMedicos = medicos.get(medicos.size() - 1);
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeUpdate);
+        Medicos testMedicos = medicosList.get(medicosList.size() - 1);
         assertThat(testMedicos.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testMedicos.getCrm()).isEqualTo(UPDATED_CRM);
         assertThat(testMedicos.getCpf()).isEqualTo(UPDATED_CPF);
@@ -280,9 +319,27 @@ public class MedicosResourceIntTest {
         assertThat(testMedicos.getCidade()).isEqualTo(UPDATED_CIDADE);
         assertThat(testMedicos.getuF()).isEqualTo(UPDATED_U_F);
 
-        // Validate the Medicos in ElasticSearch
+        // Validate the Medicos in Elasticsearch
         Medicos medicosEs = medicosSearchRepository.findOne(testMedicos.getId());
         assertThat(medicosEs).isEqualToComparingFieldByField(testMedicos);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingMedicos() throws Exception {
+        int databaseSizeBeforeUpdate = medicosRepository.findAll().size();
+
+        // Create the Medicos
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restMedicosMockMvc.perform(put("/api/medicos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(medicos)))
+            .andExpect(status().isCreated());
+
+        // Validate the Medicos in the database
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -295,16 +352,16 @@ public class MedicosResourceIntTest {
 
         // Get the medicos
         restMedicosMockMvc.perform(delete("/api/medicos/{id}", medicos.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
-        // Validate ElasticSearch is empty
+        // Validate Elasticsearch is empty
         boolean medicosExistsInEs = medicosSearchRepository.exists(medicos.getId());
         assertThat(medicosExistsInEs).isFalse();
 
         // Validate the database is empty
-        List<Medicos> medicos = medicosRepository.findAll();
-        assertThat(medicos).hasSize(databaseSizeBeforeDelete - 1);
+        List<Medicos> medicosList = medicosRepository.findAll();
+        assertThat(medicosList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
@@ -317,7 +374,7 @@ public class MedicosResourceIntTest {
         // Search the medicos
         restMedicosMockMvc.perform(get("/api/_search/medicos?query=id:" + medicos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
             .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM.toString())))
@@ -330,5 +387,20 @@ public class MedicosResourceIntTest {
             .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO.toString())))
             .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE.toString())))
             .andExpect(jsonPath("$.[*].uF").value(hasItem(DEFAULT_U_F.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Medicos.class);
+        Medicos medicos1 = new Medicos();
+        medicos1.setId(1L);
+        Medicos medicos2 = new Medicos();
+        medicos2.setId(medicos1.getId());
+        assertThat(medicos1).isEqualTo(medicos2);
+        medicos2.setId(2L);
+        assertThat(medicos1).isNotEqualTo(medicos2);
+        medicos1.setId(null);
+        assertThat(medicos1).isNotEqualTo(medicos2);
     }
 }

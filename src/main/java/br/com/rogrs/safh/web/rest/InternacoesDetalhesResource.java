@@ -1,34 +1,31 @@
 package br.com.rogrs.safh.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-
+import com.codahale.metrics.annotation.Timed;
+import br.com.rogrs.safh.domain.InternacoesDetalhes;
+import br.com.rogrs.safh.service.InternacoesDetalhesService;
+import br.com.rogrs.safh.web.rest.errors.BadRequestAlertException;
+import br.com.rogrs.safh.web.rest.util.HeaderUtil;
+import br.com.rogrs.safh.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.rogrs.safh.domain.InternacoesDetalhes;
-import br.com.rogrs.safh.service.InternacoesDetalhesService;
-import br.com.rogrs.safh.web.rest.util.HeaderUtil;
-import br.com.rogrs.safh.web.rest.util.PaginationUtil;
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import com.codahale.metrics.annotation.Timed;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing InternacoesDetalhes.
@@ -38,10 +35,15 @@ import com.codahale.metrics.annotation.Timed;
 public class InternacoesDetalhesResource {
 
     private final Logger log = LoggerFactory.getLogger(InternacoesDetalhesResource.class);
-        
-    @Inject
-    private InternacoesDetalhesService internacoesDetalhesService;
-    
+
+    private static final String ENTITY_NAME = "internacoesDetalhes";
+
+    private final InternacoesDetalhesService internacoesDetalhesService;
+
+    public InternacoesDetalhesResource(InternacoesDetalhesService internacoesDetalhesService) {
+        this.internacoesDetalhesService = internacoesDetalhesService;
+    }
+
     /**
      * POST  /internacoes-detalhes : Create a new internacoesDetalhes.
      *
@@ -49,18 +51,16 @@ public class InternacoesDetalhesResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new internacoesDetalhes, or with status 400 (Bad Request) if the internacoesDetalhes has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/internacoes-detalhes",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/internacoes-detalhes")
     @Timed
     public ResponseEntity<InternacoesDetalhes> createInternacoesDetalhes(@Valid @RequestBody InternacoesDetalhes internacoesDetalhes) throws URISyntaxException {
         log.debug("REST request to save InternacoesDetalhes : {}", internacoesDetalhes);
         if (internacoesDetalhes.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("internacoesDetalhes", "idexists", "A new internacoesDetalhes cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new internacoesDetalhes cannot already have an ID", ENTITY_NAME, "idexists");
         }
         InternacoesDetalhes result = internacoesDetalhesService.save(internacoesDetalhes);
         return ResponseEntity.created(new URI("/api/internacoes-detalhes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("internacoesDetalhes", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -70,12 +70,10 @@ public class InternacoesDetalhesResource {
      * @param internacoesDetalhes the internacoesDetalhes to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated internacoesDetalhes,
      * or with status 400 (Bad Request) if the internacoesDetalhes is not valid,
-     * or with status 500 (Internal Server Error) if the internacoesDetalhes couldnt be updated
+     * or with status 500 (Internal Server Error) if the internacoesDetalhes couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/internacoes-detalhes",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/internacoes-detalhes")
     @Timed
     public ResponseEntity<InternacoesDetalhes> updateInternacoesDetalhes(@Valid @RequestBody InternacoesDetalhes internacoesDetalhes) throws URISyntaxException {
         log.debug("REST request to update InternacoesDetalhes : {}", internacoesDetalhes);
@@ -84,7 +82,7 @@ public class InternacoesDetalhesResource {
         }
         InternacoesDetalhes result = internacoesDetalhesService.save(internacoesDetalhes);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("internacoesDetalhes", internacoesDetalhes.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, internacoesDetalhes.getId().toString()))
             .body(result);
     }
 
@@ -93,16 +91,12 @@ public class InternacoesDetalhesResource {
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of internacoesDetalhes in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/internacoes-detalhes",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/internacoes-detalhes")
     @Timed
-    public ResponseEntity<List<InternacoesDetalhes>> getAllInternacoesDetalhes(Pageable pageable)
-        throws URISyntaxException {
+    public ResponseEntity<List<InternacoesDetalhes>> getAllInternacoesDetalhes(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of InternacoesDetalhes");
-        Page<InternacoesDetalhes> page = internacoesDetalhesService.findAll(pageable); 
+        Page<InternacoesDetalhes> page = internacoesDetalhesService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/internacoes-detalhes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -113,18 +107,12 @@ public class InternacoesDetalhesResource {
      * @param id the id of the internacoesDetalhes to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the internacoesDetalhes, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/internacoes-detalhes/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/internacoes-detalhes/{id}")
     @Timed
     public ResponseEntity<InternacoesDetalhes> getInternacoesDetalhes(@PathVariable Long id) {
         log.debug("REST request to get InternacoesDetalhes : {}", id);
         InternacoesDetalhes internacoesDetalhes = internacoesDetalhesService.findOne(id);
-        return Optional.ofNullable(internacoesDetalhes)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(internacoesDetalhes));
     }
 
     /**
@@ -133,14 +121,12 @@ public class InternacoesDetalhesResource {
      * @param id the id of the internacoesDetalhes to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/internacoes-detalhes/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/internacoes-detalhes/{id}")
     @Timed
     public ResponseEntity<Void> deleteInternacoesDetalhes(@PathVariable Long id) {
         log.debug("REST request to delete InternacoesDetalhes : {}", id);
         internacoesDetalhesService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("internacoesDetalhes", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     /**
@@ -148,14 +134,12 @@ public class InternacoesDetalhesResource {
      * to the query.
      *
      * @param query the query of the internacoesDetalhes search
+     * @param pageable the pagination information
      * @return the result of the search
      */
-    @RequestMapping(value = "/_search/internacoes-detalhes",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/_search/internacoes-detalhes")
     @Timed
-    public ResponseEntity<List<InternacoesDetalhes>> searchInternacoesDetalhes(@RequestParam String query, Pageable pageable)
-        throws URISyntaxException {
+    public ResponseEntity<List<InternacoesDetalhes>> searchInternacoesDetalhes(@RequestParam String query, @ApiParam Pageable pageable) {
         log.debug("REST request to search for a page of InternacoesDetalhes for query {}", query);
         Page<InternacoesDetalhes> page = internacoesDetalhesService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/internacoes-detalhes");

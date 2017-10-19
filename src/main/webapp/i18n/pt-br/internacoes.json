@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Internacoes",
                 "search": "Pesquisar por Internacoes"
             },
-            "created": "Um novo Internacoes é criado com o identificador {{ param }}",
-            "updated": "Um Internacoes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Internacoes é deletado com o identificador {{ param }}",
+            "created": "Um novo Internacoes foi criado com o identificador {{ param }}",
+            "updated": "Um Internacoes foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Internacoes foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Internacoes {{ id }}?"
             },

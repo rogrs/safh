@@ -1,14 +1,12 @@
 package br.com.rogrs.safh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +26,8 @@ public class Medicos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -77,7 +76,7 @@ public class Medicos implements Serializable {
     @Column(name = "u_f")
     private Estados uF;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "medicos")
+    @OneToMany(mappedBy = "medicos")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Internacoes> internacoes = new HashSet<>();
@@ -85,6 +84,7 @@ public class Medicos implements Serializable {
     @ManyToOne
     private Especialidades especialidades;
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -97,12 +97,22 @@ public class Medicos implements Serializable {
         return nome;
     }
 
+    public Medicos nome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
     public String getCrm() {
         return crm;
+    }
+
+    public Medicos crm(String crm) {
+        this.crm = crm;
+        return this;
     }
 
     public void setCrm(String crm) {
@@ -113,12 +123,22 @@ public class Medicos implements Serializable {
         return cpf;
     }
 
+    public Medicos cpf(String cpf) {
+        this.cpf = cpf;
+        return this;
+    }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public Medicos email(String email) {
+        this.email = email;
+        return this;
     }
 
     public void setEmail(String email) {
@@ -129,12 +149,22 @@ public class Medicos implements Serializable {
         return cep;
     }
 
+    public Medicos cep(String cep) {
+        this.cep = cep;
+        return this;
+    }
+
     public void setCep(String cep) {
         this.cep = cep;
     }
 
     public String getLogradouro() {
         return logradouro;
+    }
+
+    public Medicos logradouro(String logradouro) {
+        this.logradouro = logradouro;
+        return this;
     }
 
     public void setLogradouro(String logradouro) {
@@ -145,12 +175,22 @@ public class Medicos implements Serializable {
         return numero;
     }
 
+    public Medicos numero(String numero) {
+        this.numero = numero;
+        return this;
+    }
+
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
     public String getComplemento() {
         return complemento;
+    }
+
+    public Medicos complemento(String complemento) {
+        this.complemento = complemento;
+        return this;
     }
 
     public void setComplemento(String complemento) {
@@ -161,12 +201,22 @@ public class Medicos implements Serializable {
         return bairro;
     }
 
+    public Medicos bairro(String bairro) {
+        this.bairro = bairro;
+        return this;
+    }
+
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 
     public String getCidade() {
         return cidade;
+    }
+
+    public Medicos cidade(String cidade) {
+        this.cidade = cidade;
+        return this;
     }
 
     public void setCidade(String cidade) {
@@ -177,12 +227,34 @@ public class Medicos implements Serializable {
         return uF;
     }
 
+    public Medicos uF(Estados uF) {
+        this.uF = uF;
+        return this;
+    }
+
     public void setuF(Estados uF) {
         this.uF = uF;
     }
 
     public Set<Internacoes> getInternacoes() {
         return internacoes;
+    }
+
+    public Medicos internacoes(Set<Internacoes> internacoes) {
+        this.internacoes = internacoes;
+        return this;
+    }
+
+    public Medicos addInternacoes(Internacoes internacoes) {
+        this.internacoes.add(internacoes);
+        internacoes.setMedicos(this);
+        return this;
+    }
+
+    public Medicos removeInternacoes(Internacoes internacoes) {
+        this.internacoes.remove(internacoes);
+        internacoes.setMedicos(null);
+        return this;
     }
 
     public void setInternacoes(Set<Internacoes> internacoes) {
@@ -193,9 +265,15 @@ public class Medicos implements Serializable {
         return especialidades;
     }
 
+    public Medicos especialidades(Especialidades especialidades) {
+        this.especialidades = especialidades;
+        return this;
+    }
+
     public void setEspecialidades(Especialidades especialidades) {
         this.especialidades = especialidades;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -206,32 +284,32 @@ public class Medicos implements Serializable {
             return false;
         }
         Medicos medicos = (Medicos) o;
-        if(medicos.id == null || id == null) {
+        if (medicos.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, medicos.id);
+        return Objects.equals(getId(), medicos.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Medicos{" +
-            "id=" + id +
-            ", nome='" + nome + "'" +
-            ", crm='" + crm + "'" +
-            ", cpf='" + cpf + "'" +
-            ", email='" + email + "'" +
-            ", cep='" + cep + "'" +
-            ", logradouro='" + logradouro + "'" +
-            ", numero='" + numero + "'" +
-            ", complemento='" + complemento + "'" +
-            ", bairro='" + bairro + "'" +
-            ", cidade='" + cidade + "'" +
-            ", uF='" + uF + "'" +
-            '}';
+            "id=" + getId() +
+            ", nome='" + getNome() + "'" +
+            ", crm='" + getCrm() + "'" +
+            ", cpf='" + getCpf() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", cep='" + getCep() + "'" +
+            ", logradouro='" + getLogradouro() + "'" +
+            ", numero='" + getNumero() + "'" +
+            ", complemento='" + getComplemento() + "'" +
+            ", bairro='" + getBairro() + "'" +
+            ", cidade='" + getCidade() + "'" +
+            ", uF='" + getuF() + "'" +
+            "}";
     }
 }

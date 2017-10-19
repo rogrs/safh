@@ -24,7 +24,8 @@ public class Especialidades implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -37,6 +38,7 @@ public class Especialidades implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Medicos> medicos = new HashSet<>();
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -49,6 +51,11 @@ public class Especialidades implements Serializable {
         return especialidade;
     }
 
+    public Especialidades especialidade(String especialidade) {
+        this.especialidade = especialidade;
+        return this;
+    }
+
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
@@ -57,9 +64,27 @@ public class Especialidades implements Serializable {
         return medicos;
     }
 
+    public Especialidades medicos(Set<Medicos> medicos) {
+        this.medicos = medicos;
+        return this;
+    }
+
+    public Especialidades addMedicos(Medicos medicos) {
+        this.medicos.add(medicos);
+        medicos.setEspecialidades(this);
+        return this;
+    }
+
+    public Especialidades removeMedicos(Medicos medicos) {
+        this.medicos.remove(medicos);
+        medicos.setEspecialidades(null);
+        return this;
+    }
+
     public void setMedicos(Set<Medicos> medicos) {
         this.medicos = medicos;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -70,22 +95,22 @@ public class Especialidades implements Serializable {
             return false;
         }
         Especialidades especialidades = (Especialidades) o;
-        if(especialidades.id == null || id == null) {
+        if (especialidades.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, especialidades.id);
+        return Objects.equals(getId(), especialidades.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Especialidades{" +
-            "id=" + id +
-            ", especialidade='" + especialidade + "'" +
-            '}';
+            "id=" + getId() +
+            ", especialidade='" + getEspecialidade() + "'" +
+            "}";
     }
 }

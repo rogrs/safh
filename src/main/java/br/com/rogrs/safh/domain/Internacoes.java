@@ -1,14 +1,12 @@
 package br.com.rogrs.safh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -27,7 +25,8 @@ public class Internacoes implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -39,7 +38,7 @@ public class Internacoes implements Serializable {
     @Column(name = "descricao", length = 200, nullable = false)
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "internacoes")
+    @OneToMany(mappedBy = "internacoes")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
@@ -53,6 +52,7 @@ public class Internacoes implements Serializable {
     @ManyToOne
     private Medicos medicos;
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -65,12 +65,22 @@ public class Internacoes implements Serializable {
         return dataInternacao;
     }
 
+    public Internacoes dataInternacao(LocalDate dataInternacao) {
+        this.dataInternacao = dataInternacao;
+        return this;
+    }
+
     public void setDataInternacao(LocalDate dataInternacao) {
         this.dataInternacao = dataInternacao;
     }
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public Internacoes descricao(String descricao) {
+        this.descricao = descricao;
+        return this;
     }
 
     public void setDescricao(String descricao) {
@@ -81,12 +91,34 @@ public class Internacoes implements Serializable {
         return internacoesDetalhes;
     }
 
+    public Internacoes internacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        this.internacoesDetalhes = internacoesDetalhes;
+        return this;
+    }
+
+    public Internacoes addInternacoesDetalhes(InternacoesDetalhes internacoesDetalhes) {
+        this.internacoesDetalhes.add(internacoesDetalhes);
+        internacoesDetalhes.setInternacoes(this);
+        return this;
+    }
+
+    public Internacoes removeInternacoesDetalhes(InternacoesDetalhes internacoesDetalhes) {
+        this.internacoesDetalhes.remove(internacoesDetalhes);
+        internacoesDetalhes.setInternacoes(null);
+        return this;
+    }
+
     public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
         this.internacoesDetalhes = internacoesDetalhes;
     }
 
     public Pacientes getPacientes() {
         return pacientes;
+    }
+
+    public Internacoes pacientes(Pacientes pacientes) {
+        this.pacientes = pacientes;
+        return this;
     }
 
     public void setPacientes(Pacientes pacientes) {
@@ -97,6 +129,11 @@ public class Internacoes implements Serializable {
         return clinicas;
     }
 
+    public Internacoes clinicas(Clinicas clinicas) {
+        this.clinicas = clinicas;
+        return this;
+    }
+
     public void setClinicas(Clinicas clinicas) {
         this.clinicas = clinicas;
     }
@@ -105,9 +142,15 @@ public class Internacoes implements Serializable {
         return medicos;
     }
 
+    public Internacoes medicos(Medicos medicos) {
+        this.medicos = medicos;
+        return this;
+    }
+
     public void setMedicos(Medicos medicos) {
         this.medicos = medicos;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -118,23 +161,23 @@ public class Internacoes implements Serializable {
             return false;
         }
         Internacoes internacoes = (Internacoes) o;
-        if(internacoes.id == null || id == null) {
+        if (internacoes.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, internacoes.id);
+        return Objects.equals(getId(), internacoes.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Internacoes{" +
-            "id=" + id +
-            ", dataInternacao='" + dataInternacao + "'" +
-            ", descricao='" + descricao + "'" +
-            '}';
+            "id=" + getId() +
+            ", dataInternacao='" + getDataInternacao() + "'" +
+            ", descricao='" + getDescricao() + "'" +
+            "}";
     }
 }

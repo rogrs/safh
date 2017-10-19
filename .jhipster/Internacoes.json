@@ -1,56 +1,53 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "internacoesDetalhes",
-      "otherEntityName": "internacoesDetalhes",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "internacoes"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipName": "pacientes",
-      "otherEntityName": "pacientes",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "nome"
-    },
-    {
-      "relationshipId": 3,
-      "relationshipName": "clinicas",
-      "otherEntityName": "clinicas",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "clinica"
-    },
-    {
-      "relationshipId": 4,
-      "relationshipName": "medicos",
-      "otherEntityName": "medicos",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "nome"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "dataInternacao",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "descricao",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 200
-    }
-  ],
-  "changelogDate": "20160610015657",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "internacoesDetalhes",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "internacoes"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pacientes",
+            "otherEntityName": "pacientes",
+            "otherEntityField": "nome"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "clinicas",
+            "otherEntityName": "clinicas",
+            "otherEntityField": "clinica"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "medicos",
+            "otherEntityName": "medicos",
+            "otherEntityField": "nome"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dataInternacao",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 200
+        }
+    ],
+    "changelogDate": "20171019202211",
+    "entityTableName": "internacoes",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

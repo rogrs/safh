@@ -1,36 +1,36 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "internacoesDetalhes",
-      "otherEntityName": "internacoesDetalhes",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "dietas"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "dieta",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 40
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "descricao",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 255
-    }
-  ],
-  "changelogDate": "20160610015653",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "internacoesDetalhes",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "dietas"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dieta",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 255
+        }
+    ],
+    "changelogDate": "20171019202207",
+    "entityTableName": "dietas",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

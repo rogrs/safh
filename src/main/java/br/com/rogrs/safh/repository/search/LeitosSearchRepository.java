@@ -4,7 +4,7 @@ import br.com.rogrs.safh.domain.Leitos;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data ElasticSearch repository for the Leitos entity.
+ * Spring Data Elasticsearch repository for the Leitos entity.
  */
 public interface LeitosSearchRepository extends ElasticsearchRepository<Leitos, Long> {
 }

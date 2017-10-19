@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Posologias",
                 "search": "Pesquisar por Posologias"
             },
-            "created": "Um novo Posologias é criado com o identificador {{ param }}",
-            "updated": "Um Posologias é atualizado com o identificador {{ param }}",
-            "deleted": "Um Posologias é deletado com o identificador {{ param }}",
+            "created": "Um novo Posologias foi criado com o identificador {{ param }}",
+            "updated": "Um Posologias foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Posologias foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Posologias {{ id }}?"
             },

@@ -1,14 +1,12 @@
 package br.com.rogrs.safh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +24,8 @@ public class Dietas implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -38,11 +37,12 @@ public class Dietas implements Serializable {
     @Column(name = "descricao", length = 255)
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "dietas")
+    @OneToMany(mappedBy = "dietas")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -55,12 +55,22 @@ public class Dietas implements Serializable {
         return dieta;
     }
 
+    public Dietas dieta(String dieta) {
+        this.dieta = dieta;
+        return this;
+    }
+
     public void setDieta(String dieta) {
         this.dieta = dieta;
     }
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public Dietas descricao(String descricao) {
+        this.descricao = descricao;
+        return this;
     }
 
     public void setDescricao(String descricao) {
@@ -71,9 +81,27 @@ public class Dietas implements Serializable {
         return internacoesDetalhes;
     }
 
+    public Dietas internacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        this.internacoesDetalhes = internacoesDetalhes;
+        return this;
+    }
+
+    public Dietas addInternacoesDetalhes(InternacoesDetalhes internacoesDetalhes) {
+        this.internacoesDetalhes.add(internacoesDetalhes);
+        internacoesDetalhes.setDietas(this);
+        return this;
+    }
+
+    public Dietas removeInternacoesDetalhes(InternacoesDetalhes internacoesDetalhes) {
+        this.internacoesDetalhes.remove(internacoesDetalhes);
+        internacoesDetalhes.setDietas(null);
+        return this;
+    }
+
     public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
         this.internacoesDetalhes = internacoesDetalhes;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -84,23 +112,23 @@ public class Dietas implements Serializable {
             return false;
         }
         Dietas dietas = (Dietas) o;
-        if(dietas.id == null || id == null) {
+        if (dietas.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, dietas.id);
+        return Objects.equals(getId(), dietas.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Dietas{" +
-            "id=" + id +
-            ", dieta='" + dieta + "'" +
-            ", descricao='" + descricao + "'" +
-            '}';
+            "id=" + getId() +
+            ", dieta='" + getDieta() + "'" +
+            ", descricao='" + getDescricao() + "'" +
+            "}";
     }
 }

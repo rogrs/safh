@@ -1,0 +1,107 @@
+<div>
+    <h2>
+        <span jhiTranslate="safhApp.pacientes.home.title">Pacientes</span>
+        <button class="btn btn-primary float-right jh-create-entity create-pacientes" [routerLink]="['/', { outlets: { popup: ['pacientes-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="safhApp.pacientes.home.createLabel">
+            Create new Pacientes
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'safhApp.pacientes.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="pacientes">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="prontuario"><span jhiTranslate="safhApp.pacientes.prontuario">Prontuario</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nome"><span jhiTranslate="safhApp.pacientes.nome">Nome</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cpf"><span jhiTranslate="safhApp.pacientes.cpf">Cpf</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="email"><span jhiTranslate="safhApp.pacientes.email">Email</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cep"><span jhiTranslate="safhApp.pacientes.cep">Cep</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="logradouro"><span jhiTranslate="safhApp.pacientes.logradouro">Logradouro</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="numero"><span jhiTranslate="safhApp.pacientes.numero">Numero</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="complemento"><span jhiTranslate="safhApp.pacientes.complemento">Complemento</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="bairro"><span jhiTranslate="safhApp.pacientes.bairro">Bairro</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cidade"><span jhiTranslate="safhApp.pacientes.cidade">Cidade</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="uF"><span jhiTranslate="safhApp.pacientes.uF">U F</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="clinicas.clinica"><span jhiTranslate="safhApp.pacientes.clinicas">Clinicas</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="enfermarias.enfermaria"><span jhiTranslate="safhApp.pacientes.enfermarias">Enfermarias</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="leitos.leito"><span jhiTranslate="safhApp.pacientes.leitos">Leitos</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let pacientes of pacientes ;trackBy: trackId">
+                <td><a [routerLink]="['../pacientes', pacientes.id ]">{{pacientes.id}}</a></td>
+                <td>{{pacientes.prontuario}}</td>
+                <td>{{pacientes.nome}}</td>
+                <td>{{pacientes.cpf}}</td>
+                <td>{{pacientes.email}}</td>
+                <td>{{pacientes.cep}}</td>
+                <td>{{pacientes.logradouro}}</td>
+                <td>{{pacientes.numero}}</td>
+                <td>{{pacientes.complemento}}</td>
+                <td>{{pacientes.bairro}}</td>
+                <td>{{pacientes.cidade}}</td>
+                <td jhiTranslate="{{'safhApp.Estados.' + pacientes.uF}}">{{pacientes.uF}}</td>
+                <td>
+                    <div *ngIf="pacientes.clinicas">
+                        <a [routerLink]="['../clinicas', pacientes.clinicas?.id ]" >{{pacientes.clinicas?.clinica}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pacientes.enfermarias">
+                        <a [routerLink]="['../enfermarias', pacientes.enfermarias?.id ]" >{{pacientes.enfermarias?.enfermaria}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pacientes.leitos">
+                        <a [routerLink]="['../leitos', pacientes.leitos?.id ]" >{{pacientes.leitos?.leito}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../pacientes', pacientes.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pacientes/'+ pacientes.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pacientes/'+ pacientes.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

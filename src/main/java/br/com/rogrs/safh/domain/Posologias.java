@@ -1,14 +1,12 @@
 package br.com.rogrs.safh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +24,8 @@ public class Posologias implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -34,16 +33,17 @@ public class Posologias implements Serializable {
     @Column(name = "posologia", length = 40, nullable = false)
     private String posologia;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "posologiaPadrao")
+    @OneToMany(mappedBy = "posologiaPadrao")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Medicamentos> medicamentos = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "posologias")
+    @OneToMany(mappedBy = "posologias")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -56,12 +56,34 @@ public class Posologias implements Serializable {
         return posologia;
     }
 
+    public Posologias posologia(String posologia) {
+        this.posologia = posologia;
+        return this;
+    }
+
     public void setPosologia(String posologia) {
         this.posologia = posologia;
     }
 
     public Set<Medicamentos> getMedicamentos() {
         return medicamentos;
+    }
+
+    public Posologias medicamentos(Set<Medicamentos> medicamentos) {
+        this.medicamentos = medicamentos;
+        return this;
+    }
+
+    public Posologias addMedicamentos(Medicamentos medicamentos) {
+        this.medicamentos.add(medicamentos);
+        medicamentos.setPosologiaPadrao(this);
+        return this;
+    }
+
+    public Posologias removeMedicamentos(Medicamentos medicamentos) {
+        this.medicamentos.remove(medicamentos);
+        medicamentos.setPosologiaPadrao(null);
+        return this;
     }
 
     public void setMedicamentos(Set<Medicamentos> medicamentos) {
@@ -72,9 +94,27 @@ public class Posologias implements Serializable {
         return internacoesDetalhes;
     }
 
+    public Posologias internacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        this.internacoesDetalhes = internacoesDetalhes;
+        return this;
+    }
+
+    public Posologias addInternacoesDetalhes(InternacoesDetalhes internacoesDetalhes) {
+        this.internacoesDetalhes.add(internacoesDetalhes);
+        internacoesDetalhes.setPosologias(this);
+        return this;
+    }
+
+    public Posologias removeInternacoesDetalhes(InternacoesDetalhes internacoesDetalhes) {
+        this.internacoesDetalhes.remove(internacoesDetalhes);
+        internacoesDetalhes.setPosologias(null);
+        return this;
+    }
+
     public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
         this.internacoesDetalhes = internacoesDetalhes;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -85,22 +125,22 @@ public class Posologias implements Serializable {
             return false;
         }
         Posologias posologias = (Posologias) o;
-        if(posologias.id == null || id == null) {
+        if (posologias.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, posologias.id);
+        return Objects.equals(getId(), posologias.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Posologias{" +
-            "id=" + id +
-            ", posologia='" + posologia + "'" +
-            '}';
+            "id=" + getId() +
+            ", posologia='" + getPosologia() + "'" +
+            "}";
     }
 }

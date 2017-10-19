@@ -1,122 +1,112 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "internacoes",
-      "otherEntityName": "internacoes",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "medicos"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipName": "especialidades",
-      "otherEntityName": "especialidades",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "especialidade"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "nome",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 255
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "crm",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 40
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "cpf",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 11
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "email",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 100
-    },
-    {
-      "fieldId": 5,
-      "fieldName": "cep",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 10
-    },
-    {
-      "fieldId": 6,
-      "fieldName": "logradouro",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 80
-    },
-    {
-      "fieldId": 7,
-      "fieldName": "numero",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 10
-    },
-    {
-      "fieldId": 8,
-      "fieldName": "complemento",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 60
-    },
-    {
-      "fieldId": 9,
-      "fieldName": "bairro",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 60
-    },
-    {
-      "fieldId": 10,
-      "fieldName": "cidade",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 60
-    },
-    {
-      "fieldId": 11,
-      "fieldName": "uF",
-      "fieldType": "Estados",
-      "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
-    }
-  ],
-  "changelogDate": "20160610015601",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "internacoes",
+            "otherEntityName": "internacoes",
+            "otherEntityRelationshipName": "medicos"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "especialidades",
+            "otherEntityName": "especialidades",
+            "otherEntityField": "especialidade"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 255
+        },
+        {
+            "fieldName": "crm",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "cpf",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 11
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "cep",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 10
+        },
+        {
+            "fieldName": "logradouro",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 80
+        },
+        {
+            "fieldName": "numero",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 10
+        },
+        {
+            "fieldName": "complemento",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        },
+        {
+            "fieldName": "bairro",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        },
+        {
+            "fieldName": "cidade",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        },
+        {
+            "fieldName": "uF",
+            "fieldType": "Estados",
+            "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
+        }
+    ],
+    "changelogDate": "20171019202215",
+    "entityTableName": "medicos",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

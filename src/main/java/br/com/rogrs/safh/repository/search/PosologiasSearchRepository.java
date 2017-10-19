@@ -4,7 +4,7 @@ import br.com.rogrs.safh.domain.Posologias;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data ElasticSearch repository for the Posologias entity.
+ * Spring Data Elasticsearch repository for the Posologias entity.
  */
 public interface PosologiasSearchRepository extends ElasticsearchRepository<Posologias, Long> {
 }

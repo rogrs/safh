@@ -4,7 +4,7 @@ import br.com.rogrs.safh.domain.Enfermarias;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data ElasticSearch repository for the Enfermarias entity.
+ * Spring Data Elasticsearch repository for the Enfermarias entity.
  */
 public interface EnfermariasSearchRepository extends ElasticsearchRepository<Enfermarias, Long> {
 }

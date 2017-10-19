@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Pacientes",
                 "search": "Pesquisar por Pacientes"
             },
-            "created": "Um novo Pacientes é criado com o identificador {{ param }}",
-            "updated": "Um Pacientes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Pacientes é deletado com o identificador {{ param }}",
+            "created": "Um novo Pacientes foi criado com o identificador {{ param }}",
+            "updated": "Um Pacientes foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Pacientes foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Pacientes {{ id }}?"
             },

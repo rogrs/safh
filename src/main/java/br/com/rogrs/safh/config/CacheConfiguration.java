@@ -1,76 +1,73 @@
 package br.com.rogrs.safh.config;
 
-import java.util.Set;
-import java.util.SortedSet;
+import io.github.jhipster.config.JHipsterProperties;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.expiry.Duration;
+import org.ehcache.expiry.Expirations;
+import org.ehcache.jsr107.Eh107Configuration;
 
-import javax.annotation.PreDestroy;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.metamodel.EntityType;
+import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.cache.CacheManager;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.util.Assert;
-
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.ehcache.InstrumentedEhcache;
-
+import org.springframework.context.annotation.*;
 
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(value = { MetricsConfiguration.class, DatabaseConfiguration.class })
+@AutoConfigureAfter(value = { MetricsConfiguration.class })
+@AutoConfigureBefore(value = { WebConfigurer.class, DatabaseConfiguration.class })
 public class CacheConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
+    private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    public CacheConfiguration(JHipsterProperties jHipsterProperties) {
+        JHipsterProperties.Cache.Ehcache ehcache =
+            jHipsterProperties.getCache().getEhcache();
 
-    @Inject
-    private MetricRegistry metricRegistry;
-
-    private net.sf.ehcache.CacheManager cacheManager;
-
-    @PreDestroy
-    public void destroy() {
-        log.info("Remove Cache Manager metrics");
-        SortedSet<String> names = metricRegistry.getNames();
-        names.forEach(metricRegistry::remove);
-        log.info("Closing Cache Manager");
-        cacheManager.shutdown();
+        jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(
+            CacheConfigurationBuilder.newCacheConfigurationBuilder(Object.class, Object.class,
+                ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
+                .withExpiry(Expirations.timeToLiveExpiration(Duration.of(ehcache.getTimeToLiveSeconds(), TimeUnit.SECONDS)))
+                .build());
     }
 
     @Bean
-    public CacheManager cacheManager(JHipsterProperties jHipsterProperties) {
-        log.debug("Starting Ehcache");
-        cacheManager = net.sf.ehcache.CacheManager.create();
-        cacheManager.getConfiguration().setMaxBytesLocalHeap(jHipsterProperties.getCache().getEhcache().getMaxBytesLocalHeap());
-        log.debug("Registering Ehcache Metrics gauges");
-        Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
-        for (EntityType<?> entity : entities) {
-
-            String name = entity.getName();
-            if (name == null || entity.getJavaType() != null) {
-                name = entity.getJavaType().getName();
-            }
-            Assert.notNull(name, "entity cannot exist without a identifier");
-
-            net.sf.ehcache.Cache cache = cacheManager.getCache(name);
-            if (cache != null) {
-                cache.getCacheConfiguration().setTimeToLiveSeconds(jHipsterProperties.getCache().getTimeToLiveSeconds());
-                net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(metricRegistry, cache);
-                cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);
-            }
-        }
-        EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
-        ehCacheManager.setCacheManager(cacheManager);
-        return ehCacheManager;
+    public JCacheManagerCustomizer cacheManagerCustomizer() {
+        return cm -> {
+            cm.createCache("users", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.User.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Authority.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Clinicas.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Clinicas.class.getName() + ".pacientes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Clinicas.class.getName() + ".internacoes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Dietas.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Dietas.class.getName() + ".internacoesDetalhes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Enfermarias.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Enfermarias.class.getName() + ".pacientes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Especialidades.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Especialidades.class.getName() + ".medicos", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Fabricantes.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Fabricantes.class.getName() + ".medicamentos", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Internacoes.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Internacoes.class.getName() + ".internacoesDetalhes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.InternacoesDetalhes.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Leitos.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Leitos.class.getName() + ".pacientes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Medicamentos.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Medicos.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Medicos.class.getName() + ".internacoes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Pacientes.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Pacientes.class.getName() + ".internacoes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Posologias.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Posologias.class.getName() + ".medicamentos", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Posologias.class.getName() + ".internacoesDetalhes", jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Prescricoes.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.rogrs.safh.domain.Prescricoes.class.getName() + ".internacoesDetalhes", jcacheConfiguration);
+            // jhipster-needle-ehcache-add-entry
+        };
     }
 }

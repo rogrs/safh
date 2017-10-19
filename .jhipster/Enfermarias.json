@@ -1,27 +1,28 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "pacientes",
-      "otherEntityName": "pacientes",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "enfermarias"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "enfermaria",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
-      "fieldValidateRulesMaxlength": 60
-    }
-  ],
-  "changelogDate": "20160610015654",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "pacientes",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "enfermarias"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "enfermaria",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        }
+    ],
+    "changelogDate": "20171019202208",
+    "entityTableName": "enfermarias",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

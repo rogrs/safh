@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Clinicas",
                 "search": "Pesquisar por Clinicas"
             },
-            "created": "Um novo Clinicas é criado com o identificador {{ param }}",
-            "updated": "Um Clinicas é atualizado com o identificador {{ param }}",
-            "deleted": "Um Clinicas é deletado com o identificador {{ param }}",
+            "created": "Um novo Clinicas foi criado com o identificador {{ param }}",
+            "updated": "Um Clinicas foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Clinicas foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Clinicas {{ id }}?"
             },

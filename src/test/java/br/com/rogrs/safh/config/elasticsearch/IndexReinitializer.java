@@ -3,10 +3,10 @@ package br.com.rogrs.safh.config.elasticsearch;
 import static java.lang.System.currentTimeMillis;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 public class IndexReinitializer {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Inject
+
+    @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
 
     @PostConstruct
@@ -22,6 +23,6 @@ public class IndexReinitializer {
         long t = currentTimeMillis();
         elasticsearchTemplate.deleteIndex("_all");
         t = currentTimeMillis() - t;
-        logger.debug("ElasticSearch indexes reset in {} ms", t);
+        logger.debug("Elasticsearch indexes reset in {} ms", t);
     }
 }

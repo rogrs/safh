@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Prescricoes",
                 "search": "Pesquisar por Prescricoes"
             },
-            "created": "Um novo Prescricoes é criado com o identificador {{ param }}",
-            "updated": "Um Prescricoes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Prescricoes é deletado com o identificador {{ param }}",
+            "created": "Um novo Prescricoes foi criado com o identificador {{ param }}",
+            "updated": "Um Prescricoes foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Prescricoes foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Prescricoes {{ id }}?"
             },

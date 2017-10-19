@@ -1,82 +1,94 @@
 package br.com.rogrs.safh.web.rest;
 
 import br.com.rogrs.safh.SafhApp;
+
 import br.com.rogrs.safh.domain.Enfermarias;
 import br.com.rogrs.safh.repository.EnfermariasRepository;
 import br.com.rogrs.safh.repository.search.EnfermariasSearchRepository;
+import br.com.rogrs.safh.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 /**
  * Test class for the EnfermariasResource REST controller.
  *
  * @see EnfermariasResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SafhApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SafhApp.class)
 public class EnfermariasResourceIntTest {
 
-    private static final String DEFAULT_ENFERMARIA = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    private static final String UPDATED_ENFERMARIA = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+    private static final String DEFAULT_ENFERMARIA = "AAAAAAAAAA";
+    private static final String UPDATED_ENFERMARIA = "BBBBBBBBBB";
 
-    @Inject
+    @Autowired
     private EnfermariasRepository enfermariasRepository;
 
-    @Inject
+    @Autowired
     private EnfermariasSearchRepository enfermariasSearchRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Autowired
+    private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private EntityManager em;
 
     private MockMvc restEnfermariasMockMvc;
 
     private Enfermarias enfermarias;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        EnfermariasResource enfermariasResource = new EnfermariasResource();
-        ReflectionTestUtils.setField(enfermariasResource, "enfermariasSearchRepository", enfermariasSearchRepository);
-        ReflectionTestUtils.setField(enfermariasResource, "enfermariasRepository", enfermariasRepository);
+        final EnfermariasResource enfermariasResource = new EnfermariasResource(enfermariasRepository, enfermariasSearchRepository);
         this.restEnfermariasMockMvc = MockMvcBuilders.standaloneSetup(enfermariasResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter).build();
+    }
+
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Enfermarias createEntity(EntityManager em) {
+        Enfermarias enfermarias = new Enfermarias()
+            .enfermaria(DEFAULT_ENFERMARIA);
+        return enfermarias;
     }
 
     @Before
     public void initTest() {
         enfermariasSearchRepository.deleteAll();
-        enfermarias = new Enfermarias();
-        enfermarias.setEnfermaria(DEFAULT_ENFERMARIA);
+        enfermarias = createEntity(em);
     }
 
     @Test
@@ -85,21 +97,39 @@ public class EnfermariasResourceIntTest {
         int databaseSizeBeforeCreate = enfermariasRepository.findAll().size();
 
         // Create the Enfermarias
-
         restEnfermariasMockMvc.perform(post("/api/enfermarias")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(enfermarias)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(enfermarias)))
+            .andExpect(status().isCreated());
 
         // Validate the Enfermarias in the database
-        List<Enfermarias> enfermarias = enfermariasRepository.findAll();
-        assertThat(enfermarias).hasSize(databaseSizeBeforeCreate + 1);
-        Enfermarias testEnfermarias = enfermarias.get(enfermarias.size() - 1);
+        List<Enfermarias> enfermariasList = enfermariasRepository.findAll();
+        assertThat(enfermariasList).hasSize(databaseSizeBeforeCreate + 1);
+        Enfermarias testEnfermarias = enfermariasList.get(enfermariasList.size() - 1);
         assertThat(testEnfermarias.getEnfermaria()).isEqualTo(DEFAULT_ENFERMARIA);
 
-        // Validate the Enfermarias in ElasticSearch
+        // Validate the Enfermarias in Elasticsearch
         Enfermarias enfermariasEs = enfermariasSearchRepository.findOne(testEnfermarias.getId());
         assertThat(enfermariasEs).isEqualToComparingFieldByField(testEnfermarias);
+    }
+
+    @Test
+    @Transactional
+    public void createEnfermariasWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = enfermariasRepository.findAll().size();
+
+        // Create the Enfermarias with an existing ID
+        enfermarias.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restEnfermariasMockMvc.perform(post("/api/enfermarias")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(enfermarias)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Enfermarias in the database
+        List<Enfermarias> enfermariasList = enfermariasRepository.findAll();
+        assertThat(enfermariasList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -112,12 +142,12 @@ public class EnfermariasResourceIntTest {
         // Create the Enfermarias, which fails.
 
         restEnfermariasMockMvc.perform(post("/api/enfermarias")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(enfermarias)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(enfermarias)))
+            .andExpect(status().isBadRequest());
 
-        List<Enfermarias> enfermarias = enfermariasRepository.findAll();
-        assertThat(enfermarias).hasSize(databaseSizeBeforeTest);
+        List<Enfermarias> enfermariasList = enfermariasRepository.findAll();
+        assertThat(enfermariasList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -126,12 +156,12 @@ public class EnfermariasResourceIntTest {
         // Initialize the database
         enfermariasRepository.saveAndFlush(enfermarias);
 
-        // Get all the enfermarias
+        // Get all the enfermariasList
         restEnfermariasMockMvc.perform(get("/api/enfermarias?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(enfermarias.getId().intValue())))
-                .andExpect(jsonPath("$.[*].enfermaria").value(hasItem(DEFAULT_ENFERMARIA.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(enfermarias.getId().intValue())))
+            .andExpect(jsonPath("$.[*].enfermaria").value(hasItem(DEFAULT_ENFERMARIA.toString())));
     }
 
     @Test
@@ -143,7 +173,7 @@ public class EnfermariasResourceIntTest {
         // Get the enfermarias
         restEnfermariasMockMvc.perform(get("/api/enfermarias/{id}", enfermarias.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(enfermarias.getId().intValue()))
             .andExpect(jsonPath("$.enfermaria").value(DEFAULT_ENFERMARIA.toString()));
     }
@@ -153,7 +183,7 @@ public class EnfermariasResourceIntTest {
     public void getNonExistingEnfermarias() throws Exception {
         // Get the enfermarias
         restEnfermariasMockMvc.perform(get("/api/enfermarias/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -165,24 +195,42 @@ public class EnfermariasResourceIntTest {
         int databaseSizeBeforeUpdate = enfermariasRepository.findAll().size();
 
         // Update the enfermarias
-        Enfermarias updatedEnfermarias = new Enfermarias();
-        updatedEnfermarias.setId(enfermarias.getId());
-        updatedEnfermarias.setEnfermaria(UPDATED_ENFERMARIA);
+        Enfermarias updatedEnfermarias = enfermariasRepository.findOne(enfermarias.getId());
+        updatedEnfermarias
+            .enfermaria(UPDATED_ENFERMARIA);
 
         restEnfermariasMockMvc.perform(put("/api/enfermarias")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedEnfermarias)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedEnfermarias)))
+            .andExpect(status().isOk());
 
         // Validate the Enfermarias in the database
-        List<Enfermarias> enfermarias = enfermariasRepository.findAll();
-        assertThat(enfermarias).hasSize(databaseSizeBeforeUpdate);
-        Enfermarias testEnfermarias = enfermarias.get(enfermarias.size() - 1);
+        List<Enfermarias> enfermariasList = enfermariasRepository.findAll();
+        assertThat(enfermariasList).hasSize(databaseSizeBeforeUpdate);
+        Enfermarias testEnfermarias = enfermariasList.get(enfermariasList.size() - 1);
         assertThat(testEnfermarias.getEnfermaria()).isEqualTo(UPDATED_ENFERMARIA);
 
-        // Validate the Enfermarias in ElasticSearch
+        // Validate the Enfermarias in Elasticsearch
         Enfermarias enfermariasEs = enfermariasSearchRepository.findOne(testEnfermarias.getId());
         assertThat(enfermariasEs).isEqualToComparingFieldByField(testEnfermarias);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingEnfermarias() throws Exception {
+        int databaseSizeBeforeUpdate = enfermariasRepository.findAll().size();
+
+        // Create the Enfermarias
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restEnfermariasMockMvc.perform(put("/api/enfermarias")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(enfermarias)))
+            .andExpect(status().isCreated());
+
+        // Validate the Enfermarias in the database
+        List<Enfermarias> enfermariasList = enfermariasRepository.findAll();
+        assertThat(enfermariasList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -195,16 +243,16 @@ public class EnfermariasResourceIntTest {
 
         // Get the enfermarias
         restEnfermariasMockMvc.perform(delete("/api/enfermarias/{id}", enfermarias.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
-        // Validate ElasticSearch is empty
+        // Validate Elasticsearch is empty
         boolean enfermariasExistsInEs = enfermariasSearchRepository.exists(enfermarias.getId());
         assertThat(enfermariasExistsInEs).isFalse();
 
         // Validate the database is empty
-        List<Enfermarias> enfermarias = enfermariasRepository.findAll();
-        assertThat(enfermarias).hasSize(databaseSizeBeforeDelete - 1);
+        List<Enfermarias> enfermariasList = enfermariasRepository.findAll();
+        assertThat(enfermariasList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
@@ -217,8 +265,23 @@ public class EnfermariasResourceIntTest {
         // Search the enfermarias
         restEnfermariasMockMvc.perform(get("/api/_search/enfermarias?query=id:" + enfermarias.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(enfermarias.getId().intValue())))
             .andExpect(jsonPath("$.[*].enfermaria").value(hasItem(DEFAULT_ENFERMARIA.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Enfermarias.class);
+        Enfermarias enfermarias1 = new Enfermarias();
+        enfermarias1.setId(1L);
+        Enfermarias enfermarias2 = new Enfermarias();
+        enfermarias2.setId(enfermarias1.getId());
+        assertThat(enfermarias1).isEqualTo(enfermarias2);
+        enfermarias2.setId(2L);
+        assertThat(enfermarias1).isNotEqualTo(enfermarias2);
+        enfermarias1.setId(null);
+        assertThat(enfermarias1).isNotEqualTo(enfermarias2);
     }
 }

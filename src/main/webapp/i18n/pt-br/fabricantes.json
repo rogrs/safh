@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Fabricantes",
                 "search": "Pesquisar por Fabricantes"
             },
-            "created": "Um novo Fabricantes é criado com o identificador {{ param }}",
-            "updated": "Um Fabricantes é atualizado com o identificador {{ param }}",
-            "deleted": "Um Fabricantes é deletado com o identificador {{ param }}",
+            "created": "Um novo Fabricantes foi criado com o identificador {{ param }}",
+            "updated": "Um Fabricantes foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Fabricantes foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Fabricantes {{ id }}?"
             },

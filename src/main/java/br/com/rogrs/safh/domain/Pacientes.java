@@ -1,14 +1,12 @@
 package br.com.rogrs.safh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +26,8 @@ public class Pacientes implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -76,7 +75,7 @@ public class Pacientes implements Serializable {
     @Column(name = "u_f")
     private Estados uF;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pacientes")
+    @OneToMany(mappedBy = "pacientes")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Internacoes> internacoes = new HashSet<>();
@@ -90,6 +89,7 @@ public class Pacientes implements Serializable {
     @ManyToOne
     private Leitos leitos;
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -102,12 +102,22 @@ public class Pacientes implements Serializable {
         return prontuario;
     }
 
+    public Pacientes prontuario(Long prontuario) {
+        this.prontuario = prontuario;
+        return this;
+    }
+
     public void setProntuario(Long prontuario) {
         this.prontuario = prontuario;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public Pacientes nome(String nome) {
+        this.nome = nome;
+        return this;
     }
 
     public void setNome(String nome) {
@@ -118,12 +128,22 @@ public class Pacientes implements Serializable {
         return cpf;
     }
 
+    public Pacientes cpf(String cpf) {
+        this.cpf = cpf;
+        return this;
+    }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public Pacientes email(String email) {
+        this.email = email;
+        return this;
     }
 
     public void setEmail(String email) {
@@ -134,12 +154,22 @@ public class Pacientes implements Serializable {
         return cep;
     }
 
+    public Pacientes cep(String cep) {
+        this.cep = cep;
+        return this;
+    }
+
     public void setCep(String cep) {
         this.cep = cep;
     }
 
     public String getLogradouro() {
         return logradouro;
+    }
+
+    public Pacientes logradouro(String logradouro) {
+        this.logradouro = logradouro;
+        return this;
     }
 
     public void setLogradouro(String logradouro) {
@@ -150,12 +180,22 @@ public class Pacientes implements Serializable {
         return numero;
     }
 
+    public Pacientes numero(String numero) {
+        this.numero = numero;
+        return this;
+    }
+
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
     public String getComplemento() {
         return complemento;
+    }
+
+    public Pacientes complemento(String complemento) {
+        this.complemento = complemento;
+        return this;
     }
 
     public void setComplemento(String complemento) {
@@ -166,12 +206,22 @@ public class Pacientes implements Serializable {
         return bairro;
     }
 
+    public Pacientes bairro(String bairro) {
+        this.bairro = bairro;
+        return this;
+    }
+
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 
     public String getCidade() {
         return cidade;
+    }
+
+    public Pacientes cidade(String cidade) {
+        this.cidade = cidade;
+        return this;
     }
 
     public void setCidade(String cidade) {
@@ -182,12 +232,34 @@ public class Pacientes implements Serializable {
         return uF;
     }
 
+    public Pacientes uF(Estados uF) {
+        this.uF = uF;
+        return this;
+    }
+
     public void setuF(Estados uF) {
         this.uF = uF;
     }
 
     public Set<Internacoes> getInternacoes() {
         return internacoes;
+    }
+
+    public Pacientes internacoes(Set<Internacoes> internacoes) {
+        this.internacoes = internacoes;
+        return this;
+    }
+
+    public Pacientes addInternacoes(Internacoes internacoes) {
+        this.internacoes.add(internacoes);
+        internacoes.setPacientes(this);
+        return this;
+    }
+
+    public Pacientes removeInternacoes(Internacoes internacoes) {
+        this.internacoes.remove(internacoes);
+        internacoes.setPacientes(null);
+        return this;
     }
 
     public void setInternacoes(Set<Internacoes> internacoes) {
@@ -198,12 +270,22 @@ public class Pacientes implements Serializable {
         return clinicas;
     }
 
+    public Pacientes clinicas(Clinicas clinicas) {
+        this.clinicas = clinicas;
+        return this;
+    }
+
     public void setClinicas(Clinicas clinicas) {
         this.clinicas = clinicas;
     }
 
     public Enfermarias getEnfermarias() {
         return enfermarias;
+    }
+
+    public Pacientes enfermarias(Enfermarias enfermarias) {
+        this.enfermarias = enfermarias;
+        return this;
     }
 
     public void setEnfermarias(Enfermarias enfermarias) {
@@ -214,9 +296,15 @@ public class Pacientes implements Serializable {
         return leitos;
     }
 
+    public Pacientes leitos(Leitos leitos) {
+        this.leitos = leitos;
+        return this;
+    }
+
     public void setLeitos(Leitos leitos) {
         this.leitos = leitos;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -227,32 +315,32 @@ public class Pacientes implements Serializable {
             return false;
         }
         Pacientes pacientes = (Pacientes) o;
-        if(pacientes.id == null || id == null) {
+        if (pacientes.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, pacientes.id);
+        return Objects.equals(getId(), pacientes.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Pacientes{" +
-            "id=" + id +
-            ", prontuario='" + prontuario + "'" +
-            ", nome='" + nome + "'" +
-            ", cpf='" + cpf + "'" +
-            ", email='" + email + "'" +
-            ", cep='" + cep + "'" +
-            ", logradouro='" + logradouro + "'" +
-            ", numero='" + numero + "'" +
-            ", complemento='" + complemento + "'" +
-            ", bairro='" + bairro + "'" +
-            ", cidade='" + cidade + "'" +
-            ", uF='" + uF + "'" +
-            '}';
+            "id=" + getId() +
+            ", prontuario='" + getProntuario() + "'" +
+            ", nome='" + getNome() + "'" +
+            ", cpf='" + getCpf() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", cep='" + getCep() + "'" +
+            ", logradouro='" + getLogradouro() + "'" +
+            ", numero='" + getNumero() + "'" +
+            ", complemento='" + getComplemento() + "'" +
+            ", bairro='" + getBairro() + "'" +
+            ", cidade='" + getCidade() + "'" +
+            ", uF='" + getuF() + "'" +
+            "}";
     }
 }

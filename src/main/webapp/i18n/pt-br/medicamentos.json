@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Medicamentos",
                 "search": "Pesquisar por Medicamentos"
             },
-            "created": "Um novo Medicamentos é criado com o identificador {{ param }}",
-            "updated": "Um Medicamentos é atualizado com o identificador {{ param }}",
-            "deleted": "Um Medicamentos é deletado com o identificador {{ param }}",
+            "created": "Um novo Medicamentos foi criado com o identificador {{ param }}",
+            "updated": "Um Medicamentos foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Medicamentos foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Medicamentos {{ id }}?"
             },

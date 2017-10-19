@@ -7,9 +7,9 @@
                 "createOrEditLabel": "Criar ou editar Enfermarias",
                 "search": "Pesquisar por Enfermarias"
             },
-            "created": "Um novo Enfermarias é criado com o identificador {{ param }}",
-            "updated": "Um Enfermarias é atualizado com o identificador {{ param }}",
-            "deleted": "Um Enfermarias é deletado com o identificador {{ param }}",
+            "created": "Um novo Enfermarias foi criado com o identificador {{ param }}",
+            "updated": "Um Enfermarias foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Enfermarias foi deletado com o identificador {{ param }}",
             "delete": {
                 "question": "Tem certeza de que deseja excluir Enfermarias {{ id }}?"
             },
