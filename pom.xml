@@ -658,6 +658,27 @@
         </plugins>
         <pluginManagement>
             <plugins>
+
+                   <plugin>
+ 					<groupId>org.apache.maven.plugins</groupId>
+ 					<artifactId>maven-compiler-plugin</artifactId>
+ 					<configuration>
+						<source>${java.version}</source>
+ 						<target>${java.version}</target>
+ 					</configuration>
+ 		    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>cobertura-maven-plugin</artifactId>
+                        <version>2.7</version>
+                        <configuration>
+                            <formats>
+                                <format>html</format>
+                                <format>xml</format>
+                            </formats>
+                            <check />
+                        </configuration>
+                    </plugin>
                 <!--
                     This plugin's configuration is used to store Eclipse m2e settings only.
                     It has no influence on the Maven build itself.
@@ -987,26 +1008,7 @@
                             <scalaVersion>${scala.version}</scalaVersion>
                         </configuration>
                     </plugin>
-                    <plugin>
- 					<groupId>org.apache.maven.plugins</groupId>
- 					<artifactId>maven-compiler-plugin</artifactId>
- 					<configuration>
-						<source>${java.version}</source>
- 						<target>${java.version}</target>
- 					</configuration>
- 		    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>cobertura-maven-plugin</artifactId>
-                        <version>2.7</version>
-                        <configuration>
-                            <formats>
-                                <format>html</format>
-                                <format>xml</format>
-                            </formats>
-                            <check />
-                        </configuration>
-                    </plugin>
+                  
                 </plugins>
             </build>
             <properties>
