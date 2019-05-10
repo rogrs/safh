@@ -1,13 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "medicamentos",
-            "otherEntityName": "medicamentos",
-            "otherEntityRelationshipName": "fabricantes"
-        }
-    ],
+    "name": "Fabricantes",
     "fields": [
         {
             "fieldName": "fabricante",
@@ -19,10 +11,21 @@
             "fieldValidateRulesMaxlength": 60
         }
     ],
-    "changelogDate": "20171019202210",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "medicamentos",
+            "otherEntityRelationshipName": "fabricantes",
+            "relationshipName": "medicamentos"
+        }
+    ],
+    "changelogDate": "20190510033905",
     "entityTableName": "fabricantes",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

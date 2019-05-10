@@ -1,31 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "internacoes",
-            "otherEntityName": "internacoes",
-            "otherEntityRelationshipName": "pacientes"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "clinicas",
-            "otherEntityName": "clinicas",
-            "otherEntityField": "clinica"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "enfermarias",
-            "otherEntityName": "enfermarias",
-            "otherEntityField": "enfermaria"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "leitos",
-            "otherEntityName": "leitos",
-            "otherEntityField": "leito"
-        }
-    ],
+    "name": "Pacientes",
     "fields": [
         {
             "fieldName": "prontuario",
@@ -113,10 +87,42 @@
             "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
         }
     ],
-    "changelogDate": "20171019202216",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoes",
+            "otherEntityRelationshipName": "pacientes",
+            "relationshipName": "internacoes"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "clinicas",
+            "otherEntityRelationshipName": "pacientes",
+            "relationshipName": "clinicas",
+            "otherEntityField": "clinica"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "enfermarias",
+            "otherEntityRelationshipName": "pacientes",
+            "relationshipName": "enfermarias",
+            "otherEntityField": "enfermaria"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "leitos",
+            "otherEntityRelationshipName": "pacientes",
+            "relationshipName": "leitos",
+            "otherEntityField": "leito"
+        }
+    ],
+    "changelogDate": "20190510033911",
     "entityTableName": "pacientes",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

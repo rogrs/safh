@@ -1,13 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "internacoesDetalhes",
-            "otherEntityName": "internacoesDetalhes",
-            "otherEntityRelationshipName": "dietas"
-        }
-    ],
+    "name": "Dietas",
     "fields": [
         {
             "fieldName": "dieta",
@@ -27,10 +19,21 @@
             "fieldValidateRulesMaxlength": 255
         }
     ],
-    "changelogDate": "20171019202207",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "dietas",
+            "relationshipName": "internacoesDetalhes"
+        }
+    ],
+    "changelogDate": "20190510033902",
     "entityTableName": "dietas",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

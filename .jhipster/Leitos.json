@@ -1,13 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "pacientes",
-            "otherEntityName": "pacientes",
-            "otherEntityRelationshipName": "leitos"
-        }
-    ],
+    "name": "Leitos",
     "fields": [
         {
             "fieldName": "leito",
@@ -27,10 +19,21 @@
             "fieldValidateRulesMaxlength": 40
         }
     ],
-    "changelogDate": "20171019202213",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "leitos",
+            "relationshipName": "pacientes"
+        }
+    ],
+    "changelogDate": "20190510033908",
     "entityTableName": "leitos",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

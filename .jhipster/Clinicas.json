@@ -1,19 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "pacientes",
-            "otherEntityName": "pacientes",
-            "otherEntityRelationshipName": "clinicas"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "internacoes",
-            "otherEntityName": "internacoes",
-            "otherEntityRelationshipName": "clinicas"
-        }
-    ],
+    "name": "Clinicas",
     "fields": [
         {
             "fieldName": "clinica",
@@ -33,10 +19,27 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20171019202206",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "clinicas",
+            "relationshipName": "pacientes"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoes",
+            "otherEntityRelationshipName": "clinicas",
+            "relationshipName": "internacoes"
+        }
+    ],
+    "changelogDate": "20190510033901",
     "entityTableName": "clinicas",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

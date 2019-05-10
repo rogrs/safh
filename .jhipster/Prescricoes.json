@@ -1,13 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "internacoesDetalhes",
-            "otherEntityName": "internacoesDetalhes",
-            "otherEntityRelationshipName": "prescricoes"
-        }
-    ],
+    "name": "Prescricoes",
     "fields": [
         {
             "fieldName": "prescricao",
@@ -19,10 +11,21 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20171019202218",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "prescricoes",
+            "relationshipName": "internacoesDetalhes"
+        }
+    ],
+    "changelogDate": "20190510033913",
     "entityTableName": "prescricoes",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

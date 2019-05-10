@@ -1,31 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "internacoesDetalhes",
-            "otherEntityName": "internacoesDetalhes",
-            "otherEntityRelationshipName": "internacoes"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "pacientes",
-            "otherEntityName": "pacientes",
-            "otherEntityField": "nome"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "clinicas",
-            "otherEntityName": "clinicas",
-            "otherEntityField": "clinica"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "medicos",
-            "otherEntityName": "medicos",
-            "otherEntityField": "nome"
-        }
-    ],
+    "name": "Internacoes",
     "fields": [
         {
             "fieldName": "dataInternacao",
@@ -44,10 +18,42 @@
             "fieldValidateRulesMaxlength": 200
         }
     ],
-    "changelogDate": "20171019202211",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "internacoesDetalhes"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "pacientes",
+            "otherEntityField": "nome"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "clinicas",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "clinicas",
+            "otherEntityField": "clinica"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "medicos",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "medicos",
+            "otherEntityField": "nome"
+        }
+    ],
+    "changelogDate": "20190510033906",
     "entityTableName": "internacoes",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

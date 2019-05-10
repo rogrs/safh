@@ -1,19 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "internacoes",
-            "otherEntityName": "internacoes",
-            "otherEntityRelationshipName": "medicos"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "especialidades",
-            "otherEntityName": "especialidades",
-            "otherEntityField": "especialidade"
-        }
-    ],
+    "name": "Medicos",
     "fields": [
         {
             "fieldName": "nome",
@@ -103,10 +89,28 @@
             "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
         }
     ],
-    "changelogDate": "20171019202215",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoes",
+            "otherEntityRelationshipName": "medicos",
+            "relationshipName": "internacoes"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "especialidades",
+            "otherEntityRelationshipName": "medicos",
+            "relationshipName": "especialidades",
+            "otherEntityField": "especialidade"
+        }
+    ],
+    "changelogDate": "20190510033910",
     "entityTableName": "medicos",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

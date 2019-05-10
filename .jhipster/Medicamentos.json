@@ -1,19 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "posologiaPadrao",
-            "otherEntityName": "posologias",
-            "otherEntityField": "posologia"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "fabricantes",
-            "otherEntityName": "fabricantes",
-            "otherEntityField": "fabricante"
-        }
-    ],
+    "name": "Medicamentos",
     "fields": [
         {
             "fieldName": "descricao",
@@ -67,10 +53,29 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20171019202214",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "posologias",
+            "otherEntityRelationshipName": "medicamentos",
+            "relationshipName": "posologiaPadrao",
+            "otherEntityField": "posologia"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "fabricantes",
+            "otherEntityRelationshipName": "medicamentos",
+            "relationshipName": "fabricantes",
+            "otherEntityField": "fabricante"
+        }
+    ],
+    "changelogDate": "20190510033909",
     "entityTableName": "medicamentos",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

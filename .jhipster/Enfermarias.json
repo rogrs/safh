@@ -1,13 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "pacientes",
-            "otherEntityName": "pacientes",
-            "otherEntityRelationshipName": "enfermarias"
-        }
-    ],
+    "name": "Enfermarias",
     "fields": [
         {
             "fieldName": "enfermaria",
@@ -19,10 +11,21 @@
             "fieldValidateRulesMaxlength": 60
         }
     ],
-    "changelogDate": "20171019202208",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "enfermarias",
+            "relationshipName": "pacientes"
+        }
+    ],
+    "changelogDate": "20190510033903",
     "entityTableName": "enfermarias",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

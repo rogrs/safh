@@ -1,13 +1,5 @@
 {
-    "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "medicos",
-            "otherEntityName": "medicos",
-            "otherEntityRelationshipName": "especialidades"
-        }
-    ],
+    "name": "Especialidades",
     "fields": [
         {
             "fieldName": "especialidade",
@@ -19,10 +11,21 @@
             "fieldValidateRulesMaxlength": 60
         }
     ],
-    "changelogDate": "20171019202209",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "medicos",
+            "otherEntityRelationshipName": "especialidades",
+            "relationshipName": "medicos"
+        }
+    ],
+    "changelogDate": "20190510033904",
     "entityTableName": "especialidades",
     "dto": "no",
     "pagination": "infinite-scroll",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }

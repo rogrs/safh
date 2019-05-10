@@ -2,27 +2,27 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202206_added_entity_Clinicas.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202207_added_entity_Dietas.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202208_added_entity_Enfermarias.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202209_added_entity_Especialidades.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202210_added_entity_Fabricantes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202211_added_entity_Internacoes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202212_added_entity_InternacoesDetalhes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202213_added_entity_Leitos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202214_added_entity_Medicamentos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202215_added_entity_Medicos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202216_added_entity_Pacientes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202217_added_entity_Posologias.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202218_added_entity_Prescricoes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033901_added_entity_Clinicas.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033902_added_entity_Dietas.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033903_added_entity_Enfermarias.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033904_added_entity_Especialidades.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033905_added_entity_Fabricantes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033906_added_entity_Internacoes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033907_added_entity_InternacoesDetalhes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033908_added_entity_Leitos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033909_added_entity_Medicamentos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033910_added_entity_Medicos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033911_added_entity_Pacientes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033912_added_entity_Posologias.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033913_added_entity_Prescricoes.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20171019202211_added_entity_constraints_Internacoes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202212_added_entity_constraints_InternacoesDetalhes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202214_added_entity_constraints_Medicamentos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202215_added_entity_constraints_Medicos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20171019202216_added_entity_constraints_Pacientes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033906_added_entity_constraints_Internacoes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033907_added_entity_constraints_InternacoesDetalhes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033909_added_entity_constraints_Medicamentos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033910_added_entity_constraints_Medicos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190510033911_added_entity_constraints_Pacientes.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
