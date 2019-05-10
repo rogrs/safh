@@ -1,27 +1,36 @@
 module.exports = {
-    preset: 'jest-preset-angular',
-    setupFilesAfterEnv: ['<rootDir>/src/test/javascript/jest.ts'],
-    coverageDirectory: '<rootDir>/target/test-results/',
-    globals: {
-        'ts-jest': {
-            stringifyContentPathRegex: '\\.html$',
-            tsConfig: 'tsconfig.json',
-            astTransformers: [require.resolve('jest-preset-angular/InlineHtmlStripStylesTransformer')]
-        }
-    },
-    coveragePathIgnorePatterns: [
-        '<rootDir>/src/test/javascript'
-    ],
-    moduleNameMapper: {
-        'app/(.*)': '<rootDir>/src/main/webapp/app/$1'
-    },
-    reporters: [
-        'default',
-        [ 'jest-junit', { output: './target/test-results/TESTS-results-jest.xml' } ]
-    ],
-    testResultsProcessor: 'jest-sonar-reporter',
-    transformIgnorePatterns: ['node_modules/(?!@angular/common/locales)'],
-    testMatch: ['<rootDir>/src/test/javascript/spec/**/@(*.)@(spec.ts)'],
-    rootDir: '../../../',
-    testURL: "http://localhost/"
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest'
+  },
+  rootDir: '../../../',
+  testURL: 'http://localhost/',
+  coverageDirectory: '<rootDir>/target/test-results/',
+  testMatch: ['<rootDir>/src/test/javascript/spec/**/@(*.)@(spec.ts?(x))'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/test/javascript'
+  ],
+  moduleNameMapper: {
+    'app/(.*)': '<rootDir>/src/main/webapp/app/$1',
+    '\\.(css|scss)$': 'identity-obj-proxy'
+  },
+  reporters: [
+    'default',
+    [ 'jest-junit', { output: './target/test-results/TESTS-results-jest.xml' } ]
+  ],
+  testResultsProcessor: 'jest-sonar-reporter',
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/'
+  ],
+  setupFiles: [
+    '<rootDir>/src/test/javascript/spec/enzyme-setup.ts',
+    '<rootDir>/src/test/javascript/spec/storage-mock.ts'
+  ],
+  snapshotSerializers: ['enzyme-to-json/serializer'],
+  globals: {
+    'ts-jest': {
+      tsConfig: './tsconfig.test.json',
+      diagnostics: false
+    }
+  }
 };

@@ -1,8 +1,7 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "br.com.rogrs",
-      "nativeLanguage": "pt-br"
+      "packageName": "br.com.rogrs"
     },
     "jhipsterVersion": "6.0.0",
     "applicationType": "monolith",
@@ -16,28 +15,25 @@
     "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "postgresql",
+    "prodDatabaseType": "mysql",
     "searchEngine": "elasticsearch",
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "MDQ1M2MxNTRlZDFkNTYxY2Q4NzM2ZmNhOTI2NzkzNGYwZWY0MzRiMjYwNTU4Y2E2ZDMzNTZhMmNhOWQxYmFmMzA5NjkxZDQzOTAwZTY1ZmUzZGY1ZjFmOGNjOTFmMDQwY2Y1NDAwMWRmYzRiNjM1NmYyMjgzOWE1ZjY2OTgwNGE=",
-    "clientFramework": "angularX",
+    "jwtSecretKey": "NGU3YTA5YmY5YTM0NjhhYTNiMmIxOTNmZDBmZWQ1M2QwY2FkNWZiMDMzNjljMTMxMDBlOWJlOTU2ODMxYWYzYTliZjY1ZjM2OGE2YzYzZDg1YWIzOTJkMmU0ZjA2MWViOTM1MGE1NzI4OTVjNTFiZjFmODcwMTZkZGM0Mjc2YTU=",
+    "clientFramework": "react",
     "clientTheme": "none",
     "clientThemeVariant": "",
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [],
+    "testFrameworks": [
+      "cucumber"
+    ],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
-    "enableTranslation": true,
-    "nativeLanguage": "pt-br",
-    "languages": [
-      "pt-br",
-      "pt-pt"
-    ]
+    "enableTranslation": false
   }
 }
