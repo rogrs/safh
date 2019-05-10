@@ -1,11 +1,11 @@
 version: '2'
 services:
-    safh-postgresql:
-        image: postgres:9.6.5
-        # volumes:
-        #     - ~/volumes/jhipster/safh/postgresql/:/var/lib/postgresql/data/
-        environment:
-            - POSTGRES_USER=safh
-            - POSTGRES_PASSWORD=
-        ports:
-            - 5432:5432
+  safh-postgresql:
+    image: postgres:11.2
+    # volumes:
+    #     - ~/volumes/jhipster/safh/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=safh
+      - POSTGRES_PASSWORD=
+    ports:
+      - 5432:5432

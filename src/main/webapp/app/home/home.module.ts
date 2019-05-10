@@ -1,22 +1,12 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SafhSharedModule } from '../shared';
-
+import { SafhSharedModule } from 'app/shared';
 import { HOME_ROUTE, HomeComponent } from './';
 
 @NgModule({
-    imports: [
-        SafhSharedModule,
-        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
-    ],
-    declarations: [
-        HomeComponent,
-    ],
-    entryComponents: [
-    ],
-    providers: [
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [SafhSharedModule, RouterModule.forChild([HOME_ROUTE])],
+  declarations: [HomeComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SafhHomeModule {}

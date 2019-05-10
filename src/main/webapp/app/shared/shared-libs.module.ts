@@ -1,31 +1,20 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-    imports: [
-        NgbModule.forRoot(),
-        NgJhipsterModule.forRoot({
-            // set below to true to make alerts look like toast
-            alertAsToast: false,
-            i18nEnabled: true,
-            defaultI18nLang: 'pt-br'
-        }),
-        InfiniteScrollModule,
-        CookieModule.forRoot()
-    ],
-    exports: [
-        FormsModule,
-        HttpModule,
-        CommonModule,
-        NgbModule,
-        NgJhipsterModule,
-        InfiniteScrollModule
-    ]
+  imports: [NgbModule, InfiniteScrollModule, CookieModule.forRoot(), FontAwesomeModule, ReactiveFormsModule],
+  exports: [FormsModule, CommonModule, NgbModule, NgJhipsterModule, InfiniteScrollModule, FontAwesomeModule, ReactiveFormsModule]
 })
-export class SafhSharedLibsModule {}
+export class SafhSharedLibsModule {
+  static forRoot() {
+    return {
+      ngModule: SafhSharedLibsModule
+    };
+  }
+}

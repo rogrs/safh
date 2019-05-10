@@ -1,73 +1,54 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-import { SafhSharedModule } from '../shared';
+import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageHelper } from 'app/core';
+import { SafhSharedModule } from 'app/shared';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
-    adminState,
-    AuditsComponent,
-    UserMgmtComponent,
-    UserDialogComponent,
-    UserDeleteDialogComponent,
-    UserMgmtDetailComponent,
-    UserMgmtDialogComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    JhiMetricsMonitoringModalComponent,
-    JhiMetricsMonitoringComponent,
-    JhiHealthModalComponent,
-    JhiHealthCheckComponent,
-    JhiConfigurationComponent,
-    JhiDocsComponent,
-    AuditsService,
-    JhiConfigurationService,
-    JhiHealthService,
-    JhiMetricsService,
-    LogsService,
-    UserResolvePagingParams,
-    UserResolve,
-    UserModalService
+  adminState,
+  AuditsComponent,
+  UserMgmtComponent,
+  UserMgmtDetailComponent,
+  UserMgmtUpdateComponent,
+  UserMgmtDeleteDialogComponent,
+  LogsComponent,
+  JhiMetricsMonitoringComponent,
+  JhiHealthModalComponent,
+  JhiHealthCheckComponent,
+  JhiConfigurationComponent,
+  JhiDocsComponent
 } from './';
 
 @NgModule({
-    imports: [
-        SafhSharedModule,
-        RouterModule.forRoot(adminState, { useHash: true }),
-        /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
-    ],
-    declarations: [
-        AuditsComponent,
-        UserMgmtComponent,
-        UserDialogComponent,
-        UserDeleteDialogComponent,
-        UserMgmtDetailComponent,
-        UserMgmtDialogComponent,
-        UserMgmtDeleteDialogComponent,
-        LogsComponent,
-        JhiConfigurationComponent,
-        JhiHealthCheckComponent,
-        JhiHealthModalComponent,
-        JhiDocsComponent,
-        JhiMetricsMonitoringComponent,
-        JhiMetricsMonitoringModalComponent
-    ],
-    entryComponents: [
-        UserMgmtDialogComponent,
-        UserMgmtDeleteDialogComponent,
-        JhiHealthModalComponent,
-        JhiMetricsMonitoringModalComponent,
-    ],
-    providers: [
-        AuditsService,
-        JhiConfigurationService,
-        JhiHealthService,
-        JhiMetricsService,
-        LogsService,
-        UserResolvePagingParams,
-        UserResolve,
-        UserModalService
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [
+    SafhSharedModule,
+    RouterModule.forChild(adminState)
+    /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
+  ],
+  declarations: [
+    AuditsComponent,
+    UserMgmtComponent,
+    UserMgmtDetailComponent,
+    UserMgmtUpdateComponent,
+    UserMgmtDeleteDialogComponent,
+    LogsComponent,
+    JhiConfigurationComponent,
+    JhiHealthCheckComponent,
+    JhiHealthModalComponent,
+    JhiDocsComponent,
+    JhiMetricsMonitoringComponent
+  ],
+  providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
+  entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SafhAdminModule {}
+export class SafhAdminModule {
+  constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
+    this.languageHelper.language.subscribe((languageKey: string) => {
+      if (languageKey !== undefined) {
+        this.languageService.changeLanguage(languageKey);
+      }
+    });
+  }
+}
