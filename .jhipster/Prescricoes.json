@@ -1,0 +1,31 @@
+{
+    "name": "Prescricoes",
+    "fields": [
+        {
+            "fieldName": "prescricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "prescricoes",
+            "relationshipName": "internacoesDetalhes"
+        }
+    ],
+    "changelogDate": "20190510033913",
+    "entityTableName": "prescricoes",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

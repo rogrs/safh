@@ -43,6 +43,32 @@ public class CacheConfiguration {
             createCache(cm, br.com.rogrs.domain.User.class.getName());
             createCache(cm, br.com.rogrs.domain.Authority.class.getName());
             createCache(cm, br.com.rogrs.domain.User.class.getName() + ".authorities");
+            createCache(cm, br.com.rogrs.domain.Clinicas.class.getName());
+            createCache(cm, br.com.rogrs.domain.Clinicas.class.getName() + ".pacientes");
+            createCache(cm, br.com.rogrs.domain.Clinicas.class.getName() + ".internacoes");
+            createCache(cm, br.com.rogrs.domain.Dietas.class.getName());
+            createCache(cm, br.com.rogrs.domain.Dietas.class.getName() + ".internacoesDetalhes");
+            createCache(cm, br.com.rogrs.domain.Enfermarias.class.getName());
+            createCache(cm, br.com.rogrs.domain.Enfermarias.class.getName() + ".pacientes");
+            createCache(cm, br.com.rogrs.domain.Especialidades.class.getName());
+            createCache(cm, br.com.rogrs.domain.Especialidades.class.getName() + ".medicos");
+            createCache(cm, br.com.rogrs.domain.Fabricantes.class.getName());
+            createCache(cm, br.com.rogrs.domain.Fabricantes.class.getName() + ".medicamentos");
+            createCache(cm, br.com.rogrs.domain.Internacoes.class.getName());
+            createCache(cm, br.com.rogrs.domain.Internacoes.class.getName() + ".internacoesDetalhes");
+            createCache(cm, br.com.rogrs.domain.InternacoesDetalhes.class.getName());
+            createCache(cm, br.com.rogrs.domain.Leitos.class.getName());
+            createCache(cm, br.com.rogrs.domain.Leitos.class.getName() + ".pacientes");
+            createCache(cm, br.com.rogrs.domain.Medicamentos.class.getName());
+            createCache(cm, br.com.rogrs.domain.Medicos.class.getName());
+            createCache(cm, br.com.rogrs.domain.Medicos.class.getName() + ".internacoes");
+            createCache(cm, br.com.rogrs.domain.Pacientes.class.getName());
+            createCache(cm, br.com.rogrs.domain.Pacientes.class.getName() + ".internacoes");
+            createCache(cm, br.com.rogrs.domain.Posologias.class.getName());
+            createCache(cm, br.com.rogrs.domain.Posologias.class.getName() + ".medicamentos");
+            createCache(cm, br.com.rogrs.domain.Posologias.class.getName() + ".internacoesDetalhes");
+            createCache(cm, br.com.rogrs.domain.Prescricoes.class.getName());
+            createCache(cm, br.com.rogrs.domain.Prescricoes.class.getName() + ".internacoesDetalhes");
             // jhipster-needle-ehcache-add-entry
         };
     }

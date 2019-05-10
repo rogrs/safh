@@ -1,0 +1,59 @@
+{
+    "name": "Internacoes",
+    "fields": [
+        {
+            "fieldName": "dataInternacao",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 200
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "internacoesDetalhes"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "pacientes",
+            "otherEntityField": "nome"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "clinicas",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "clinicas",
+            "otherEntityField": "clinica"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "medicos",
+            "otherEntityRelationshipName": "internacoes",
+            "relationshipName": "medicos",
+            "otherEntityField": "nome"
+        }
+    ],
+    "changelogDate": "20190510033906",
+    "entityTableName": "internacoes",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

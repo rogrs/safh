@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Pacientes.
+    -->
+    <changeSet id="20190510033911-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="clinicas_id"
+                                 baseTableName="pacientes"
+                                 constraintName="fk_pacientes_clinicas_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="clinicas"/>
+
+        <addForeignKeyConstraint baseColumnNames="enfermarias_id"
+                                 baseTableName="pacientes"
+                                 constraintName="fk_pacientes_enfermarias_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="enfermarias"/>
+
+        <addForeignKeyConstraint baseColumnNames="leitos_id"
+                                 baseTableName="pacientes"
+                                 constraintName="fk_pacientes_leitos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="leitos"/>
+
+    </changeSet>
+</databaseChangeLog>

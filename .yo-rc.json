@@ -27,13 +27,13 @@
     "clientThemeVariant": "",
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [
-      "cucumber"
-    ],
+    "testFrameworks": ["cucumber"],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
-    "enableTranslation": false
+    "enableTranslation": false,
+    "herokuAppName": "safh",
+    "herokuDeployType": "jar"
   }
 }

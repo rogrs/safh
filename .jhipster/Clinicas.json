@@ -1,0 +1,45 @@
+{
+    "name": "Clinicas",
+    "fields": [
+        {
+            "fieldName": "clinica",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 80
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "pacientes",
+            "otherEntityRelationshipName": "clinicas",
+            "relationshipName": "pacientes"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoes",
+            "otherEntityRelationshipName": "clinicas",
+            "relationshipName": "internacoes"
+        }
+    ],
+    "changelogDate": "20190510033901",
+    "entityTableName": "clinicas",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,37 @@
+{
+    "name": "Posologias",
+    "fields": [
+        {
+            "fieldName": "posologia",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "medicamentos",
+            "otherEntityRelationshipName": "posologiaPadrao",
+            "relationshipName": "medicamentos"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "posologias",
+            "relationshipName": "internacoesDetalhes"
+        }
+    ],
+    "changelogDate": "20190510033912",
+    "entityTableName": "posologias",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

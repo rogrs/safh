@@ -1,0 +1,39 @@
+{
+    "name": "Dietas",
+    "fields": [
+        {
+            "fieldName": "dieta",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 255
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "internacoesDetalhes",
+            "otherEntityRelationshipName": "dietas",
+            "relationshipName": "internacoesDetalhes"
+        }
+    ],
+    "changelogDate": "20190510033902",
+    "entityTableName": "dietas",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
