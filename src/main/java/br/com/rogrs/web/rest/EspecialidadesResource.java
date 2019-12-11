@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.EspecialidadesSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class EspecialidadesResource {
         Especialidades result = especialidadesRepository.save(especialidades);
         especialidadesSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/especialidades/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class EspecialidadesResource {
         Especialidades result = especialidadesRepository.save(especialidades);
         especialidadesSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, especialidades.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, especialidades.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /especialidades} : get all the especialidades.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of especialidades in body.
      */
     @GetMapping("/especialidades")
-    public ResponseEntity<List<Especialidades>> getAllEspecialidades(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Especialidades");
-        Page<Especialidades> page = especialidadesRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Especialidades> getAllEspecialidades() {
+        log.debug("REST request to get all Especialidades");
+        return especialidadesRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class EspecialidadesResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the especialidades, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/especialidades/{id}")
-    public ResponseEntity<Especialidades> getEspecialidades(@PathVariable Long id) {
+    public ResponseEntity<Especialidades> getEspecialidades(@PathVariable String id) {
         log.debug("REST request to get Especialidades : {}", id);
         Optional<Especialidades> especialidades = especialidadesRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(especialidades);
@@ -130,11 +122,11 @@ public class EspecialidadesResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/especialidades/{id}")
-    public ResponseEntity<Void> deleteEspecialidades(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEspecialidades(@PathVariable String id) {
         log.debug("REST request to delete Especialidades : {}", id);
         especialidadesRepository.deleteById(id);
         especialidadesSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class EspecialidadesResource {
      * to the query.
      *
      * @param query the query of the especialidades search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/especialidades")
-    public ResponseEntity<List<Especialidades>> searchEspecialidades(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Especialidades for query {}", query);
-        Page<Especialidades> page = especialidadesSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Especialidades> searchEspecialidades(@RequestParam String query) {
+        log.debug("REST request to search Especialidades for query {}", query);
+        return StreamSupport
+            .stream(especialidadesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

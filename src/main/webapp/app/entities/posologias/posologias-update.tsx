@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './posologias.reducer';
 import { IPosologias } from 'app/shared/model/posologias.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -35,7 +33,9 @@ export class PosologiasUpdate extends React.Component<IPosologiasUpdateProps, IP
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
   }
@@ -57,7 +57,7 @@ export class PosologiasUpdate extends React.Component<IPosologiasUpdateProps, IP
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/posologias');
+    this.props.history.push('/posologias');
   };
 
   render() {
@@ -68,7 +68,9 @@ export class PosologiasUpdate extends React.Component<IPosologiasUpdateProps, IP
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.posologias.home.createOrEditLabel">Create or edit a Posologias</h2>
+            <h2 id="safhApp.posologias.home.createOrEditLabel">
+              <Translate contentKey="safhApp.posologias.home.createOrEditLabel">Create or edit a Posologias</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -79,33 +81,38 @@ export class PosologiasUpdate extends React.Component<IPosologiasUpdateProps, IP
               <AvForm model={isNew ? {} : posologiasEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="posologias-id">ID</Label>
+                    <Label for="posologias-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="posologias-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="posologiaLabel" for="posologias-posologia">
-                    Posologia
+                    <Translate contentKey="safhApp.posologias.posologia">Posologia</Translate>
                   </Label>
                   <AvField
                     id="posologias-posologia"
                     type="text"
                     name="posologia"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 40, errorMessage: 'This field cannot be longer than 40 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 40, errorMessage: translate('entity.validation.maxlength', { max: 40 }) }
                     }}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/posologias" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/posologias" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

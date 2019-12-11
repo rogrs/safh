@@ -5,7 +5,7 @@ import { IPrescricoes } from 'app/shared/model/prescricoes.model';
 import { IPosologias } from 'app/shared/model/posologias.model';
 
 export interface IInternacoesDetalhes {
-  id?: number;
+  id?: string;
   dataDetalhe?: Moment;
   horario?: Moment;
   qtd?: number;

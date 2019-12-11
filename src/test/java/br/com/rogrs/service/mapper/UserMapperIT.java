@@ -1,6 +1,5 @@
 package br.com.rogrs.service.mapper;
 
-
 import br.com.rogrs.SafhApp;
 import br.com.rogrs.domain.User;
 import br.com.rogrs.service.dto.UserDTO;
@@ -24,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserMapperIT {
 
     private static final String DEFAULT_LOGIN = "johndoe";
-    private static final Long DEFAULT_ID = 1L;
+    private static final String DEFAULT_ID = "id1";
 
     @Autowired
     private UserMapper userMapper;

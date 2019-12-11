@@ -1,50 +1,43 @@
 package br.com.rogrs.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Especialidades.
  */
-@Entity
-@Table(name = "especialidades")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "especialidades")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "especialidades")
 public class Especialidades implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(max = 60)
-    @Column(name = "especialidade", length = 60, nullable = false)
+    @Field("especialidade")
     private String especialidade;
 
-    @OneToMany(mappedBy = "especialidades")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @DBRef
+    @Field("medicos")
     private Set<Medicos> medicos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

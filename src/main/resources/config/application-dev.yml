@@ -19,6 +19,11 @@ logging:
     io.github.jhipster: DEBUG
     br.com.rogrs: DEBUG
 
+management:
+  health:
+    elasticsearch:
+      enabled: false
+
 spring:
   profiles:
     active: dev
@@ -29,41 +34,20 @@ spring:
   devtools:
     restart:
       enabled: true
-      additional-exclude: .h2.server.properties
+      additional-exclude: static/**
     livereload:
       enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
     serialization:
       indent-output: true
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/safh;DB_CLOSE_DELAY=-1
-    username: safh
-    password:
-    hikari:
-      poolName: Hikari
-      auto-commit: false
-  h2:
-    console:
-      enabled: false
-  jpa:
-    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-    database: H2
-    show-sql: true
-    properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
   data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: safh
     elasticsearch:
       properties:
         path:
           home: target/elasticsearch
-  liquibase:
-    # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
   mail:
     host: localhost
     port: 25
@@ -100,12 +84,11 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NGU3YTA5YmY5YTM0NjhhYTNiMmIxOTNmZDBmZWQ1M2QwY2FkNWZiMDMzNjljMTMxMDBlOWJlOTU2ODMxYWYzYTliZjY1ZjM2OGE2YzYzZDg1YWIzOTJkMmU0ZjA2MWViOTM1MGE1NzI4OTVjNTFiZjFmODcwMTZkZGM0Mjc2YTU=
+        base64-secret: MzFjZmVhZTA0YjkyNmRiNzM0OTFlODk4YmIyNTVhNmVmZWE1OTRkNDg4YWEwOGE1YWI4MmQ3ZTUwMTdhNWI1NjQxNGY5NWI1NzRmODc4ZGRkNmNhZDA3NTYyMjY0YTNkOTBhMWY5NTdjM2M0ZDI5MDhmZjVmMDRmNTJmZTRkZTQ=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    from: safh@localhost
     base-url: http://127.0.0.1:8080
   metrics:
     logs: # Reports metrics in the logs
@@ -118,6 +101,9 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

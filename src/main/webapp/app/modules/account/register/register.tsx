@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { Translate, translate } from 'react-jhipster';
 import { connect } from 'react-redux';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Row, Col, Alert, Button } from 'reactstrap';
@@ -8,113 +8,114 @@ import PasswordStrengthBar from 'app/shared/layout/password/password-strength-ba
 import { IRootState } from 'app/shared/reducers';
 import { handleRegister, reset } from './register.reducer';
 
-export type IRegisterProps = DispatchProps;
+export interface IRegisterProps extends StateProps, DispatchProps {}
 
-export interface IRegisterState {
-  password: string;
-}
+export const RegisterPage = (props: IRegisterProps) => {
+  const [password, setPassword] = useState('');
 
-export class RegisterPage extends React.Component<IRegisterProps, IRegisterState> {
-  state: IRegisterState = {
-    password: ''
-  };
+  useEffect(() => () => props.reset(), []);
 
-  componentWillUnmount() {
-    this.props.reset();
-  }
-
-  handleValidSubmit = (event, values) => {
-    this.props.handleRegister(values.username, values.email, values.firstPassword);
+  const handleValidSubmit = (event, values) => {
+    props.handleRegister(values.username, values.email, values.firstPassword, props.currentLocale);
     event.preventDefault();
   };
 
-  updatePassword = event => {
-    this.setState({ password: event.target.value });
-  };
+  const updatePassword = event => setPassword(event.target.value);
 
-  render() {
-    return (
-      <div>
-        <Row className="justify-content-center">
-          <Col md="8">
-            <h1 id="register-title">Registration</h1>
-          </Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col md="8">
-            <AvForm id="register-form" onValidSubmit={this.handleValidSubmit}>
-              <AvField
-                name="username"
-                label="Username"
-                placeholder={'Your username'}
-                validate={{
-                  required: { value: true, errorMessage: 'Your username is required.' },
-                  pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: 'Your username can only contain letters and digits.' },
-                  minLength: { value: 1, errorMessage: 'Your username is required to be at least 1 character.' },
-                  maxLength: { value: 50, errorMessage: 'Your username cannot be longer than 50 characters.' }
-                }}
-              />
-              <AvField
-                name="email"
-                label="Email"
-                placeholder={'Your email'}
-                type="email"
-                validate={{
-                  required: { value: true, errorMessage: 'Your email is required.' },
-                  minLength: { value: 5, errorMessage: 'Your email is required to be at least 5 characters.' },
-                  maxLength: { value: 254, errorMessage: 'Your email cannot be longer than 50 characters.' }
-                }}
-              />
-              <AvField
-                name="firstPassword"
-                label="New password"
-                placeholder={'New password'}
-                type="password"
-                onChange={this.updatePassword}
-                validate={{
-                  required: { value: true, errorMessage: 'Your password is required.' },
-                  minLength: { value: 4, errorMessage: 'Your password is required to be at least 4 characters.' },
-                  maxLength: { value: 50, errorMessage: 'Your password cannot be longer than 50 characters.' }
-                }}
-              />
-              <PasswordStrengthBar password={this.state.password} />
-              <AvField
-                name="secondPassword"
-                label="New password confirmation"
-                placeholder="Confirm the new password"
-                type="password"
-                validate={{
-                  required: { value: true, errorMessage: 'Your confirmation password is required.' },
-                  minLength: { value: 4, errorMessage: 'Your confirmation password is required to be at least 4 characters.' },
-                  maxLength: { value: 50, errorMessage: 'Your confirmation password cannot be longer than 50 characters.' },
-                  match: { value: 'firstPassword', errorMessage: 'The password and its confirmation do not match!' }
-                }}
-              />
-              <Button id="register-submit" color="primary" type="submit">
-                Register
-              </Button>
-            </AvForm>
-            <p>&nbsp;</p>
-            <Alert color="warning">
-              <span>If you want to</span>
-              <a className="alert-link"> sign in</a>
-              <span>
+  return (
+    <div>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h1 id="register-title">
+            <Translate contentKey="register.title">Registration</Translate>
+          </h1>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <AvForm id="register-form" onValidSubmit={handleValidSubmit}>
+            <AvField
+              name="username"
+              label={translate('global.form.username.label')}
+              placeholder={translate('global.form.username.placeholder')}
+              validate={{
+                required: { value: true, errorMessage: translate('register.messages.validate.login.required') },
+                pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: translate('register.messages.validate.login.pattern') },
+                minLength: { value: 1, errorMessage: translate('register.messages.validate.login.minlength') },
+                maxLength: { value: 50, errorMessage: translate('register.messages.validate.login.maxlength') }
+              }}
+            />
+            <AvField
+              name="email"
+              label={translate('global.form.email.label')}
+              placeholder={translate('global.form.email.placeholder')}
+              type="email"
+              validate={{
+                required: { value: true, errorMessage: translate('global.messages.validate.email.required') },
+                minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
+                maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
+              }}
+            />
+            <AvField
+              name="firstPassword"
+              label={translate('global.form.newpassword.label')}
+              placeholder={translate('global.form.newpassword.placeholder')}
+              type="password"
+              onChange={updatePassword}
+              validate={{
+                required: { value: true, errorMessage: translate('global.messages.validate.newpassword.required') },
+                minLength: { value: 4, errorMessage: translate('global.messages.validate.newpassword.minlength') },
+                maxLength: { value: 50, errorMessage: translate('global.messages.validate.newpassword.maxlength') }
+              }}
+            />
+            <PasswordStrengthBar password={password} />
+            <AvField
+              name="secondPassword"
+              label={translate('global.form.confirmpassword.label')}
+              placeholder={translate('global.form.confirmpassword.placeholder')}
+              type="password"
+              validate={{
+                required: { value: true, errorMessage: translate('global.messages.validate.confirmpassword.required') },
+                minLength: { value: 4, errorMessage: translate('global.messages.validate.confirmpassword.minlength') },
+                maxLength: { value: 50, errorMessage: translate('global.messages.validate.confirmpassword.maxlength') },
+                match: { value: 'firstPassword', errorMessage: translate('global.messages.error.dontmatch') }
+              }}
+            />
+            <Button id="register-submit" color="primary" type="submit">
+              <Translate contentKey="register.form.button">Register</Translate>
+            </Button>
+          </AvForm>
+          <p>&nbsp;</p>
+          <Alert color="warning">
+            <span>
+              <Translate contentKey="global.messages.info.authenticated.prefix">If you want to </Translate>
+            </span>
+            <a className="alert-link">
+              <Translate contentKey="global.messages.info.authenticated.link"> sign in</Translate>
+            </a>
+            <span>
+              <Translate contentKey="global.messages.info.authenticated.suffix">
                 , you can try the default accounts:
-                <br />- Administrator (login="admin" and password="admin")
-                <br />- User (login="user" and password="user").
-              </span>
-            </Alert>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
+                <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
+                <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
+              </Translate>
+            </span>
+          </Alert>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+const mapStateToProps = ({ locale }: IRootState) => ({
+  currentLocale: locale.currentLocale
+});
 
 const mapDispatchToProps = { handleRegister, reset };
+type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(RegisterPage);

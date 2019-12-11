@@ -2,14 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction } from 'react-jhipster';
+import { Translate, ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './posologias.reducer';
 import { IPosologias } from 'app/shared/model/posologias.model';
-// tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IPosologiasDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -25,20 +23,28 @@ export class PosologiasDetail extends React.Component<IPosologiasDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Posologias [<b>{posologiasEntity.id}</b>]
+            <Translate contentKey="safhApp.posologias.detail.title">Posologias</Translate> [<b>{posologiasEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="posologia">Posologia</span>
+              <span id="posologia">
+                <Translate contentKey="safhApp.posologias.posologia">Posologia</Translate>
+              </span>
             </dt>
             <dd>{posologiasEntity.posologia}</dd>
           </dl>
-          <Button tag={Link} to="/entity/posologias" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+          <Button tag={Link} to="/posologias" replace color="info">
+            <FontAwesomeIcon icon="arrow-left" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.back">Back</Translate>
+            </span>
           </Button>
           &nbsp;
-          <Button tag={Link} to={`/entity/posologias/${posologiasEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+          <Button tag={Link} to={`/posologias/${posologiasEntity.id}/edit`} replace color="primary">
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </span>
           </Button>
         </Col>
       </Row>

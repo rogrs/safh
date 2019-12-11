@@ -19,13 +19,14 @@
             "relationshipName": "medicos"
         }
     ],
-    "changelogDate": "20190510033904",
+    "changelogDate": "20191211110030",
     "entityTableName": "especialidades",
     "dto": "no",
-    "pagination": "infinite-scroll",
+    "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
+    "readOnly": false,
     "clientRootFolder": "",
     "applications": "*"
 }

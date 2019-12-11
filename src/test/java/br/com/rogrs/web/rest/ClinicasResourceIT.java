@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link ClinicasResource} REST controller.
+ * Integration tests for the {@link ClinicasResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class ClinicasResourceIT {
@@ -66,9 +63,6 @@ public class ClinicasResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restClinicasMockMvc;
@@ -93,20 +87,32 @@ public class ClinicasResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Clinicas createEntity(EntityManager em) {
+    public static Clinicas createEntity() {
         Clinicas clinicas = new Clinicas()
             .clinica(DEFAULT_CLINICA)
             .descricao(DEFAULT_DESCRICAO);
         return clinicas;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Clinicas createUpdatedEntity() {
+        Clinicas clinicas = new Clinicas()
+            .clinica(UPDATED_CLINICA)
+            .descricao(UPDATED_DESCRICAO);
+        return clinicas;
+    }
 
     @BeforeEach
     public void initTest() {
-        clinicas = createEntity(em);
+        clinicasRepository.deleteAll();
+        clinicas = createEntity();
     }
 
     @Test
-    @Transactional
     public void createClinicas() throws Exception {
         int databaseSizeBeforeCreate = clinicasRepository.findAll().size();
 
@@ -128,12 +134,11 @@ public class ClinicasResourceIT {
     }
 
     @Test
-    @Transactional
     public void createClinicasWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = clinicasRepository.findAll().size();
 
         // Create the Clinicas with an existing ID
-        clinicas.setId(1L);
+        clinicas.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restClinicasMockMvc.perform(post("/api/clinicas")
@@ -151,7 +156,6 @@ public class ClinicasResourceIT {
 
 
     @Test
-    @Transactional
     public void checkClinicaIsRequired() throws Exception {
         int databaseSizeBeforeTest = clinicasRepository.findAll().size();
         // set the field null
@@ -169,37 +173,34 @@ public class ClinicasResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllClinicas() throws Exception {
         // Initialize the database
-        clinicasRepository.saveAndFlush(clinicas);
+        clinicasRepository.save(clinicas);
 
         // Get all the clinicasList
         restClinicasMockMvc.perform(get("/api/clinicas?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(clinicas.getId().intValue())))
-            .andExpect(jsonPath("$.[*].clinica").value(hasItem(DEFAULT_CLINICA.toString())))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(clinicas.getId())))
+            .andExpect(jsonPath("$.[*].clinica").value(hasItem(DEFAULT_CLINICA)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
     }
     
     @Test
-    @Transactional
     public void getClinicas() throws Exception {
         // Initialize the database
-        clinicasRepository.saveAndFlush(clinicas);
+        clinicasRepository.save(clinicas);
 
         // Get the clinicas
         restClinicasMockMvc.perform(get("/api/clinicas/{id}", clinicas.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(clinicas.getId().intValue()))
-            .andExpect(jsonPath("$.clinica").value(DEFAULT_CLINICA.toString()))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()));
+            .andExpect(jsonPath("$.id").value(clinicas.getId()))
+            .andExpect(jsonPath("$.clinica").value(DEFAULT_CLINICA))
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO));
     }
 
     @Test
-    @Transactional
     public void getNonExistingClinicas() throws Exception {
         // Get the clinicas
         restClinicasMockMvc.perform(get("/api/clinicas/{id}", Long.MAX_VALUE))
@@ -207,17 +208,14 @@ public class ClinicasResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateClinicas() throws Exception {
         // Initialize the database
-        clinicasRepository.saveAndFlush(clinicas);
+        clinicasRepository.save(clinicas);
 
         int databaseSizeBeforeUpdate = clinicasRepository.findAll().size();
 
         // Update the clinicas
         Clinicas updatedClinicas = clinicasRepository.findById(clinicas.getId()).get();
-        // Disconnect from session so that the updates on updatedClinicas are not directly saved in db
-        em.detach(updatedClinicas);
         updatedClinicas
             .clinica(UPDATED_CLINICA)
             .descricao(UPDATED_DESCRICAO);
@@ -239,7 +237,6 @@ public class ClinicasResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingClinicas() throws Exception {
         int databaseSizeBeforeUpdate = clinicasRepository.findAll().size();
 
@@ -260,10 +257,9 @@ public class ClinicasResourceIT {
     }
 
     @Test
-    @Transactional
     public void deleteClinicas() throws Exception {
         // Initialize the database
-        clinicasRepository.saveAndFlush(clinicas);
+        clinicasRepository.save(clinicas);
 
         int databaseSizeBeforeDelete = clinicasRepository.findAll().size();
 
@@ -272,7 +268,7 @@ public class ClinicasResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Clinicas> clinicasList = clinicasRepository.findAll();
         assertThat(clinicasList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -281,33 +277,17 @@ public class ClinicasResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchClinicas() throws Exception {
         // Initialize the database
-        clinicasRepository.saveAndFlush(clinicas);
-        when(mockClinicasSearchRepository.search(queryStringQuery("id:" + clinicas.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(clinicas), PageRequest.of(0, 1), 1));
+        clinicasRepository.save(clinicas);
+        when(mockClinicasSearchRepository.search(queryStringQuery("id:" + clinicas.getId())))
+            .thenReturn(Collections.singletonList(clinicas));
         // Search the clinicas
         restClinicasMockMvc.perform(get("/api/_search/clinicas?query=id:" + clinicas.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(clinicas.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(clinicas.getId())))
             .andExpect(jsonPath("$.[*].clinica").value(hasItem(DEFAULT_CLINICA)))
             .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Clinicas.class);
-        Clinicas clinicas1 = new Clinicas();
-        clinicas1.setId(1L);
-        Clinicas clinicas2 = new Clinicas();
-        clinicas2.setId(clinicas1.getId());
-        assertThat(clinicas1).isEqualTo(clinicas2);
-        clinicas2.setId(2L);
-        assertThat(clinicas1).isNotEqualTo(clinicas2);
-        clinicas1.setId(null);
-        assertThat(clinicas1).isNotEqualTo(clinicas2);
     }
 }

@@ -1,13 +1,5 @@
 import axios from 'axios';
-import {
-  ICrudSearchAction,
-  parseHeaderForLinks,
-  loadMoreDataWhenScrolled,
-  ICrudGetAction,
-  ICrudGetAllAction,
-  ICrudPutAction,
-  ICrudDeleteAction
-} from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -29,9 +21,7 @@ const initialState = {
   errorMessage: null,
   entities: [] as ReadonlyArray<IInternacoesDetalhes>,
   entity: defaultValue,
-  links: { next: 0 },
   updating: false,
-  totalItems: 0,
   updateSuccess: false
 };
 
@@ -74,13 +64,10 @@ export default (state: InternacoesDetalhesState = initialState, action): Interna
       };
     case SUCCESS(ACTION_TYPES.SEARCH_INTERNACOESDETALHES):
     case SUCCESS(ACTION_TYPES.FETCH_INTERNACOESDETALHES_LIST):
-      const links = parseHeaderForLinks(action.payload.headers.link);
       return {
         ...state,
-        links,
         loading: false,
-        totalItems: action.payload.headers['x-total-count'],
-        entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links)
+        entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_INTERNACOESDETALHES):
       return {
@@ -119,16 +106,13 @@ const apiSearchUrl = 'api/_search/internacoes-detalhes';
 
 export const getSearchEntities: ICrudSearchAction<IInternacoesDetalhes> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_INTERNACOESDETALHES,
-  payload: axios.get<IInternacoesDetalhes>(`${apiSearchUrl}?query=${query}${sort ? `&page=${page}&size=${size}&sort=${sort}` : ''}`)
+  payload: axios.get<IInternacoesDetalhes>(`${apiSearchUrl}?query=${query}`)
 });
 
-export const getEntities: ICrudGetAllAction<IInternacoesDetalhes> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
-  return {
-    type: ACTION_TYPES.FETCH_INTERNACOESDETALHES_LIST,
-    payload: axios.get<IInternacoesDetalhes>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
-  };
-};
+export const getEntities: ICrudGetAllAction<IInternacoesDetalhes> = (page, size, sort) => ({
+  type: ACTION_TYPES.FETCH_INTERNACOESDETALHES_LIST,
+  payload: axios.get<IInternacoesDetalhes>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+});
 
 export const getEntity: ICrudGetAction<IInternacoesDetalhes> = id => {
   const requestUrl = `${apiUrl}/${id}`;
@@ -143,6 +127,7 @@ export const createEntity: ICrudPutAction<IInternacoesDetalhes> = entity => asyn
     type: ACTION_TYPES.CREATE_INTERNACOESDETALHES,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
+  dispatch(getEntities());
   return result;
 };
 
@@ -151,6 +136,7 @@ export const updateEntity: ICrudPutAction<IInternacoesDetalhes> = entity => asyn
     type: ACTION_TYPES.UPDATE_INTERNACOESDETALHES,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
+  dispatch(getEntities());
   return result;
 };
 
@@ -160,6 +146,7 @@ export const deleteEntity: ICrudDeleteAction<IInternacoesDetalhes> = id => async
     type: ACTION_TYPES.DELETE_INTERNACOESDETALHES,
     payload: axios.delete(requestUrl)
   });
+  dispatch(getEntities());
   return result;
 };
 

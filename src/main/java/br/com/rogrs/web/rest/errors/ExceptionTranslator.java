@@ -15,6 +15,7 @@ import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
+import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  * The error response follows RFC7807 - Problem Details for HTTP APIs (https://tools.ietf.org/html/rfc7807).
  */
 @ControllerAdvice
-public class ExceptionTranslator implements ProblemHandling {
+public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
 
     private static final String FIELD_ERRORS_KEY = "fieldErrors";
     private static final String MESSAGE_KEY = "message";
@@ -78,7 +79,7 @@ public class ExceptionTranslator implements ProblemHandling {
     public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @Nonnull NativeWebRequest request) {
         BindingResult result = ex.getBindingResult();
         List<FieldErrorVM> fieldErrors = result.getFieldErrors().stream()
-            .map(f -> new FieldErrorVM(f.getObjectName(), f.getField(), f.getCode()))
+            .map(f -> new FieldErrorVM(f.getObjectName().replaceFirst("DTO$", ""), f.getField(), f.getCode()))
             .collect(Collectors.toList());
 
         Problem problem = Problem.builder()
@@ -99,10 +100,25 @@ public class ExceptionTranslator implements ProblemHandling {
             .build();
         return create(ex, problem, request);
     }
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleEmailAlreadyUsedException(br.com.rogrs.service.EmailAlreadyUsedException ex, NativeWebRequest request) {
+        EmailAlreadyUsedException problem = new EmailAlreadyUsedException();
+        return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
+    }
 
     @ExceptionHandler
+    public ResponseEntity<Problem> handleUsernameAlreadyUsedException(br.com.rogrs.service.UsernameAlreadyUsedException ex, NativeWebRequest request) {
+        LoginAlreadyUsedException problem = new LoginAlreadyUsedException();
+        return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleInvalidPasswordException(br.com.rogrs.service.InvalidPasswordException ex, NativeWebRequest request) {
+        return create(new InvalidPasswordException(), request);
+    }
+    @ExceptionHandler
     public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
-        return create(ex, request, HeaderUtil.createFailureAlert(applicationName, false, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
+        return create(ex, request, HeaderUtil.createFailureAlert(applicationName, true, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
     }
 
     @ExceptionHandler

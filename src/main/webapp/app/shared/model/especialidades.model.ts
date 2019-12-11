@@ -1,7 +1,7 @@
 import { IMedicos } from 'app/shared/model/medicos.model';
 
 export interface IEspecialidades {
-  id?: number;
+  id?: string;
   especialidade?: string;
   medicos?: IMedicos[];
 }

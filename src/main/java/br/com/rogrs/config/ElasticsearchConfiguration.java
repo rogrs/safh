@@ -15,6 +15,13 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.EntityMapper;
 import org.springframework.data.elasticsearch.core.convert.ElasticsearchConverter;
 import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
+import org.springframework.data.elasticsearch.core.mapping.ElasticsearchPersistentProperty;
+import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchPersistentProperty;
+import org.springframework.data.mapping.PersistentEntity;
+import org.springframework.data.mapping.model.Property;
+import org.springframework.data.mapping.model.SimpleTypeHolder;
+import org.springframework.data.elasticsearch.core.convert.MappingElasticsearchConverter;
+import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchPersistentEntity;
 
 import java.io.IOException;
 
@@ -37,12 +44,12 @@ public class ElasticsearchConfiguration {
     @Primary
     public ElasticsearchOperations elasticsearchTemplate(final JestClient jestClient,
                                                          final ElasticsearchConverter elasticsearchConverter,
-                                                         final SimpleElasticsearchMappingContext simpleElasticsearchMappingContext,
                                                          EntityMapper mapper) {
+        CustomElasticsearchMappingContext mappingContext = new CustomElasticsearchMappingContext();
         return new JestElasticsearchTemplate(
             jestClient,
-            elasticsearchConverter,
-            new DefaultJestResultsMapper(simpleElasticsearchMappingContext, mapper));
+            new MappingElasticsearchConverter(mappingContext),
+            new DefaultJestResultsMapper(mappingContext, mapper));
     }
 
     public class CustomEntityMapper implements EntityMapper {
@@ -69,4 +76,25 @@ public class ElasticsearchConfiguration {
         }
     }
 
+}
+
+class CustomElasticsearchMappingContext extends SimpleElasticsearchMappingContext {
+
+    @Override
+    protected ElasticsearchPersistentProperty createPersistentProperty(Property property, SimpleElasticsearchPersistentEntity owner, SimpleTypeHolder simpleTypeHolder) {
+        return new CustomElasticsearchPersistentProperty(property, owner, simpleTypeHolder);
+    }
+}
+
+class CustomElasticsearchPersistentProperty extends SimpleElasticsearchPersistentProperty {
+
+    @SuppressWarnings({"unchecked"})
+    public CustomElasticsearchPersistentProperty(Property property, PersistentEntity owner, SimpleTypeHolder simpleTypeHolder) {
+        super(property, owner, simpleTypeHolder);
+    }
+
+    @Override
+    public boolean isAssociation() {
+        return false;
+    }
 }

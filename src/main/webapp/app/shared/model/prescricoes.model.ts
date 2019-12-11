@@ -1,7 +1,7 @@
 import { IInternacoesDetalhes } from 'app/shared/model/internacoes-detalhes.model';
 
 export interface IPrescricoes {
-  id?: number;
+  id?: string;
   prescricao?: string;
   internacoesDetalhes?: IInternacoesDetalhes[];
 }

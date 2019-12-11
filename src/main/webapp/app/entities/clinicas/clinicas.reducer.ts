@@ -1,13 +1,5 @@
 import axios from 'axios';
-import {
-  ICrudSearchAction,
-  parseHeaderForLinks,
-  loadMoreDataWhenScrolled,
-  ICrudGetAction,
-  ICrudGetAllAction,
-  ICrudPutAction,
-  ICrudDeleteAction
-} from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -29,9 +21,7 @@ const initialState = {
   errorMessage: null,
   entities: [] as ReadonlyArray<IClinicas>,
   entity: defaultValue,
-  links: { next: 0 },
   updating: false,
-  totalItems: 0,
   updateSuccess: false
 };
 
@@ -74,13 +64,10 @@ export default (state: ClinicasState = initialState, action): ClinicasState => {
       };
     case SUCCESS(ACTION_TYPES.SEARCH_CLINICAS):
     case SUCCESS(ACTION_TYPES.FETCH_CLINICAS_LIST):
-      const links = parseHeaderForLinks(action.payload.headers.link);
       return {
         ...state,
-        links,
         loading: false,
-        totalItems: action.payload.headers['x-total-count'],
-        entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links)
+        entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_CLINICAS):
       return {
@@ -119,16 +106,13 @@ const apiSearchUrl = 'api/_search/clinicas';
 
 export const getSearchEntities: ICrudSearchAction<IClinicas> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_CLINICAS,
-  payload: axios.get<IClinicas>(`${apiSearchUrl}?query=${query}${sort ? `&page=${page}&size=${size}&sort=${sort}` : ''}`)
+  payload: axios.get<IClinicas>(`${apiSearchUrl}?query=${query}`)
 });
 
-export const getEntities: ICrudGetAllAction<IClinicas> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
-  return {
-    type: ACTION_TYPES.FETCH_CLINICAS_LIST,
-    payload: axios.get<IClinicas>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
-  };
-};
+export const getEntities: ICrudGetAllAction<IClinicas> = (page, size, sort) => ({
+  type: ACTION_TYPES.FETCH_CLINICAS_LIST,
+  payload: axios.get<IClinicas>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+});
 
 export const getEntity: ICrudGetAction<IClinicas> = id => {
   const requestUrl = `${apiUrl}/${id}`;
@@ -143,6 +127,7 @@ export const createEntity: ICrudPutAction<IClinicas> = entity => async dispatch 
     type: ACTION_TYPES.CREATE_CLINICAS,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
+  dispatch(getEntities());
   return result;
 };
 
@@ -151,6 +136,7 @@ export const updateEntity: ICrudPutAction<IClinicas> = entity => async dispatch 
     type: ACTION_TYPES.UPDATE_CLINICAS,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
+  dispatch(getEntities());
   return result;
 };
 
@@ -160,6 +146,7 @@ export const deleteEntity: ICrudDeleteAction<IClinicas> = id => async dispatch =
     type: ACTION_TYPES.DELETE_CLINICAS,
     payload: axios.delete(requestUrl)
   });
+  dispatch(getEntities());
   return result;
 };
 

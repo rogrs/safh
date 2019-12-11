@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IMedicamentos } from 'app/shared/model/medicamentos.model';
@@ -30,16 +30,24 @@ export class MedicamentosDeleteDialog extends React.Component<IMedicamentosDelet
     const { medicamentosEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="safhApp.medicamentos.delete.question">Are you sure you want to delete this Medicamentos?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>
+          <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
+        </ModalHeader>
+        <ModalBody id="safhApp.medicamentos.delete.question">
+          <Translate contentKey="safhApp.medicamentos.delete.question" interpolate={{ id: medicamentosEntity.id }}>
+            Are you sure you want to delete this Medicamentos?
+          </Translate>
+        </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp;
+            <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
           <Button id="jhi-confirm-delete-medicamentos" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp;
+            <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>
         </ModalFooter>
       </Modal>

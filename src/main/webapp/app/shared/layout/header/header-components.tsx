@@ -1,4 +1,5 @@
 import React from 'react';
+import { Translate } from 'react-jhipster';
 
 import { NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
@@ -15,7 +16,9 @@ export const BrandIcon = props => (
 export const Brand = props => (
   <NavbarBrand tag={Link} to="/" className="brand-logo">
     <BrandIcon />
-    <span className="brand-title">Safh</span>
+    <span className="brand-title">
+      <Translate contentKey="global.title">Safh</Translate>
+    </span>
     <span className="navbar-version">{appConfig.VERSION}</span>
   </NavbarBrand>
 );
@@ -24,7 +27,9 @@ export const Home = props => (
   <NavItem>
     <NavLink tag={Link} to="/" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home" />
-      <span>Home</span>
+      <span>
+        <Translate contentKey="global.menu.home">Home</Translate>
+      </span>
     </NavLink>
   </NavItem>
 );

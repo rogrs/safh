@@ -1,13 +1,5 @@
 import axios from 'axios';
-import {
-  ICrudSearchAction,
-  parseHeaderForLinks,
-  loadMoreDataWhenScrolled,
-  ICrudGetAction,
-  ICrudGetAllAction,
-  ICrudPutAction,
-  ICrudDeleteAction
-} from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -29,9 +21,7 @@ const initialState = {
   errorMessage: null,
   entities: [] as ReadonlyArray<IEnfermarias>,
   entity: defaultValue,
-  links: { next: 0 },
   updating: false,
-  totalItems: 0,
   updateSuccess: false
 };
 
@@ -74,13 +64,10 @@ export default (state: EnfermariasState = initialState, action): EnfermariasStat
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ENFERMARIAS):
     case SUCCESS(ACTION_TYPES.FETCH_ENFERMARIAS_LIST):
-      const links = parseHeaderForLinks(action.payload.headers.link);
       return {
         ...state,
-        links,
         loading: false,
-        totalItems: action.payload.headers['x-total-count'],
-        entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links)
+        entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_ENFERMARIAS):
       return {
@@ -119,16 +106,13 @@ const apiSearchUrl = 'api/_search/enfermarias';
 
 export const getSearchEntities: ICrudSearchAction<IEnfermarias> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_ENFERMARIAS,
-  payload: axios.get<IEnfermarias>(`${apiSearchUrl}?query=${query}${sort ? `&page=${page}&size=${size}&sort=${sort}` : ''}`)
+  payload: axios.get<IEnfermarias>(`${apiSearchUrl}?query=${query}`)
 });
 
-export const getEntities: ICrudGetAllAction<IEnfermarias> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
-  return {
-    type: ACTION_TYPES.FETCH_ENFERMARIAS_LIST,
-    payload: axios.get<IEnfermarias>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
-  };
-};
+export const getEntities: ICrudGetAllAction<IEnfermarias> = (page, size, sort) => ({
+  type: ACTION_TYPES.FETCH_ENFERMARIAS_LIST,
+  payload: axios.get<IEnfermarias>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+});
 
 export const getEntity: ICrudGetAction<IEnfermarias> = id => {
   const requestUrl = `${apiUrl}/${id}`;
@@ -143,6 +127,7 @@ export const createEntity: ICrudPutAction<IEnfermarias> = entity => async dispat
     type: ACTION_TYPES.CREATE_ENFERMARIAS,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
+  dispatch(getEntities());
   return result;
 };
 
@@ -151,6 +136,7 @@ export const updateEntity: ICrudPutAction<IEnfermarias> = entity => async dispat
     type: ACTION_TYPES.UPDATE_ENFERMARIAS,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
+  dispatch(getEntities());
   return result;
 };
 
@@ -160,6 +146,7 @@ export const deleteEntity: ICrudDeleteAction<IEnfermarias> = id => async dispatc
     type: ACTION_TYPES.DELETE_ENFERMARIAS,
     payload: axios.delete(requestUrl)
   });
+  dispatch(getEntities());
   return result;
 };
 

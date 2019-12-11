@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.InternacoesSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class InternacoesResource {
         Internacoes result = internacoesRepository.save(internacoes);
         internacoesSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/internacoes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class InternacoesResource {
         Internacoes result = internacoesRepository.save(internacoes);
         internacoesSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, internacoes.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, internacoes.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /internacoes} : get all the internacoes.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of internacoes in body.
      */
     @GetMapping("/internacoes")
-    public ResponseEntity<List<Internacoes>> getAllInternacoes(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Internacoes");
-        Page<Internacoes> page = internacoesRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Internacoes> getAllInternacoes() {
+        log.debug("REST request to get all Internacoes");
+        return internacoesRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class InternacoesResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the internacoes, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/internacoes/{id}")
-    public ResponseEntity<Internacoes> getInternacoes(@PathVariable Long id) {
+    public ResponseEntity<Internacoes> getInternacoes(@PathVariable String id) {
         log.debug("REST request to get Internacoes : {}", id);
         Optional<Internacoes> internacoes = internacoesRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(internacoes);
@@ -130,11 +122,11 @@ public class InternacoesResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/internacoes/{id}")
-    public ResponseEntity<Void> deleteInternacoes(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteInternacoes(@PathVariable String id) {
         log.debug("REST request to delete Internacoes : {}", id);
         internacoesRepository.deleteById(id);
         internacoesSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class InternacoesResource {
      * to the query.
      *
      * @param query the query of the internacoes search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/internacoes")
-    public ResponseEntity<List<Internacoes>> searchInternacoes(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Internacoes for query {}", query);
-        Page<Internacoes> page = internacoesSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Internacoes> searchInternacoes(@RequestParam String query) {
+        log.debug("REST request to search Internacoes for query {}", query);
+        return StreamSupport
+            .stream(internacoesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

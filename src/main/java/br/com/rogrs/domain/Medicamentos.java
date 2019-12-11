@@ -1,78 +1,74 @@
 package br.com.rogrs.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A Medicamentos.
  */
-@Entity
-@Table(name = "medicamentos")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "medicamentos")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "medicamentos")
 public class Medicamentos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(max = 100)
-    @Column(name = "descricao", length = 100, nullable = false)
+    @Field("descricao")
     private String descricao;
 
     @NotNull
     @Size(max = 60)
-    @Column(name = "registro_ministerio_saude", length = 60, nullable = false)
+    @Field("registro_ministerio_saude")
     private String registroMinisterioSaude;
 
     @NotNull
     @Size(max = 13)
-    @Column(name = "codigo_barras", length = 13, nullable = false)
+    @Field("codigo_barras")
     private String codigoBarras;
 
-    @Column(name = "qtd_atual")
+    @Field("qtd_atual")
     private Float qtdAtual;
 
-    @Column(name = "qtd_min")
+    @Field("qtd_min")
     private Float qtdMin;
 
-    @Column(name = "qtd_max")
+    @Field("qtd_max")
     private Float qtdMax;
 
     @Size(max = 8000)
-    @Column(name = "observacoes", length = 8000)
+    @Field("observacoes")
     private String observacoes;
 
-    @Column(name = "apresentacao")
+    @Field("apresentacao")
     private String apresentacao;
 
-    @ManyToOne
+    @DBRef
+    @Field("posologiaPadrao")
     @JsonIgnoreProperties("medicamentos")
     private Posologias posologiaPadrao;
 
-    @ManyToOne
+    @DBRef
+    @Field("fabricantes")
     @JsonIgnoreProperties("medicamentos")
     private Fabricantes fabricantes;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

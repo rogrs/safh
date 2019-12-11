@@ -1,15 +1,15 @@
 package br.com.rogrs.repository;
-
 import br.com.rogrs.domain.Posologias;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 
 /**
- * Spring Data  repository for the Posologias entity.
+ * Spring Data MongoDB repository for the Posologias entity.
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PosologiasRepository extends JpaRepository<Posologias, Long> {
+public interface PosologiasRepository extends MongoRepository<Posologias, String> {
 
 }

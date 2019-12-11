@@ -1,6 +1,7 @@
 package br.com.rogrs.web.rest;
 
 import br.com.rogrs.SafhApp;
+import io.github.jhipster.config.JHipsterProperties;
 import br.com.rogrs.config.audit.AuditEventConverter;
 import br.com.rogrs.domain.PersistentAuditEvent;
 import br.com.rogrs.repository.PersistenceAuditEventRepository;
@@ -18,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
@@ -31,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link AuditResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
-@Transactional
 public class AuditResourceIT {
 
     private static final String SAMPLE_PRINCIPAL = "SAMPLE_PRINCIPAL";
@@ -44,6 +43,9 @@ public class AuditResourceIT {
 
     @Autowired
     private AuditEventConverter auditEventConverter;
+
+    @Autowired
+    private JHipsterProperties jhipsterProperties;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -63,7 +65,7 @@ public class AuditResourceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         AuditEventService auditEventService =
-            new AuditEventService(auditEventRepository, auditEventConverter);
+            new AuditEventService(auditEventRepository, auditEventConverter, jhipsterProperties);
         AuditResource auditResource = new AuditResource(auditEventService);
         this.restAuditMockMvc = MockMvcBuilders.standaloneSetup(auditResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -144,15 +146,14 @@ public class AuditResourceIT {
     }
 
     @Test
-    @Transactional
     public void testPersistentAuditEventEquals() throws Exception {
         TestUtil.equalsVerifier(PersistentAuditEvent.class);
         PersistentAuditEvent auditEvent1 = new PersistentAuditEvent();
-        auditEvent1.setId(1L);
+        auditEvent1.setId("id1");
         PersistentAuditEvent auditEvent2 = new PersistentAuditEvent();
         auditEvent2.setId(auditEvent1.getId());
         assertThat(auditEvent1).isEqualTo(auditEvent2);
-        auditEvent2.setId(2L);
+        auditEvent2.setId("id2");
         assertThat(auditEvent1).isNotEqualTo(auditEvent2);
         auditEvent1.setId(null);
         assertThat(auditEvent1).isNotEqualTo(auditEvent2);

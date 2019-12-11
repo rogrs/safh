@@ -1,12 +1,9 @@
 package br.com.rogrs.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -14,55 +11,54 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Internacoes.
  */
-@Entity
-@Table(name = "internacoes")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "internacoes")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "internacoes")
 public class Internacoes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "data_internacao", nullable = false)
+    @Field("data_internacao")
     private LocalDate dataInternacao;
 
     @NotNull
     @Size(max = 200)
-    @Column(name = "descricao", length = 200, nullable = false)
+    @Field("descricao")
     private String descricao;
 
-    @OneToMany(mappedBy = "internacoes")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @DBRef
+    @Field("internacoesDetalhes")
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
-    @ManyToOne
+    @DBRef
+    @Field("pacientes")
     @JsonIgnoreProperties("internacoes")
     private Pacientes pacientes;
 
-    @ManyToOne
+    @DBRef
+    @Field("clinicas")
     @JsonIgnoreProperties("internacoes")
     private Clinicas clinicas;
 
-    @ManyToOne
+    @DBRef
+    @Field("medicos")
     @JsonIgnoreProperties("internacoes")
     private Medicos medicos;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

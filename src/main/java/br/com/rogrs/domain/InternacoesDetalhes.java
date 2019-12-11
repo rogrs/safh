@@ -1,68 +1,66 @@
 package br.com.rogrs.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * A InternacoesDetalhes.
  */
-@Entity
-@Table(name = "internacoes_detalhes")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "internacoes_detalhes")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "internacoesdetalhes")
 public class InternacoesDetalhes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "data_detalhe", nullable = false)
+    @Field("data_detalhe")
     private LocalDate dataDetalhe;
 
     @NotNull
-    @Column(name = "horario", nullable = false)
+    @Field("horario")
     private LocalDate horario;
 
     @NotNull
-    @Column(name = "qtd", nullable = false)
+    @Field("qtd")
     private Float qtd;
 
-    @ManyToOne
+    @DBRef
+    @Field("internacoes")
     @JsonIgnoreProperties("internacoesDetalhes")
     private Internacoes internacoes;
 
-    @ManyToOne
+    @DBRef
+    @Field("dietas")
     @JsonIgnoreProperties("internacoesDetalhes")
     private Dietas dietas;
 
-    @ManyToOne
+    @DBRef
+    @Field("prescricoes")
     @JsonIgnoreProperties("internacoesDetalhes")
     private Prescricoes prescricoes;
 
-    @ManyToOne
+    @DBRef
+    @Field("posologias")
     @JsonIgnoreProperties("internacoesDetalhes")
     private Posologias posologias;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

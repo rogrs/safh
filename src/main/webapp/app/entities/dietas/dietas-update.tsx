@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './dietas.reducer';
 import { IDietas } from 'app/shared/model/dietas.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -35,7 +33,9 @@ export class DietasUpdate extends React.Component<IDietasUpdateProps, IDietasUpd
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
   }
@@ -57,7 +57,7 @@ export class DietasUpdate extends React.Component<IDietasUpdateProps, IDietasUpd
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/dietas');
+    this.props.history.push('/dietas');
   };
 
   render() {
@@ -68,7 +68,9 @@ export class DietasUpdate extends React.Component<IDietasUpdateProps, IDietasUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.dietas.home.createOrEditLabel">Create or edit a Dietas</h2>
+            <h2 id="safhApp.dietas.home.createOrEditLabel">
+              <Translate contentKey="safhApp.dietas.home.createOrEditLabel">Create or edit a Dietas</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -79,46 +81,51 @@ export class DietasUpdate extends React.Component<IDietasUpdateProps, IDietasUpd
               <AvForm model={isNew ? {} : dietasEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="dietas-id">ID</Label>
+                    <Label for="dietas-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="dietas-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="dietaLabel" for="dietas-dieta">
-                    Dieta
+                    <Translate contentKey="safhApp.dietas.dieta">Dieta</Translate>
                   </Label>
                   <AvField
                     id="dietas-dieta"
                     type="text"
                     name="dieta"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 40, errorMessage: 'This field cannot be longer than 40 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 40, errorMessage: translate('entity.validation.maxlength', { max: 40 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="descricaoLabel" for="dietas-descricao">
-                    Descricao
+                    <Translate contentKey="safhApp.dietas.descricao">Descricao</Translate>
                   </Label>
                   <AvField
                     id="dietas-descricao"
                     type="text"
                     name="descricao"
                     validate={{
-                      maxLength: { value: 255, errorMessage: 'This field cannot be longer than 255 characters.' }
+                      maxLength: { value: 255, errorMessage: translate('entity.validation.maxlength', { max: 255 }) }
                     }}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/dietas" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/dietas" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

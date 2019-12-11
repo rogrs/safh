@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './leitos.reducer';
 import { ILeitos } from 'app/shared/model/leitos.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -35,7 +33,9 @@ export class LeitosUpdate extends React.Component<ILeitosUpdateProps, ILeitosUpd
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
   }
@@ -57,7 +57,7 @@ export class LeitosUpdate extends React.Component<ILeitosUpdateProps, ILeitosUpd
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/leitos');
+    this.props.history.push('/leitos');
   };
 
   render() {
@@ -68,7 +68,9 @@ export class LeitosUpdate extends React.Component<ILeitosUpdateProps, ILeitosUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.leitos.home.createOrEditLabel">Create or edit a Leitos</h2>
+            <h2 id="safhApp.leitos.home.createOrEditLabel">
+              <Translate contentKey="safhApp.leitos.home.createOrEditLabel">Create or edit a Leitos</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -79,46 +81,51 @@ export class LeitosUpdate extends React.Component<ILeitosUpdateProps, ILeitosUpd
               <AvForm model={isNew ? {} : leitosEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="leitos-id">ID</Label>
+                    <Label for="leitos-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="leitos-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="leitoLabel" for="leitos-leito">
-                    Leito
+                    <Translate contentKey="safhApp.leitos.leito">Leito</Translate>
                   </Label>
                   <AvField
                     id="leitos-leito"
                     type="text"
                     name="leito"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="tipoLabel" for="leitos-tipo">
-                    Tipo
+                    <Translate contentKey="safhApp.leitos.tipo">Tipo</Translate>
                   </Label>
                   <AvField
                     id="leitos-tipo"
                     type="text"
                     name="tipo"
                     validate={{
-                      maxLength: { value: 40, errorMessage: 'This field cannot be longer than 40 characters.' }
+                      maxLength: { value: 40, errorMessage: translate('entity.validation.maxlength', { max: 40 }) }
                     }}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/leitos" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/leitos" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

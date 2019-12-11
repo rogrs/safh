@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.PrescricoesSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class PrescricoesResource {
         Prescricoes result = prescricoesRepository.save(prescricoes);
         prescricoesSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/prescricoes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class PrescricoesResource {
         Prescricoes result = prescricoesRepository.save(prescricoes);
         prescricoesSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prescricoes.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, prescricoes.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /prescricoes} : get all the prescricoes.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of prescricoes in body.
      */
     @GetMapping("/prescricoes")
-    public ResponseEntity<List<Prescricoes>> getAllPrescricoes(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Prescricoes");
-        Page<Prescricoes> page = prescricoesRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Prescricoes> getAllPrescricoes() {
+        log.debug("REST request to get all Prescricoes");
+        return prescricoesRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class PrescricoesResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the prescricoes, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/prescricoes/{id}")
-    public ResponseEntity<Prescricoes> getPrescricoes(@PathVariable Long id) {
+    public ResponseEntity<Prescricoes> getPrescricoes(@PathVariable String id) {
         log.debug("REST request to get Prescricoes : {}", id);
         Optional<Prescricoes> prescricoes = prescricoesRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(prescricoes);
@@ -130,11 +122,11 @@ public class PrescricoesResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/prescricoes/{id}")
-    public ResponseEntity<Void> deletePrescricoes(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePrescricoes(@PathVariable String id) {
         log.debug("REST request to delete Prescricoes : {}", id);
         prescricoesRepository.deleteById(id);
         prescricoesSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class PrescricoesResource {
      * to the query.
      *
      * @param query the query of the prescricoes search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/prescricoes")
-    public ResponseEntity<List<Prescricoes>> searchPrescricoes(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Prescricoes for query {}", query);
-        Page<Prescricoes> page = prescricoesSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Prescricoes> searchPrescricoes(@RequestParam String query) {
+        log.debug("REST request to search Prescricoes for query {}", query);
+        return StreamSupport
+            .stream(prescricoesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

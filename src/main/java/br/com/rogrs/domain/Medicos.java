@@ -1,98 +1,91 @@
 package br.com.rogrs.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 import br.com.rogrs.domain.enumeration.Estados;
 
 /**
  * A Medicos.
  */
-@Entity
-@Table(name = "medicos")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "medicos")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "medicos")
 public class Medicos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "nome", length = 255, nullable = false)
+    @Field("nome")
     private String nome;
 
     @NotNull
     @Size(max = 40)
-    @Column(name = "crm", length = 40, nullable = false)
+    @Field("crm")
     private String crm;
 
     @Size(max = 11)
-    @Column(name = "cpf", length = 11)
+    @Field("cpf")
     private String cpf;
 
     @Size(max = 100)
-    @Column(name = "email", length = 100)
+    @Field("email")
     private String email;
 
     @Size(max = 10)
-    @Column(name = "cep", length = 10)
+    @Field("cep")
     private String cep;
 
     @Size(max = 80)
-    @Column(name = "logradouro", length = 80)
+    @Field("logradouro")
     private String logradouro;
 
     @Size(max = 10)
-    @Column(name = "numero", length = 10)
+    @Field("numero")
     private String numero;
 
     @Size(max = 60)
-    @Column(name = "complemento", length = 60)
+    @Field("complemento")
     private String complemento;
 
     @Size(max = 60)
-    @Column(name = "bairro", length = 60)
+    @Field("bairro")
     private String bairro;
 
     @Size(max = 60)
-    @Column(name = "cidade", length = 60)
+    @Field("cidade")
     private String cidade;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "u_f")
+    @Field("u_f")
     private Estados uF;
 
-    @OneToMany(mappedBy = "medicos")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @DBRef
+    @Field("internacoes")
     private Set<Internacoes> internacoes = new HashSet<>();
 
-    @ManyToOne
+    @DBRef
+    @Field("especialidades")
     @JsonIgnoreProperties("medicos")
     private Especialidades especialidades;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

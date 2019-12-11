@@ -1,9 +1,10 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "br.com.rogrs"
+      "packageName": "br.com.rogrs",
+      "nativeLanguage": "en"
     },
-    "jhipsterVersion": "6.0.0",
+    "jhipsterVersion": "6.5.1",
     "applicationType": "monolith",
     "baseName": "safh",
     "packageName": "br.com.rogrs",
@@ -11,29 +12,31 @@
     "serverPort": "8080",
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",
-    "enableHibernateCache": true,
+    "enableHibernateCache": false,
     "websocket": false,
-    "databaseType": "sql",
-    "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "mysql",
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
     "searchEngine": "elasticsearch",
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "NGU3YTA5YmY5YTM0NjhhYTNiMmIxOTNmZDBmZWQ1M2QwY2FkNWZiMDMzNjljMTMxMDBlOWJlOTU2ODMxYWYzYTliZjY1ZjM2OGE2YzYzZDg1YWIzOTJkMmU0ZjA2MWViOTM1MGE1NzI4OTVjNTFiZjFmODcwMTZkZGM0Mjc2YTU=",
+    "jwtSecretKey": "MzFjZmVhZTA0YjkyNmRiNzM0OTFlODk4YmIyNTVhNmVmZWE1OTRkNDg4YWEwOGE1YWI4MmQ3ZTUwMTdhNWI1NjQxNGY5NWI1NzRmODc4ZGRkNmNhZDA3NTYyMjY0YTNkOTBhMWY5NTdjM2M0ZDI5MDhmZjVmMDRmNTJmZTRkZTQ=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
     "clientFramework": "react",
     "clientTheme": "none",
     "clientThemeVariant": "",
-    "useSass": true,
-    "clientPackageManager": "npm",
-    "testFrameworks": ["cucumber"],
+    "testFrameworks": ["gatling", "cucumber", "protractor"],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
-    "enableTranslation": false,
-    "herokuAppName": "safh",
-    "herokuDeployType": "jar"
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": ["en", "pt-br", "es"],
+    "blueprints": []
   }
 }

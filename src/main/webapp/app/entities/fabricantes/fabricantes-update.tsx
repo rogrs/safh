@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './fabricantes.reducer';
 import { IFabricantes } from 'app/shared/model/fabricantes.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -35,7 +33,9 @@ export class FabricantesUpdate extends React.Component<IFabricantesUpdateProps, 
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
   }
@@ -57,7 +57,7 @@ export class FabricantesUpdate extends React.Component<IFabricantesUpdateProps, 
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/fabricantes');
+    this.props.history.push('/fabricantes');
   };
 
   render() {
@@ -68,7 +68,9 @@ export class FabricantesUpdate extends React.Component<IFabricantesUpdateProps, 
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.fabricantes.home.createOrEditLabel">Create or edit a Fabricantes</h2>
+            <h2 id="safhApp.fabricantes.home.createOrEditLabel">
+              <Translate contentKey="safhApp.fabricantes.home.createOrEditLabel">Create or edit a Fabricantes</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -79,33 +81,38 @@ export class FabricantesUpdate extends React.Component<IFabricantesUpdateProps, 
               <AvForm model={isNew ? {} : fabricantesEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="fabricantes-id">ID</Label>
+                    <Label for="fabricantes-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="fabricantes-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="fabricanteLabel" for="fabricantes-fabricante">
-                    Fabricante
+                    <Translate contentKey="safhApp.fabricantes.fabricante">Fabricante</Translate>
                   </Label>
                   <AvField
                     id="fabricantes-fabricante"
                     type="text"
                     name="fabricante"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) }
                     }}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/fabricantes" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/fabricantes" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

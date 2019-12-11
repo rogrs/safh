@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './clinicas.reducer';
 import { IClinicas } from 'app/shared/model/clinicas.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -35,7 +33,9 @@ export class ClinicasUpdate extends React.Component<IClinicasUpdateProps, IClini
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
   }
@@ -57,7 +57,7 @@ export class ClinicasUpdate extends React.Component<IClinicasUpdateProps, IClini
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/clinicas');
+    this.props.history.push('/clinicas');
   };
 
   render() {
@@ -68,7 +68,9 @@ export class ClinicasUpdate extends React.Component<IClinicasUpdateProps, IClini
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.clinicas.home.createOrEditLabel">Create or edit a Clinicas</h2>
+            <h2 id="safhApp.clinicas.home.createOrEditLabel">
+              <Translate contentKey="safhApp.clinicas.home.createOrEditLabel">Create or edit a Clinicas</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -79,46 +81,51 @@ export class ClinicasUpdate extends React.Component<IClinicasUpdateProps, IClini
               <AvForm model={isNew ? {} : clinicasEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="clinicas-id">ID</Label>
+                    <Label for="clinicas-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="clinicas-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="clinicaLabel" for="clinicas-clinica">
-                    Clinica
+                    <Translate contentKey="safhApp.clinicas.clinica">Clinica</Translate>
                   </Label>
                   <AvField
                     id="clinicas-clinica"
                     type="text"
                     name="clinica"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 80, errorMessage: 'This field cannot be longer than 80 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 80, errorMessage: translate('entity.validation.maxlength', { max: 80 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="descricaoLabel" for="clinicas-descricao">
-                    Descricao
+                    <Translate contentKey="safhApp.clinicas.descricao">Descricao</Translate>
                   </Label>
                   <AvField
                     id="clinicas-descricao"
                     type="text"
                     name="descricao"
                     validate={{
-                      maxLength: { value: 100, errorMessage: 'This field cannot be longer than 100 characters.' }
+                      maxLength: { value: 100, errorMessage: translate('entity.validation.maxlength', { max: 100 }) }
                     }}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/clinicas" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/clinicas" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

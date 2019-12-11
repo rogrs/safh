@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link LeitosResource} REST controller.
+ * Integration tests for the {@link LeitosResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class LeitosResourceIT {
@@ -66,9 +63,6 @@ public class LeitosResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restLeitosMockMvc;
@@ -93,20 +87,32 @@ public class LeitosResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Leitos createEntity(EntityManager em) {
+    public static Leitos createEntity() {
         Leitos leitos = new Leitos()
             .leito(DEFAULT_LEITO)
             .tipo(DEFAULT_TIPO);
         return leitos;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Leitos createUpdatedEntity() {
+        Leitos leitos = new Leitos()
+            .leito(UPDATED_LEITO)
+            .tipo(UPDATED_TIPO);
+        return leitos;
+    }
 
     @BeforeEach
     public void initTest() {
-        leitos = createEntity(em);
+        leitosRepository.deleteAll();
+        leitos = createEntity();
     }
 
     @Test
-    @Transactional
     public void createLeitos() throws Exception {
         int databaseSizeBeforeCreate = leitosRepository.findAll().size();
 
@@ -128,12 +134,11 @@ public class LeitosResourceIT {
     }
 
     @Test
-    @Transactional
     public void createLeitosWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = leitosRepository.findAll().size();
 
         // Create the Leitos with an existing ID
-        leitos.setId(1L);
+        leitos.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLeitosMockMvc.perform(post("/api/leitos")
@@ -151,7 +156,6 @@ public class LeitosResourceIT {
 
 
     @Test
-    @Transactional
     public void checkLeitoIsRequired() throws Exception {
         int databaseSizeBeforeTest = leitosRepository.findAll().size();
         // set the field null
@@ -169,37 +173,34 @@ public class LeitosResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllLeitos() throws Exception {
         // Initialize the database
-        leitosRepository.saveAndFlush(leitos);
+        leitosRepository.save(leitos);
 
         // Get all the leitosList
         restLeitosMockMvc.perform(get("/api/leitos?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(leitos.getId().intValue())))
-            .andExpect(jsonPath("$.[*].leito").value(hasItem(DEFAULT_LEITO.toString())))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(leitos.getId())))
+            .andExpect(jsonPath("$.[*].leito").value(hasItem(DEFAULT_LEITO)))
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)));
     }
     
     @Test
-    @Transactional
     public void getLeitos() throws Exception {
         // Initialize the database
-        leitosRepository.saveAndFlush(leitos);
+        leitosRepository.save(leitos);
 
         // Get the leitos
         restLeitosMockMvc.perform(get("/api/leitos/{id}", leitos.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(leitos.getId().intValue()))
-            .andExpect(jsonPath("$.leito").value(DEFAULT_LEITO.toString()))
-            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
+            .andExpect(jsonPath("$.id").value(leitos.getId()))
+            .andExpect(jsonPath("$.leito").value(DEFAULT_LEITO))
+            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO));
     }
 
     @Test
-    @Transactional
     public void getNonExistingLeitos() throws Exception {
         // Get the leitos
         restLeitosMockMvc.perform(get("/api/leitos/{id}", Long.MAX_VALUE))
@@ -207,17 +208,14 @@ public class LeitosResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateLeitos() throws Exception {
         // Initialize the database
-        leitosRepository.saveAndFlush(leitos);
+        leitosRepository.save(leitos);
 
         int databaseSizeBeforeUpdate = leitosRepository.findAll().size();
 
         // Update the leitos
         Leitos updatedLeitos = leitosRepository.findById(leitos.getId()).get();
-        // Disconnect from session so that the updates on updatedLeitos are not directly saved in db
-        em.detach(updatedLeitos);
         updatedLeitos
             .leito(UPDATED_LEITO)
             .tipo(UPDATED_TIPO);
@@ -239,7 +237,6 @@ public class LeitosResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingLeitos() throws Exception {
         int databaseSizeBeforeUpdate = leitosRepository.findAll().size();
 
@@ -260,10 +257,9 @@ public class LeitosResourceIT {
     }
 
     @Test
-    @Transactional
     public void deleteLeitos() throws Exception {
         // Initialize the database
-        leitosRepository.saveAndFlush(leitos);
+        leitosRepository.save(leitos);
 
         int databaseSizeBeforeDelete = leitosRepository.findAll().size();
 
@@ -272,7 +268,7 @@ public class LeitosResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Leitos> leitosList = leitosRepository.findAll();
         assertThat(leitosList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -281,33 +277,17 @@ public class LeitosResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchLeitos() throws Exception {
         // Initialize the database
-        leitosRepository.saveAndFlush(leitos);
-        when(mockLeitosSearchRepository.search(queryStringQuery("id:" + leitos.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(leitos), PageRequest.of(0, 1), 1));
+        leitosRepository.save(leitos);
+        when(mockLeitosSearchRepository.search(queryStringQuery("id:" + leitos.getId())))
+            .thenReturn(Collections.singletonList(leitos));
         // Search the leitos
         restLeitosMockMvc.perform(get("/api/_search/leitos?query=id:" + leitos.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(leitos.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(leitos.getId())))
             .andExpect(jsonPath("$.[*].leito").value(hasItem(DEFAULT_LEITO)))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Leitos.class);
-        Leitos leitos1 = new Leitos();
-        leitos1.setId(1L);
-        Leitos leitos2 = new Leitos();
-        leitos2.setId(leitos1.getId());
-        assertThat(leitos1).isEqualTo(leitos2);
-        leitos2.setId(2L);
-        assertThat(leitos1).isNotEqualTo(leitos2);
-        leitos1.setId(null);
-        assertThat(leitos1).isNotEqualTo(leitos2);
     }
 }

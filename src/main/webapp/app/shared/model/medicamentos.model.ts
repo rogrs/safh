@@ -2,7 +2,7 @@ import { IPosologias } from 'app/shared/model/posologias.model';
 import { IFabricantes } from 'app/shared/model/fabricantes.model';
 
 export interface IMedicamentos {
-  id?: number;
+  id?: string;
   descricao?: string;
   registroMinisterioSaude?: string;
   codigoBarras?: string;

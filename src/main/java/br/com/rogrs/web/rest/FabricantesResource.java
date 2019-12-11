@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.FabricantesSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class FabricantesResource {
         Fabricantes result = fabricantesRepository.save(fabricantes);
         fabricantesSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/fabricantes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class FabricantesResource {
         Fabricantes result = fabricantesRepository.save(fabricantes);
         fabricantesSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, fabricantes.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fabricantes.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /fabricantes} : get all the fabricantes.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of fabricantes in body.
      */
     @GetMapping("/fabricantes")
-    public ResponseEntity<List<Fabricantes>> getAllFabricantes(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Fabricantes");
-        Page<Fabricantes> page = fabricantesRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Fabricantes> getAllFabricantes() {
+        log.debug("REST request to get all Fabricantes");
+        return fabricantesRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class FabricantesResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the fabricantes, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/fabricantes/{id}")
-    public ResponseEntity<Fabricantes> getFabricantes(@PathVariable Long id) {
+    public ResponseEntity<Fabricantes> getFabricantes(@PathVariable String id) {
         log.debug("REST request to get Fabricantes : {}", id);
         Optional<Fabricantes> fabricantes = fabricantesRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(fabricantes);
@@ -130,11 +122,11 @@ public class FabricantesResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/fabricantes/{id}")
-    public ResponseEntity<Void> deleteFabricantes(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFabricantes(@PathVariable String id) {
         log.debug("REST request to delete Fabricantes : {}", id);
         fabricantesRepository.deleteById(id);
         fabricantesSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class FabricantesResource {
      * to the query.
      *
      * @param query the query of the fabricantes search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/fabricantes")
-    public ResponseEntity<List<Fabricantes>> searchFabricantes(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Fabricantes for query {}", query);
-        Page<Fabricantes> page = fabricantesSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Fabricantes> searchFabricantes(@RequestParam String query) {
+        log.debug("REST request to search Fabricantes for query {}", query);
+        return StreamSupport
+            .stream(fabricantesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

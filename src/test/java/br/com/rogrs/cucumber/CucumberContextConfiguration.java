@@ -1,7 +1,7 @@
 package br.com.rogrs.cucumber;
 
 import br.com.rogrs.SafhApp;
-import cucumber.api.java.Before;
+import io.cucumber.java.Before;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;

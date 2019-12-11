@@ -12,17 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
@@ -37,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link InternacoesDetalhesResource} REST controller.
+ * Integration tests for the {@link InternacoesDetalhesResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class InternacoesDetalhesResourceIT {
@@ -75,9 +72,6 @@ public class InternacoesDetalhesResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restInternacoesDetalhesMockMvc;
@@ -102,21 +96,34 @@ public class InternacoesDetalhesResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static InternacoesDetalhes createEntity(EntityManager em) {
+    public static InternacoesDetalhes createEntity() {
         InternacoesDetalhes internacoesDetalhes = new InternacoesDetalhes()
             .dataDetalhe(DEFAULT_DATA_DETALHE)
             .horario(DEFAULT_HORARIO)
             .qtd(DEFAULT_QTD);
         return internacoesDetalhes;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static InternacoesDetalhes createUpdatedEntity() {
+        InternacoesDetalhes internacoesDetalhes = new InternacoesDetalhes()
+            .dataDetalhe(UPDATED_DATA_DETALHE)
+            .horario(UPDATED_HORARIO)
+            .qtd(UPDATED_QTD);
+        return internacoesDetalhes;
+    }
 
     @BeforeEach
     public void initTest() {
-        internacoesDetalhes = createEntity(em);
+        internacoesDetalhesRepository.deleteAll();
+        internacoesDetalhes = createEntity();
     }
 
     @Test
-    @Transactional
     public void createInternacoesDetalhes() throws Exception {
         int databaseSizeBeforeCreate = internacoesDetalhesRepository.findAll().size();
 
@@ -139,12 +146,11 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void createInternacoesDetalhesWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = internacoesDetalhesRepository.findAll().size();
 
         // Create the InternacoesDetalhes with an existing ID
-        internacoesDetalhes.setId(1L);
+        internacoesDetalhes.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restInternacoesDetalhesMockMvc.perform(post("/api/internacoes-detalhes")
@@ -162,7 +168,6 @@ public class InternacoesDetalhesResourceIT {
 
 
     @Test
-    @Transactional
     public void checkDataDetalheIsRequired() throws Exception {
         int databaseSizeBeforeTest = internacoesDetalhesRepository.findAll().size();
         // set the field null
@@ -180,7 +185,6 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void checkHorarioIsRequired() throws Exception {
         int databaseSizeBeforeTest = internacoesDetalhesRepository.findAll().size();
         // set the field null
@@ -198,7 +202,6 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void checkQtdIsRequired() throws Exception {
         int databaseSizeBeforeTest = internacoesDetalhesRepository.findAll().size();
         // set the field null
@@ -216,39 +219,36 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllInternacoesDetalhes() throws Exception {
         // Initialize the database
-        internacoesDetalhesRepository.saveAndFlush(internacoesDetalhes);
+        internacoesDetalhesRepository.save(internacoesDetalhes);
 
         // Get all the internacoesDetalhesList
         restInternacoesDetalhesMockMvc.perform(get("/api/internacoes-detalhes?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoesDetalhes.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoesDetalhes.getId())))
             .andExpect(jsonPath("$.[*].dataDetalhe").value(hasItem(DEFAULT_DATA_DETALHE.toString())))
             .andExpect(jsonPath("$.[*].horario").value(hasItem(DEFAULT_HORARIO.toString())))
             .andExpect(jsonPath("$.[*].qtd").value(hasItem(DEFAULT_QTD.doubleValue())));
     }
     
     @Test
-    @Transactional
     public void getInternacoesDetalhes() throws Exception {
         // Initialize the database
-        internacoesDetalhesRepository.saveAndFlush(internacoesDetalhes);
+        internacoesDetalhesRepository.save(internacoesDetalhes);
 
         // Get the internacoesDetalhes
         restInternacoesDetalhesMockMvc.perform(get("/api/internacoes-detalhes/{id}", internacoesDetalhes.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(internacoesDetalhes.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(internacoesDetalhes.getId()))
             .andExpect(jsonPath("$.dataDetalhe").value(DEFAULT_DATA_DETALHE.toString()))
             .andExpect(jsonPath("$.horario").value(DEFAULT_HORARIO.toString()))
             .andExpect(jsonPath("$.qtd").value(DEFAULT_QTD.doubleValue()));
     }
 
     @Test
-    @Transactional
     public void getNonExistingInternacoesDetalhes() throws Exception {
         // Get the internacoesDetalhes
         restInternacoesDetalhesMockMvc.perform(get("/api/internacoes-detalhes/{id}", Long.MAX_VALUE))
@@ -256,7 +256,6 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateInternacoesDetalhes() throws Exception {
         // Initialize the database
         internacoesDetalhesService.save(internacoesDetalhes);
@@ -267,8 +266,6 @@ public class InternacoesDetalhesResourceIT {
 
         // Update the internacoesDetalhes
         InternacoesDetalhes updatedInternacoesDetalhes = internacoesDetalhesRepository.findById(internacoesDetalhes.getId()).get();
-        // Disconnect from session so that the updates on updatedInternacoesDetalhes are not directly saved in db
-        em.detach(updatedInternacoesDetalhes);
         updatedInternacoesDetalhes
             .dataDetalhe(UPDATED_DATA_DETALHE)
             .horario(UPDATED_HORARIO)
@@ -292,7 +289,6 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingInternacoesDetalhes() throws Exception {
         int databaseSizeBeforeUpdate = internacoesDetalhesRepository.findAll().size();
 
@@ -313,7 +309,6 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void deleteInternacoesDetalhes() throws Exception {
         // Initialize the database
         internacoesDetalhesService.save(internacoesDetalhes);
@@ -325,7 +320,7 @@ public class InternacoesDetalhesResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<InternacoesDetalhes> internacoesDetalhesList = internacoesDetalhesRepository.findAll();
         assertThat(internacoesDetalhesList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -334,34 +329,18 @@ public class InternacoesDetalhesResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchInternacoesDetalhes() throws Exception {
         // Initialize the database
         internacoesDetalhesService.save(internacoesDetalhes);
-        when(mockInternacoesDetalhesSearchRepository.search(queryStringQuery("id:" + internacoesDetalhes.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(internacoesDetalhes), PageRequest.of(0, 1), 1));
+        when(mockInternacoesDetalhesSearchRepository.search(queryStringQuery("id:" + internacoesDetalhes.getId())))
+            .thenReturn(Collections.singletonList(internacoesDetalhes));
         // Search the internacoesDetalhes
         restInternacoesDetalhesMockMvc.perform(get("/api/_search/internacoes-detalhes?query=id:" + internacoesDetalhes.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoesDetalhes.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoesDetalhes.getId())))
             .andExpect(jsonPath("$.[*].dataDetalhe").value(hasItem(DEFAULT_DATA_DETALHE.toString())))
             .andExpect(jsonPath("$.[*].horario").value(hasItem(DEFAULT_HORARIO.toString())))
             .andExpect(jsonPath("$.[*].qtd").value(hasItem(DEFAULT_QTD.doubleValue())));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(InternacoesDetalhes.class);
-        InternacoesDetalhes internacoesDetalhes1 = new InternacoesDetalhes();
-        internacoesDetalhes1.setId(1L);
-        InternacoesDetalhes internacoesDetalhes2 = new InternacoesDetalhes();
-        internacoesDetalhes2.setId(internacoesDetalhes1.getId());
-        assertThat(internacoesDetalhes1).isEqualTo(internacoesDetalhes2);
-        internacoesDetalhes2.setId(2L);
-        assertThat(internacoesDetalhes1).isNotEqualTo(internacoesDetalhes2);
-        internacoesDetalhes1.setId(null);
-        assertThat(internacoesDetalhes1).isNotEqualTo(internacoesDetalhes2);
     }
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
+import { TranslatorContext } from 'react-jhipster';
 
 import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 import register, { ACTION_TYPES, handleRegister, reset } from 'app/modules/account/register/register.reducer';
@@ -14,6 +15,10 @@ describe('Creating account tests', () => {
     registrationFailure: false,
     errorMessage: null
   };
+
+  beforeAll(() => {
+    TranslatorContext.registerTranslations('en', {});
+  });
 
   it('should return the initial state', () => {
     expect(register(undefined, {})).toEqual({
@@ -74,7 +79,7 @@ describe('Creating account tests', () => {
 
     it('dispatches CREATE_ACCOUNT_PENDING and CREATE_ACCOUNT_FULFILLED actions', async () => {
       const meta = {
-        successMessage: '<strong>Registration saved!</strong> Please check your email for confirmation.'
+        successMessage: 'translation-not-found[register.messages.success]'
       };
 
       const expectedActions = [

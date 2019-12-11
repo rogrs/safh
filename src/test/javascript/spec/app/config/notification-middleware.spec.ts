@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import * as toastify from 'react-toastify'; // synthetic default import doesn't work here due to mocking.
 import sinon from 'sinon';
+import { TranslatorContext } from 'react-jhipster';
 
 import notificationMiddleware from 'app/config/notification-middleware';
 
@@ -105,6 +106,10 @@ describe('Notification Middleware', () => {
 
   const makeStore = () => applyMiddleware(notificationMiddleware, promiseMiddleware)(createStore)(() => null);
 
+  beforeAll(() => {
+    TranslatorContext.registerTranslations('en', {});
+  });
+
   beforeEach(() => {
     store = makeStore();
     sinon.spy(toastify.toast, 'error');
@@ -164,21 +169,21 @@ describe('Notification Middleware', () => {
       expect(err.response.data.message).toEqual('error.validation');
     });
     const toastMsg = (toastify.toast as any).error.getCall(0).args[0];
-    expect(toastMsg).toContain('Error on field "MinField"');
+    expect(toastMsg).toContain('error.Size');
   });
   it('should trigger an error toast message and return promise error for 404 response code', async () => {
     await store.dispatch(NOT_FOUND_ERROR).catch(err => {
       expect(err.response.data.message).toEqual('Not found');
     });
     const toastMsg = (toastify.toast as any).error.getCall(0).args[0];
-    expect(toastMsg).toContain('Not found');
+    expect(toastMsg).toContain('error.url.not.found');
   });
   it('should trigger an error toast message and return promise error for 0 response code', async () => {
     await store.dispatch(NO_SERVER_ERROR).catch(err => {
       expect(err.response.status).toEqual(0);
     });
     const toastMsg = (toastify.toast as any).error.getCall(0).args[0];
-    expect(toastMsg).toContain('Server not reachable');
+    expect(toastMsg).toContain('error.server.not.reachable');
   });
   it('should trigger an error toast message and return promise error for headers containing errors', async () => {
     await store.dispatch(HEADER_ERRORS).catch(err => {

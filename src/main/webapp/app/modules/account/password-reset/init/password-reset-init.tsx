@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Translate, translate } from 'react-jhipster';
 import { connect } from 'react-redux';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button, Alert, Col, Row } from 'reactstrap';
@@ -24,24 +24,28 @@ export class PasswordResetInit extends React.Component<IPasswordResetInitProps> 
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h1>Reset your password</h1>
+            <h1>
+              <Translate contentKey="reset.request.title">Reset your password</Translate>
+            </h1>
             <Alert color="warning">
-              <p>Enter the email address you used to register</p>
+              <p>
+                <Translate contentKey="reset.request.messages.info">Enter the email address you used to register</Translate>
+              </p>
             </Alert>
             <AvForm onValidSubmit={this.handleValidSubmit}>
               <AvField
                 name="email"
-                label="Email"
-                placeholder={'Your email'}
+                label={translate('global.form.email.label')}
+                placeholder={translate('global.form.email.placeholder')}
                 type="email"
                 validate={{
-                  required: { value: true, errorMessage: 'Your email is required.' },
-                  minLength: { value: 5, errorMessage: 'Your email is required to be at least 5 characters.' },
-                  maxLength: { value: 254, errorMessage: 'Your email cannot be longer than 50 characters.' }
+                  required: { value: true, errorMessage: translate('global.messages.validate.email.required') },
+                  minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
+                  maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
                 }}
               />
               <Button color="primary" type="submit">
-                Reset password
+                <Translate contentKey="reset.request.form.button">Reset password</Translate>
               </Button>
             </AvForm>
           </Col>

@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.DietasSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class DietasResource {
         Dietas result = dietasRepository.save(dietas);
         dietasSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/dietas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class DietasResource {
         Dietas result = dietasRepository.save(dietas);
         dietasSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, dietas.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, dietas.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /dietas} : get all the dietas.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of dietas in body.
      */
     @GetMapping("/dietas")
-    public ResponseEntity<List<Dietas>> getAllDietas(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Dietas");
-        Page<Dietas> page = dietasRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Dietas> getAllDietas() {
+        log.debug("REST request to get all Dietas");
+        return dietasRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class DietasResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the dietas, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/dietas/{id}")
-    public ResponseEntity<Dietas> getDietas(@PathVariable Long id) {
+    public ResponseEntity<Dietas> getDietas(@PathVariable String id) {
         log.debug("REST request to get Dietas : {}", id);
         Optional<Dietas> dietas = dietasRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(dietas);
@@ -130,11 +122,11 @@ public class DietasResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/dietas/{id}")
-    public ResponseEntity<Void> deleteDietas(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDietas(@PathVariable String id) {
         log.debug("REST request to delete Dietas : {}", id);
         dietasRepository.deleteById(id);
         dietasSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class DietasResource {
      * to the query.
      *
      * @param query the query of the dietas search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/dietas")
-    public ResponseEntity<List<Dietas>> searchDietas(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Dietas for query {}", query);
-        Page<Dietas> page = dietasSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Dietas> searchDietas(@RequestParam String query) {
+        log.debug("REST request to search Dietas for query {}", query);
+        return StreamSupport
+            .stream(dietasSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

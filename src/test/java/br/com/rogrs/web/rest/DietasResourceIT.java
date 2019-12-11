@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link DietasResource} REST controller.
+ * Integration tests for the {@link DietasResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class DietasResourceIT {
@@ -66,9 +63,6 @@ public class DietasResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restDietasMockMvc;
@@ -93,20 +87,32 @@ public class DietasResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Dietas createEntity(EntityManager em) {
+    public static Dietas createEntity() {
         Dietas dietas = new Dietas()
             .dieta(DEFAULT_DIETA)
             .descricao(DEFAULT_DESCRICAO);
         return dietas;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Dietas createUpdatedEntity() {
+        Dietas dietas = new Dietas()
+            .dieta(UPDATED_DIETA)
+            .descricao(UPDATED_DESCRICAO);
+        return dietas;
+    }
 
     @BeforeEach
     public void initTest() {
-        dietas = createEntity(em);
+        dietasRepository.deleteAll();
+        dietas = createEntity();
     }
 
     @Test
-    @Transactional
     public void createDietas() throws Exception {
         int databaseSizeBeforeCreate = dietasRepository.findAll().size();
 
@@ -128,12 +134,11 @@ public class DietasResourceIT {
     }
 
     @Test
-    @Transactional
     public void createDietasWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = dietasRepository.findAll().size();
 
         // Create the Dietas with an existing ID
-        dietas.setId(1L);
+        dietas.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restDietasMockMvc.perform(post("/api/dietas")
@@ -151,7 +156,6 @@ public class DietasResourceIT {
 
 
     @Test
-    @Transactional
     public void checkDietaIsRequired() throws Exception {
         int databaseSizeBeforeTest = dietasRepository.findAll().size();
         // set the field null
@@ -169,37 +173,34 @@ public class DietasResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllDietas() throws Exception {
         // Initialize the database
-        dietasRepository.saveAndFlush(dietas);
+        dietasRepository.save(dietas);
 
         // Get all the dietasList
         restDietasMockMvc.perform(get("/api/dietas?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(dietas.getId().intValue())))
-            .andExpect(jsonPath("$.[*].dieta").value(hasItem(DEFAULT_DIETA.toString())))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(dietas.getId())))
+            .andExpect(jsonPath("$.[*].dieta").value(hasItem(DEFAULT_DIETA)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
     }
     
     @Test
-    @Transactional
     public void getDietas() throws Exception {
         // Initialize the database
-        dietasRepository.saveAndFlush(dietas);
+        dietasRepository.save(dietas);
 
         // Get the dietas
         restDietasMockMvc.perform(get("/api/dietas/{id}", dietas.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(dietas.getId().intValue()))
-            .andExpect(jsonPath("$.dieta").value(DEFAULT_DIETA.toString()))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()));
+            .andExpect(jsonPath("$.id").value(dietas.getId()))
+            .andExpect(jsonPath("$.dieta").value(DEFAULT_DIETA))
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO));
     }
 
     @Test
-    @Transactional
     public void getNonExistingDietas() throws Exception {
         // Get the dietas
         restDietasMockMvc.perform(get("/api/dietas/{id}", Long.MAX_VALUE))
@@ -207,17 +208,14 @@ public class DietasResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateDietas() throws Exception {
         // Initialize the database
-        dietasRepository.saveAndFlush(dietas);
+        dietasRepository.save(dietas);
 
         int databaseSizeBeforeUpdate = dietasRepository.findAll().size();
 
         // Update the dietas
         Dietas updatedDietas = dietasRepository.findById(dietas.getId()).get();
-        // Disconnect from session so that the updates on updatedDietas are not directly saved in db
-        em.detach(updatedDietas);
         updatedDietas
             .dieta(UPDATED_DIETA)
             .descricao(UPDATED_DESCRICAO);
@@ -239,7 +237,6 @@ public class DietasResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingDietas() throws Exception {
         int databaseSizeBeforeUpdate = dietasRepository.findAll().size();
 
@@ -260,10 +257,9 @@ public class DietasResourceIT {
     }
 
     @Test
-    @Transactional
     public void deleteDietas() throws Exception {
         // Initialize the database
-        dietasRepository.saveAndFlush(dietas);
+        dietasRepository.save(dietas);
 
         int databaseSizeBeforeDelete = dietasRepository.findAll().size();
 
@@ -272,7 +268,7 @@ public class DietasResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Dietas> dietasList = dietasRepository.findAll();
         assertThat(dietasList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -281,33 +277,17 @@ public class DietasResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchDietas() throws Exception {
         // Initialize the database
-        dietasRepository.saveAndFlush(dietas);
-        when(mockDietasSearchRepository.search(queryStringQuery("id:" + dietas.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(dietas), PageRequest.of(0, 1), 1));
+        dietasRepository.save(dietas);
+        when(mockDietasSearchRepository.search(queryStringQuery("id:" + dietas.getId())))
+            .thenReturn(Collections.singletonList(dietas));
         // Search the dietas
         restDietasMockMvc.perform(get("/api/_search/dietas?query=id:" + dietas.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(dietas.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(dietas.getId())))
             .andExpect(jsonPath("$.[*].dieta").value(hasItem(DEFAULT_DIETA)))
             .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Dietas.class);
-        Dietas dietas1 = new Dietas();
-        dietas1.setId(1L);
-        Dietas dietas2 = new Dietas();
-        dietas2.setId(dietas1.getId());
-        assertThat(dietas1).isEqualTo(dietas2);
-        dietas2.setId(2L);
-        assertThat(dietas1).isNotEqualTo(dietas2);
-        dietas1.setId(null);
-        assertThat(dietas1).isNotEqualTo(dietas2);
     }
 }

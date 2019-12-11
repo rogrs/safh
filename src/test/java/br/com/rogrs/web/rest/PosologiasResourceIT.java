@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link PosologiasResource} REST controller.
+ * Integration tests for the {@link PosologiasResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class PosologiasResourceIT {
@@ -63,9 +60,6 @@ public class PosologiasResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restPosologiasMockMvc;
@@ -90,19 +84,30 @@ public class PosologiasResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Posologias createEntity(EntityManager em) {
+    public static Posologias createEntity() {
         Posologias posologias = new Posologias()
             .posologia(DEFAULT_POSOLOGIA);
+        return posologias;
+    }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Posologias createUpdatedEntity() {
+        Posologias posologias = new Posologias()
+            .posologia(UPDATED_POSOLOGIA);
         return posologias;
     }
 
     @BeforeEach
     public void initTest() {
-        posologias = createEntity(em);
+        posologiasRepository.deleteAll();
+        posologias = createEntity();
     }
 
     @Test
-    @Transactional
     public void createPosologias() throws Exception {
         int databaseSizeBeforeCreate = posologiasRepository.findAll().size();
 
@@ -123,12 +128,11 @@ public class PosologiasResourceIT {
     }
 
     @Test
-    @Transactional
     public void createPosologiasWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = posologiasRepository.findAll().size();
 
         // Create the Posologias with an existing ID
-        posologias.setId(1L);
+        posologias.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPosologiasMockMvc.perform(post("/api/posologias")
@@ -146,7 +150,6 @@ public class PosologiasResourceIT {
 
 
     @Test
-    @Transactional
     public void checkPosologiaIsRequired() throws Exception {
         int databaseSizeBeforeTest = posologiasRepository.findAll().size();
         // set the field null
@@ -164,35 +167,32 @@ public class PosologiasResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllPosologias() throws Exception {
         // Initialize the database
-        posologiasRepository.saveAndFlush(posologias);
+        posologiasRepository.save(posologias);
 
         // Get all the posologiasList
         restPosologiasMockMvc.perform(get("/api/posologias?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(posologias.getId().intValue())))
-            .andExpect(jsonPath("$.[*].posologia").value(hasItem(DEFAULT_POSOLOGIA.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(posologias.getId())))
+            .andExpect(jsonPath("$.[*].posologia").value(hasItem(DEFAULT_POSOLOGIA)));
     }
     
     @Test
-    @Transactional
     public void getPosologias() throws Exception {
         // Initialize the database
-        posologiasRepository.saveAndFlush(posologias);
+        posologiasRepository.save(posologias);
 
         // Get the posologias
         restPosologiasMockMvc.perform(get("/api/posologias/{id}", posologias.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(posologias.getId().intValue()))
-            .andExpect(jsonPath("$.posologia").value(DEFAULT_POSOLOGIA.toString()));
+            .andExpect(jsonPath("$.id").value(posologias.getId()))
+            .andExpect(jsonPath("$.posologia").value(DEFAULT_POSOLOGIA));
     }
 
     @Test
-    @Transactional
     public void getNonExistingPosologias() throws Exception {
         // Get the posologias
         restPosologiasMockMvc.perform(get("/api/posologias/{id}", Long.MAX_VALUE))
@@ -200,17 +200,14 @@ public class PosologiasResourceIT {
     }
 
     @Test
-    @Transactional
     public void updatePosologias() throws Exception {
         // Initialize the database
-        posologiasRepository.saveAndFlush(posologias);
+        posologiasRepository.save(posologias);
 
         int databaseSizeBeforeUpdate = posologiasRepository.findAll().size();
 
         // Update the posologias
         Posologias updatedPosologias = posologiasRepository.findById(posologias.getId()).get();
-        // Disconnect from session so that the updates on updatedPosologias are not directly saved in db
-        em.detach(updatedPosologias);
         updatedPosologias
             .posologia(UPDATED_POSOLOGIA);
 
@@ -230,7 +227,6 @@ public class PosologiasResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingPosologias() throws Exception {
         int databaseSizeBeforeUpdate = posologiasRepository.findAll().size();
 
@@ -251,10 +247,9 @@ public class PosologiasResourceIT {
     }
 
     @Test
-    @Transactional
     public void deletePosologias() throws Exception {
         // Initialize the database
-        posologiasRepository.saveAndFlush(posologias);
+        posologiasRepository.save(posologias);
 
         int databaseSizeBeforeDelete = posologiasRepository.findAll().size();
 
@@ -263,7 +258,7 @@ public class PosologiasResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Posologias> posologiasList = posologiasRepository.findAll();
         assertThat(posologiasList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -272,32 +267,16 @@ public class PosologiasResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchPosologias() throws Exception {
         // Initialize the database
-        posologiasRepository.saveAndFlush(posologias);
-        when(mockPosologiasSearchRepository.search(queryStringQuery("id:" + posologias.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(posologias), PageRequest.of(0, 1), 1));
+        posologiasRepository.save(posologias);
+        when(mockPosologiasSearchRepository.search(queryStringQuery("id:" + posologias.getId())))
+            .thenReturn(Collections.singletonList(posologias));
         // Search the posologias
         restPosologiasMockMvc.perform(get("/api/_search/posologias?query=id:" + posologias.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(posologias.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(posologias.getId())))
             .andExpect(jsonPath("$.[*].posologia").value(hasItem(DEFAULT_POSOLOGIA)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Posologias.class);
-        Posologias posologias1 = new Posologias();
-        posologias1.setId(1L);
-        Posologias posologias2 = new Posologias();
-        posologias2.setId(posologias1.getId());
-        assertThat(posologias1).isEqualTo(posologias2);
-        posologias2.setId(2L);
-        assertThat(posologias1).isNotEqualTo(posologias2);
-        posologias1.setId(null);
-        assertThat(posologias1).isNotEqualTo(posologias2);
     }
 }

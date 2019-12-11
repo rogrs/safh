@@ -25,13 +25,14 @@
             "relationshipName": "internacoesDetalhes"
         }
     ],
-    "changelogDate": "20190510033912",
+    "changelogDate": "20191211110038",
     "entityTableName": "posologias",
     "dto": "no",
-    "pagination": "infinite-scroll",
+    "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
+    "readOnly": false,
     "clientRootFolder": "",
     "applications": "*"
 }

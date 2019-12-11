@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.ClinicasSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class ClinicasResource {
         Clinicas result = clinicasRepository.save(clinicas);
         clinicasSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/clinicas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class ClinicasResource {
         Clinicas result = clinicasRepository.save(clinicas);
         clinicasSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clinicas.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clinicas.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /clinicas} : get all the clinicas.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clinicas in body.
      */
     @GetMapping("/clinicas")
-    public ResponseEntity<List<Clinicas>> getAllClinicas(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Clinicas");
-        Page<Clinicas> page = clinicasRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Clinicas> getAllClinicas() {
+        log.debug("REST request to get all Clinicas");
+        return clinicasRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class ClinicasResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clinicas, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/clinicas/{id}")
-    public ResponseEntity<Clinicas> getClinicas(@PathVariable Long id) {
+    public ResponseEntity<Clinicas> getClinicas(@PathVariable String id) {
         log.debug("REST request to get Clinicas : {}", id);
         Optional<Clinicas> clinicas = clinicasRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(clinicas);
@@ -130,11 +122,11 @@ public class ClinicasResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/clinicas/{id}")
-    public ResponseEntity<Void> deleteClinicas(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClinicas(@PathVariable String id) {
         log.debug("REST request to delete Clinicas : {}", id);
         clinicasRepository.deleteById(id);
         clinicasSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class ClinicasResource {
      * to the query.
      *
      * @param query the query of the clinicas search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/clinicas")
-    public ResponseEntity<List<Clinicas>> searchClinicas(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Clinicas for query {}", query);
-        Page<Clinicas> page = clinicasSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Clinicas> searchClinicas(@RequestParam String query) {
+        log.debug("REST request to search Clinicas for query {}", query);
+        return StreamSupport
+            .stream(clinicasSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

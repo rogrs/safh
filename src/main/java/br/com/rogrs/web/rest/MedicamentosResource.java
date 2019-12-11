@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.MedicamentosSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class MedicamentosResource {
         Medicamentos result = medicamentosRepository.save(medicamentos);
         medicamentosSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/medicamentos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class MedicamentosResource {
         Medicamentos result = medicamentosRepository.save(medicamentos);
         medicamentosSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, medicamentos.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, medicamentos.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /medicamentos} : get all the medicamentos.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of medicamentos in body.
      */
     @GetMapping("/medicamentos")
-    public ResponseEntity<List<Medicamentos>> getAllMedicamentos(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Medicamentos");
-        Page<Medicamentos> page = medicamentosRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Medicamentos> getAllMedicamentos() {
+        log.debug("REST request to get all Medicamentos");
+        return medicamentosRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class MedicamentosResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the medicamentos, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/medicamentos/{id}")
-    public ResponseEntity<Medicamentos> getMedicamentos(@PathVariable Long id) {
+    public ResponseEntity<Medicamentos> getMedicamentos(@PathVariable String id) {
         log.debug("REST request to get Medicamentos : {}", id);
         Optional<Medicamentos> medicamentos = medicamentosRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(medicamentos);
@@ -130,11 +122,11 @@ public class MedicamentosResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/medicamentos/{id}")
-    public ResponseEntity<Void> deleteMedicamentos(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMedicamentos(@PathVariable String id) {
         log.debug("REST request to delete Medicamentos : {}", id);
         medicamentosRepository.deleteById(id);
         medicamentosSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class MedicamentosResource {
      * to the query.
      *
      * @param query the query of the medicamentos search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/medicamentos")
-    public ResponseEntity<List<Medicamentos>> searchMedicamentos(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Medicamentos for query {}", query);
-        Page<Medicamentos> page = medicamentosSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Medicamentos> searchMedicamentos(@RequestParam String query) {
+        log.debug("REST request to search Medicamentos for query {}", query);
+        return StreamSupport
+            .stream(medicamentosSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

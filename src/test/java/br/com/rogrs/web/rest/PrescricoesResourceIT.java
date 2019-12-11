@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link PrescricoesResource} REST controller.
+ * Integration tests for the {@link PrescricoesResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class PrescricoesResourceIT {
@@ -63,9 +60,6 @@ public class PrescricoesResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restPrescricoesMockMvc;
@@ -90,19 +84,30 @@ public class PrescricoesResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Prescricoes createEntity(EntityManager em) {
+    public static Prescricoes createEntity() {
         Prescricoes prescricoes = new Prescricoes()
             .prescricao(DEFAULT_PRESCRICAO);
+        return prescricoes;
+    }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Prescricoes createUpdatedEntity() {
+        Prescricoes prescricoes = new Prescricoes()
+            .prescricao(UPDATED_PRESCRICAO);
         return prescricoes;
     }
 
     @BeforeEach
     public void initTest() {
-        prescricoes = createEntity(em);
+        prescricoesRepository.deleteAll();
+        prescricoes = createEntity();
     }
 
     @Test
-    @Transactional
     public void createPrescricoes() throws Exception {
         int databaseSizeBeforeCreate = prescricoesRepository.findAll().size();
 
@@ -123,12 +128,11 @@ public class PrescricoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void createPrescricoesWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = prescricoesRepository.findAll().size();
 
         // Create the Prescricoes with an existing ID
-        prescricoes.setId(1L);
+        prescricoes.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPrescricoesMockMvc.perform(post("/api/prescricoes")
@@ -146,7 +150,6 @@ public class PrescricoesResourceIT {
 
 
     @Test
-    @Transactional
     public void checkPrescricaoIsRequired() throws Exception {
         int databaseSizeBeforeTest = prescricoesRepository.findAll().size();
         // set the field null
@@ -164,35 +167,32 @@ public class PrescricoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllPrescricoes() throws Exception {
         // Initialize the database
-        prescricoesRepository.saveAndFlush(prescricoes);
+        prescricoesRepository.save(prescricoes);
 
         // Get all the prescricoesList
         restPrescricoesMockMvc.perform(get("/api/prescricoes?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(prescricoes.getId().intValue())))
-            .andExpect(jsonPath("$.[*].prescricao").value(hasItem(DEFAULT_PRESCRICAO.toString())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(prescricoes.getId())))
+            .andExpect(jsonPath("$.[*].prescricao").value(hasItem(DEFAULT_PRESCRICAO)));
     }
     
     @Test
-    @Transactional
     public void getPrescricoes() throws Exception {
         // Initialize the database
-        prescricoesRepository.saveAndFlush(prescricoes);
+        prescricoesRepository.save(prescricoes);
 
         // Get the prescricoes
         restPrescricoesMockMvc.perform(get("/api/prescricoes/{id}", prescricoes.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(prescricoes.getId().intValue()))
-            .andExpect(jsonPath("$.prescricao").value(DEFAULT_PRESCRICAO.toString()));
+            .andExpect(jsonPath("$.id").value(prescricoes.getId()))
+            .andExpect(jsonPath("$.prescricao").value(DEFAULT_PRESCRICAO));
     }
 
     @Test
-    @Transactional
     public void getNonExistingPrescricoes() throws Exception {
         // Get the prescricoes
         restPrescricoesMockMvc.perform(get("/api/prescricoes/{id}", Long.MAX_VALUE))
@@ -200,17 +200,14 @@ public class PrescricoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void updatePrescricoes() throws Exception {
         // Initialize the database
-        prescricoesRepository.saveAndFlush(prescricoes);
+        prescricoesRepository.save(prescricoes);
 
         int databaseSizeBeforeUpdate = prescricoesRepository.findAll().size();
 
         // Update the prescricoes
         Prescricoes updatedPrescricoes = prescricoesRepository.findById(prescricoes.getId()).get();
-        // Disconnect from session so that the updates on updatedPrescricoes are not directly saved in db
-        em.detach(updatedPrescricoes);
         updatedPrescricoes
             .prescricao(UPDATED_PRESCRICAO);
 
@@ -230,7 +227,6 @@ public class PrescricoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingPrescricoes() throws Exception {
         int databaseSizeBeforeUpdate = prescricoesRepository.findAll().size();
 
@@ -251,10 +247,9 @@ public class PrescricoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void deletePrescricoes() throws Exception {
         // Initialize the database
-        prescricoesRepository.saveAndFlush(prescricoes);
+        prescricoesRepository.save(prescricoes);
 
         int databaseSizeBeforeDelete = prescricoesRepository.findAll().size();
 
@@ -263,7 +258,7 @@ public class PrescricoesResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Prescricoes> prescricoesList = prescricoesRepository.findAll();
         assertThat(prescricoesList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -272,32 +267,16 @@ public class PrescricoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchPrescricoes() throws Exception {
         // Initialize the database
-        prescricoesRepository.saveAndFlush(prescricoes);
-        when(mockPrescricoesSearchRepository.search(queryStringQuery("id:" + prescricoes.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(prescricoes), PageRequest.of(0, 1), 1));
+        prescricoesRepository.save(prescricoes);
+        when(mockPrescricoesSearchRepository.search(queryStringQuery("id:" + prescricoes.getId())))
+            .thenReturn(Collections.singletonList(prescricoes));
         // Search the prescricoes
         restPrescricoesMockMvc.perform(get("/api/_search/prescricoes?query=id:" + prescricoes.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(prescricoes.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(prescricoes.getId())))
             .andExpect(jsonPath("$.[*].prescricao").value(hasItem(DEFAULT_PRESCRICAO)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Prescricoes.class);
-        Prescricoes prescricoes1 = new Prescricoes();
-        prescricoes1.setId(1L);
-        Prescricoes prescricoes2 = new Prescricoes();
-        prescricoes2.setId(prescricoes1.getId());
-        assertThat(prescricoes1).isEqualTo(prescricoes2);
-        prescricoes2.setId(2L);
-        assertThat(prescricoes1).isNotEqualTo(prescricoes2);
-        prescricoes1.setId(null);
-        assertThat(prescricoes1).isNotEqualTo(prescricoes2);
     }
 }

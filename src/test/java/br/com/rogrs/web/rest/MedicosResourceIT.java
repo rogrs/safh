@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import br.com.rogrs.domain.enumeration.Estados;
 /**
- * Integration tests for the {@Link MedicosResource} REST controller.
+ * Integration tests for the {@link MedicosResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class MedicosResourceIT {
@@ -94,9 +91,6 @@ public class MedicosResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restMedicosMockMvc;
@@ -121,7 +115,7 @@ public class MedicosResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Medicos createEntity(EntityManager em) {
+    public static Medicos createEntity() {
         Medicos medicos = new Medicos()
             .nome(DEFAULT_NOME)
             .crm(DEFAULT_CRM)
@@ -136,14 +130,35 @@ public class MedicosResourceIT {
             .uF(DEFAULT_U_F);
         return medicos;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Medicos createUpdatedEntity() {
+        Medicos medicos = new Medicos()
+            .nome(UPDATED_NOME)
+            .crm(UPDATED_CRM)
+            .cpf(UPDATED_CPF)
+            .email(UPDATED_EMAIL)
+            .cep(UPDATED_CEP)
+            .logradouro(UPDATED_LOGRADOURO)
+            .numero(UPDATED_NUMERO)
+            .complemento(UPDATED_COMPLEMENTO)
+            .bairro(UPDATED_BAIRRO)
+            .cidade(UPDATED_CIDADE)
+            .uF(UPDATED_U_F);
+        return medicos;
+    }
 
     @BeforeEach
     public void initTest() {
-        medicos = createEntity(em);
+        medicosRepository.deleteAll();
+        medicos = createEntity();
     }
 
     @Test
-    @Transactional
     public void createMedicos() throws Exception {
         int databaseSizeBeforeCreate = medicosRepository.findAll().size();
 
@@ -174,12 +189,11 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void createMedicosWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = medicosRepository.findAll().size();
 
         // Create the Medicos with an existing ID
-        medicos.setId(1L);
+        medicos.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restMedicosMockMvc.perform(post("/api/medicos")
@@ -197,7 +211,6 @@ public class MedicosResourceIT {
 
 
     @Test
-    @Transactional
     public void checkNomeIsRequired() throws Exception {
         int databaseSizeBeforeTest = medicosRepository.findAll().size();
         // set the field null
@@ -215,7 +228,6 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void checkCrmIsRequired() throws Exception {
         int databaseSizeBeforeTest = medicosRepository.findAll().size();
         // set the field null
@@ -233,55 +245,52 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllMedicos() throws Exception {
         // Initialize the database
-        medicosRepository.saveAndFlush(medicos);
+        medicosRepository.save(medicos);
 
         // Get all the medicosList
         restMedicosMockMvc.perform(get("/api/medicos?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-            .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM.toString())))
-            .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF.toString())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-            .andExpect(jsonPath("$.[*].cep").value(hasItem(DEFAULT_CEP.toString())))
-            .andExpect(jsonPath("$.[*].logradouro").value(hasItem(DEFAULT_LOGRADOURO.toString())))
-            .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO.toString())))
-            .andExpect(jsonPath("$.[*].complemento").value(hasItem(DEFAULT_COMPLEMENTO.toString())))
-            .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO.toString())))
-            .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE.toString())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
+            .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM)))
+            .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].cep").value(hasItem(DEFAULT_CEP)))
+            .andExpect(jsonPath("$.[*].logradouro").value(hasItem(DEFAULT_LOGRADOURO)))
+            .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO)))
+            .andExpect(jsonPath("$.[*].complemento").value(hasItem(DEFAULT_COMPLEMENTO)))
+            .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO)))
+            .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE)))
             .andExpect(jsonPath("$.[*].uF").value(hasItem(DEFAULT_U_F.toString())));
     }
     
     @Test
-    @Transactional
     public void getMedicos() throws Exception {
         // Initialize the database
-        medicosRepository.saveAndFlush(medicos);
+        medicosRepository.save(medicos);
 
         // Get the medicos
         restMedicosMockMvc.perform(get("/api/medicos/{id}", medicos.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(medicos.getId().intValue()))
-            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.crm").value(DEFAULT_CRM.toString()))
-            .andExpect(jsonPath("$.cpf").value(DEFAULT_CPF.toString()))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
-            .andExpect(jsonPath("$.cep").value(DEFAULT_CEP.toString()))
-            .andExpect(jsonPath("$.logradouro").value(DEFAULT_LOGRADOURO.toString()))
-            .andExpect(jsonPath("$.numero").value(DEFAULT_NUMERO.toString()))
-            .andExpect(jsonPath("$.complemento").value(DEFAULT_COMPLEMENTO.toString()))
-            .andExpect(jsonPath("$.bairro").value(DEFAULT_BAIRRO.toString()))
-            .andExpect(jsonPath("$.cidade").value(DEFAULT_CIDADE.toString()))
+            .andExpect(jsonPath("$.id").value(medicos.getId()))
+            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
+            .andExpect(jsonPath("$.crm").value(DEFAULT_CRM))
+            .andExpect(jsonPath("$.cpf").value(DEFAULT_CPF))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.cep").value(DEFAULT_CEP))
+            .andExpect(jsonPath("$.logradouro").value(DEFAULT_LOGRADOURO))
+            .andExpect(jsonPath("$.numero").value(DEFAULT_NUMERO))
+            .andExpect(jsonPath("$.complemento").value(DEFAULT_COMPLEMENTO))
+            .andExpect(jsonPath("$.bairro").value(DEFAULT_BAIRRO))
+            .andExpect(jsonPath("$.cidade").value(DEFAULT_CIDADE))
             .andExpect(jsonPath("$.uF").value(DEFAULT_U_F.toString()));
     }
 
     @Test
-    @Transactional
     public void getNonExistingMedicos() throws Exception {
         // Get the medicos
         restMedicosMockMvc.perform(get("/api/medicos/{id}", Long.MAX_VALUE))
@@ -289,17 +298,14 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateMedicos() throws Exception {
         // Initialize the database
-        medicosRepository.saveAndFlush(medicos);
+        medicosRepository.save(medicos);
 
         int databaseSizeBeforeUpdate = medicosRepository.findAll().size();
 
         // Update the medicos
         Medicos updatedMedicos = medicosRepository.findById(medicos.getId()).get();
-        // Disconnect from session so that the updates on updatedMedicos are not directly saved in db
-        em.detach(updatedMedicos);
         updatedMedicos
             .nome(UPDATED_NOME)
             .crm(UPDATED_CRM)
@@ -339,7 +345,6 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingMedicos() throws Exception {
         int databaseSizeBeforeUpdate = medicosRepository.findAll().size();
 
@@ -360,10 +365,9 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void deleteMedicos() throws Exception {
         // Initialize the database
-        medicosRepository.saveAndFlush(medicos);
+        medicosRepository.save(medicos);
 
         int databaseSizeBeforeDelete = medicosRepository.findAll().size();
 
@@ -372,7 +376,7 @@ public class MedicosResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Medicos> medicosList = medicosRepository.findAll();
         assertThat(medicosList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -381,17 +385,16 @@ public class MedicosResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchMedicos() throws Exception {
         // Initialize the database
-        medicosRepository.saveAndFlush(medicos);
-        when(mockMedicosSearchRepository.search(queryStringQuery("id:" + medicos.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(medicos), PageRequest.of(0, 1), 1));
+        medicosRepository.save(medicos);
+        when(mockMedicosSearchRepository.search(queryStringQuery("id:" + medicos.getId())))
+            .thenReturn(Collections.singletonList(medicos));
         // Search the medicos
         restMedicosMockMvc.perform(get("/api/_search/medicos?query=id:" + medicos.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(medicos.getId())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].crm").value(hasItem(DEFAULT_CRM)))
             .andExpect(jsonPath("$.[*].cpf").value(hasItem(DEFAULT_CPF)))
@@ -403,20 +406,5 @@ public class MedicosResourceIT {
             .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO)))
             .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE)))
             .andExpect(jsonPath("$.[*].uF").value(hasItem(DEFAULT_U_F.toString())));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Medicos.class);
-        Medicos medicos1 = new Medicos();
-        medicos1.setId(1L);
-        Medicos medicos2 = new Medicos();
-        medicos2.setId(medicos1.getId());
-        assertThat(medicos1).isEqualTo(medicos2);
-        medicos2.setId(2L);
-        assertThat(medicos1).isNotEqualTo(medicos2);
-        medicos1.setId(null);
-        assertThat(medicos1).isNotEqualTo(medicos2);
     }
 }

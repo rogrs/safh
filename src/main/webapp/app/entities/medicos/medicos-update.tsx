@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -12,7 +11,6 @@ import { IEspecialidades } from 'app/shared/model/especialidades.model';
 import { getEntities as getEspecialidades } from 'app/entities/especialidades/especialidades.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './medicos.reducer';
 import { IMedicos } from 'app/shared/model/medicos.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -39,7 +37,9 @@ export class MedicosUpdate extends React.Component<IMedicosUpdateProps, IMedicos
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
 
@@ -63,7 +63,7 @@ export class MedicosUpdate extends React.Component<IMedicosUpdateProps, IMedicos
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/medicos');
+    this.props.history.push('/medicos');
   };
 
   render() {
@@ -74,7 +74,9 @@ export class MedicosUpdate extends React.Component<IMedicosUpdateProps, IMedicos
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.medicos.home.createOrEditLabel">Create or edit a Medicos</h2>
+            <h2 id="safhApp.medicos.home.createOrEditLabel">
+              <Translate contentKey="safhApp.medicos.home.createOrEditLabel">Create or edit a Medicos</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -85,178 +87,182 @@ export class MedicosUpdate extends React.Component<IMedicosUpdateProps, IMedicos
               <AvForm model={isNew ? {} : medicosEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="medicos-id">ID</Label>
+                    <Label for="medicos-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="medicos-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="nomeLabel" for="medicos-nome">
-                    Nome
+                    <Translate contentKey="safhApp.medicos.nome">Nome</Translate>
                   </Label>
                   <AvField
                     id="medicos-nome"
                     type="text"
                     name="nome"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 255, errorMessage: 'This field cannot be longer than 255 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 255, errorMessage: translate('entity.validation.maxlength', { max: 255 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="crmLabel" for="medicos-crm">
-                    Crm
+                    <Translate contentKey="safhApp.medicos.crm">Crm</Translate>
                   </Label>
                   <AvField
                     id="medicos-crm"
                     type="text"
                     name="crm"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 40, errorMessage: 'This field cannot be longer than 40 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 40, errorMessage: translate('entity.validation.maxlength', { max: 40 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="cpfLabel" for="medicos-cpf">
-                    Cpf
+                    <Translate contentKey="safhApp.medicos.cpf">Cpf</Translate>
                   </Label>
                   <AvField
                     id="medicos-cpf"
                     type="text"
                     name="cpf"
                     validate={{
-                      maxLength: { value: 11, errorMessage: 'This field cannot be longer than 11 characters.' }
+                      maxLength: { value: 11, errorMessage: translate('entity.validation.maxlength', { max: 11 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="emailLabel" for="medicos-email">
-                    Email
+                    <Translate contentKey="safhApp.medicos.email">Email</Translate>
                   </Label>
                   <AvField
                     id="medicos-email"
                     type="text"
                     name="email"
                     validate={{
-                      maxLength: { value: 100, errorMessage: 'This field cannot be longer than 100 characters.' }
+                      maxLength: { value: 100, errorMessage: translate('entity.validation.maxlength', { max: 100 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="cepLabel" for="medicos-cep">
-                    Cep
+                    <Translate contentKey="safhApp.medicos.cep">Cep</Translate>
                   </Label>
                   <AvField
                     id="medicos-cep"
                     type="text"
                     name="cep"
                     validate={{
-                      maxLength: { value: 10, errorMessage: 'This field cannot be longer than 10 characters.' }
+                      maxLength: { value: 10, errorMessage: translate('entity.validation.maxlength', { max: 10 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="logradouroLabel" for="medicos-logradouro">
-                    Logradouro
+                    <Translate contentKey="safhApp.medicos.logradouro">Logradouro</Translate>
                   </Label>
                   <AvField
                     id="medicos-logradouro"
                     type="text"
                     name="logradouro"
                     validate={{
-                      maxLength: { value: 80, errorMessage: 'This field cannot be longer than 80 characters.' }
+                      maxLength: { value: 80, errorMessage: translate('entity.validation.maxlength', { max: 80 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="numeroLabel" for="medicos-numero">
-                    Numero
+                    <Translate contentKey="safhApp.medicos.numero">Numero</Translate>
                   </Label>
                   <AvField
                     id="medicos-numero"
                     type="text"
                     name="numero"
                     validate={{
-                      maxLength: { value: 10, errorMessage: 'This field cannot be longer than 10 characters.' }
+                      maxLength: { value: 10, errorMessage: translate('entity.validation.maxlength', { max: 10 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="complementoLabel" for="medicos-complemento">
-                    Complemento
+                    <Translate contentKey="safhApp.medicos.complemento">Complemento</Translate>
                   </Label>
                   <AvField
                     id="medicos-complemento"
                     type="text"
                     name="complemento"
                     validate={{
-                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                      maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="bairroLabel" for="medicos-bairro">
-                    Bairro
+                    <Translate contentKey="safhApp.medicos.bairro">Bairro</Translate>
                   </Label>
                   <AvField
                     id="medicos-bairro"
                     type="text"
                     name="bairro"
                     validate={{
-                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                      maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="cidadeLabel" for="medicos-cidade">
-                    Cidade
+                    <Translate contentKey="safhApp.medicos.cidade">Cidade</Translate>
                   </Label>
                   <AvField
                     id="medicos-cidade"
                     type="text"
                     name="cidade"
                     validate={{
-                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                      maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="uFLabel" for="medicos-uF">
-                    U F
+                    <Translate contentKey="safhApp.medicos.uF">U F</Translate>
                   </Label>
                   <AvInput id="medicos-uF" type="select" className="form-control" name="uF" value={(!isNew && medicosEntity.uF) || 'AC'}>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AM">AM</option>
-                    <option value="AP">AP</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MG">MG</option>
-                    <option value="MS">MS</option>
-                    <option value="MT">MT</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="PR">PR</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="RS">RS</option>
-                    <option value="SC">SC</option>
-                    <option value="SE">SE</option>
-                    <option value="SP">SP</option>
-                    <option value="TO">TO</option>
+                    <option value="AC">{translate('safhApp.Estados.AC')}</option>
+                    <option value="AL">{translate('safhApp.Estados.AL')}</option>
+                    <option value="AM">{translate('safhApp.Estados.AM')}</option>
+                    <option value="AP">{translate('safhApp.Estados.AP')}</option>
+                    <option value="BA">{translate('safhApp.Estados.BA')}</option>
+                    <option value="CE">{translate('safhApp.Estados.CE')}</option>
+                    <option value="DF">{translate('safhApp.Estados.DF')}</option>
+                    <option value="ES">{translate('safhApp.Estados.ES')}</option>
+                    <option value="GO">{translate('safhApp.Estados.GO')}</option>
+                    <option value="MA">{translate('safhApp.Estados.MA')}</option>
+                    <option value="MG">{translate('safhApp.Estados.MG')}</option>
+                    <option value="MS">{translate('safhApp.Estados.MS')}</option>
+                    <option value="MT">{translate('safhApp.Estados.MT')}</option>
+                    <option value="PA">{translate('safhApp.Estados.PA')}</option>
+                    <option value="PB">{translate('safhApp.Estados.PB')}</option>
+                    <option value="PE">{translate('safhApp.Estados.PE')}</option>
+                    <option value="PI">{translate('safhApp.Estados.PI')}</option>
+                    <option value="PR">{translate('safhApp.Estados.PR')}</option>
+                    <option value="RJ">{translate('safhApp.Estados.RJ')}</option>
+                    <option value="RN">{translate('safhApp.Estados.RN')}</option>
+                    <option value="RO">{translate('safhApp.Estados.RO')}</option>
+                    <option value="RR">{translate('safhApp.Estados.RR')}</option>
+                    <option value="RS">{translate('safhApp.Estados.RS')}</option>
+                    <option value="SC">{translate('safhApp.Estados.SC')}</option>
+                    <option value="SE">{translate('safhApp.Estados.SE')}</option>
+                    <option value="SP">{translate('safhApp.Estados.SP')}</option>
+                    <option value="TO">{translate('safhApp.Estados.TO')}</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="medicos-especialidades">Especialidades</Label>
+                  <Label for="medicos-especialidades">
+                    <Translate contentKey="safhApp.medicos.especialidades">Especialidades</Translate>
+                  </Label>
                   <AvInput id="medicos-especialidades" type="select" className="form-control" name="especialidades.id">
                     <option value="" key="0" />
                     {especialidades
@@ -268,15 +274,18 @@ export class MedicosUpdate extends React.Component<IMedicosUpdateProps, IMedicos
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/medicos" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/medicos" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

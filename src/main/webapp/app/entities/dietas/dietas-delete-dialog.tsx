@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IDietas } from 'app/shared/model/dietas.model';
@@ -30,16 +30,24 @@ export class DietasDeleteDialog extends React.Component<IDietasDeleteDialogProps
     const { dietasEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="safhApp.dietas.delete.question">Are you sure you want to delete this Dietas?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>
+          <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
+        </ModalHeader>
+        <ModalBody id="safhApp.dietas.delete.question">
+          <Translate contentKey="safhApp.dietas.delete.question" interpolate={{ id: dietasEntity.id }}>
+            Are you sure you want to delete this Dietas?
+          </Translate>
+        </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp;
+            <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
           <Button id="jhi-confirm-delete-dietas" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp;
+            <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>
         </ModalFooter>
       </Modal>

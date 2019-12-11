@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.EnfermariasSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class EnfermariasResource {
         Enfermarias result = enfermariasRepository.save(enfermarias);
         enfermariasSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/enfermarias/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class EnfermariasResource {
         Enfermarias result = enfermariasRepository.save(enfermarias);
         enfermariasSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, enfermarias.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, enfermarias.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /enfermarias} : get all the enfermarias.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of enfermarias in body.
      */
     @GetMapping("/enfermarias")
-    public ResponseEntity<List<Enfermarias>> getAllEnfermarias(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Enfermarias");
-        Page<Enfermarias> page = enfermariasRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Enfermarias> getAllEnfermarias() {
+        log.debug("REST request to get all Enfermarias");
+        return enfermariasRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class EnfermariasResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the enfermarias, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/enfermarias/{id}")
-    public ResponseEntity<Enfermarias> getEnfermarias(@PathVariable Long id) {
+    public ResponseEntity<Enfermarias> getEnfermarias(@PathVariable String id) {
         log.debug("REST request to get Enfermarias : {}", id);
         Optional<Enfermarias> enfermarias = enfermariasRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(enfermarias);
@@ -130,11 +122,11 @@ public class EnfermariasResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/enfermarias/{id}")
-    public ResponseEntity<Void> deleteEnfermarias(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEnfermarias(@PathVariable String id) {
         log.debug("REST request to delete Enfermarias : {}", id);
         enfermariasRepository.deleteById(id);
         enfermariasSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class EnfermariasResource {
      * to the query.
      *
      * @param query the query of the enfermarias search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/enfermarias")
-    public ResponseEntity<List<Enfermarias>> searchEnfermarias(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Enfermarias for query {}", query);
-        Page<Enfermarias> page = enfermariasSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Enfermarias> searchEnfermarias(@RequestParam String query) {
+        log.debug("REST request to search Enfermarias for query {}", query);
+        return StreamSupport
+            .stream(enfermariasSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

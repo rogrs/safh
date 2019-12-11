@@ -1,104 +1,55 @@
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction, getSortState, IPaginationBaseState } from 'react-jhipster';
+import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getSearchEntities, getEntities, reset } from './medicamentos.reducer';
+import { getSearchEntities, getEntities } from './medicamentos.reducer';
 import { IMedicamentos } from 'app/shared/model/medicamentos.model';
-// tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IMedicamentosProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export interface IMedicamentosState extends IPaginationBaseState {
+export interface IMedicamentosState {
   search: string;
 }
 
 export class Medicamentos extends React.Component<IMedicamentosProps, IMedicamentosState> {
   state: IMedicamentosState = {
-    search: '',
-    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+    search: ''
   };
 
   componentDidMount() {
-    this.reset();
-  }
-
-  componentDidUpdate() {
-    if (this.props.updateSuccess) {
-      this.reset();
-    }
+    this.props.getEntities();
   }
 
   search = () => {
     if (this.state.search) {
-      this.props.reset();
-      this.setState({ activePage: 1 }, () => {
-        const { activePage, itemsPerPage, sort, order, search } = this.state;
-        this.props.getSearchEntities(search, activePage - 1, itemsPerPage, `${sort},${order}`);
-      });
+      this.props.getSearchEntities(this.state.search);
     }
   };
 
   clear = () => {
-    this.props.reset();
-    this.setState({ search: '', activePage: 1 }, () => {
+    this.setState({ search: '' }, () => {
       this.props.getEntities();
     });
   };
 
   handleSearch = event => this.setState({ search: event.target.value });
 
-  reset = () => {
-    this.props.reset();
-    this.setState({ activePage: 1 }, () => {
-      this.getEntities();
-    });
-  };
-
-  handleLoadMore = () => {
-    if (window.pageYOffset > 0) {
-      this.setState({ activePage: this.state.activePage + 1 }, () => this.getEntities());
-    }
-  };
-
-  sort = prop => () => {
-    this.setState(
-      {
-        order: this.state.order === 'asc' ? 'desc' : 'asc',
-        sort: prop
-      },
-      () => {
-        this.reset();
-      }
-    );
-  };
-
-  getEntities = () => {
-    const { activePage, itemsPerPage, sort, order, search } = this.state;
-    if (search) {
-      this.props.getSearchEntities(search, activePage - 1, itemsPerPage, `${sort},${order}`);
-    } else {
-      this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
-    }
-  };
-
   render() {
     const { medicamentosList, match } = this.props;
     return (
       <div>
         <h2 id="medicamentos-heading">
-          Medicamentos
+          <Translate contentKey="safhApp.medicamentos.home.title">Medicamentos</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create new Medicamentos
+            &nbsp;
+            <Translate contentKey="safhApp.medicamentos.home.createLabel">Create a new Medicamentos</Translate>
           </Link>
         </h2>
         <Row>
@@ -106,7 +57,13 @@ export class Medicamentos extends React.Component<IMedicamentosProps, IMedicamen
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
+                  <AvInput
+                    type="text"
+                    name="search"
+                    value={this.state.search}
+                    onChange={this.handleSearch}
+                    placeholder={translate('safhApp.medicamentos.home.search')}
+                  />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -119,49 +76,42 @@ export class Medicamentos extends React.Component<IMedicamentosProps, IMedicamen
           </Col>
         </Row>
         <div className="table-responsive">
-          <InfiniteScroll
-            pageStart={this.state.activePage}
-            loadMore={this.handleLoadMore}
-            hasMore={this.state.activePage - 1 < this.props.links.next}
-            loader={<div className="loader">Loading ...</div>}
-            threshold={0}
-            initialLoad={false}
-          >
-            <Table responsive>
+          {medicamentosList && medicamentosList.length > 0 ? (
+            <Table responsive aria-describedby="medicamentos-heading">
               <thead>
                 <tr>
-                  <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('descricao')}>
-                    Descricao <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('registroMinisterioSaude')}>
-                    Registro Ministerio Saude <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('codigoBarras')}>
-                    Codigo Barras <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('qtdAtual')}>
-                    Qtd Atual <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('qtdMin')}>
-                    Qtd Min <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('qtdMax')}>
-                    Qtd Max <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('observacoes')}>
-                    Observacoes <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('apresentacao')}>
-                    Apresentacao <FontAwesomeIcon icon="sort" />
+                  <th>
+                    <Translate contentKey="global.field.id">ID</Translate>
                   </th>
                   <th>
-                    Posologia Padrao <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="safhApp.medicamentos.descricao">Descricao</Translate>
                   </th>
                   <th>
-                    Fabricantes <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="safhApp.medicamentos.registroMinisterioSaude">Registro Ministerio Saude</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.codigoBarras">Codigo Barras</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.qtdAtual">Qtd Atual</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.qtdMin">Qtd Min</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.qtdMax">Qtd Max</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.observacoes">Observacoes</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.apresentacao">Apresentacao</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.posologiaPadrao">Posologia Padrao</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.medicamentos.fabricantes">Fabricantes</Translate>
                   </th>
                   <th />
                 </tr>
@@ -199,13 +149,22 @@ export class Medicamentos extends React.Component<IMedicamentosProps, IMedicamen
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${medicamentos.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.view">View</Translate>
+                          </span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${medicamentos.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.edit">Edit</Translate>
+                          </span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${medicamentos.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.delete">Delete</Translate>
+                          </span>
                         </Button>
                       </div>
                     </td>
@@ -213,7 +172,11 @@ export class Medicamentos extends React.Component<IMedicamentosProps, IMedicamen
                 ))}
               </tbody>
             </Table>
-          </InfiniteScroll>
+          ) : (
+            <div className="alert alert-warning">
+              <Translate contentKey="safhApp.medicamentos.home.notFound">No Medicamentos found</Translate>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -221,17 +184,12 @@ export class Medicamentos extends React.Component<IMedicamentosProps, IMedicamen
 }
 
 const mapStateToProps = ({ medicamentos }: IRootState) => ({
-  medicamentosList: medicamentos.entities,
-  totalItems: medicamentos.totalItems,
-  links: medicamentos.links,
-  entity: medicamentos.entity,
-  updateSuccess: medicamentos.updateSuccess
+  medicamentosList: medicamentos.entities
 });
 
 const mapDispatchToProps = {
   getSearchEntities,
-  getEntities,
-  reset
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

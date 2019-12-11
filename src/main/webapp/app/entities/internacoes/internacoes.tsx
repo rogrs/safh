@@ -1,104 +1,55 @@
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction, TextFormat, getSortState, IPaginationBaseState } from 'react-jhipster';
+import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getSearchEntities, getEntities, reset } from './internacoes.reducer';
+import { getSearchEntities, getEntities } from './internacoes.reducer';
 import { IInternacoes } from 'app/shared/model/internacoes.model';
-// tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IInternacoesProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export interface IInternacoesState extends IPaginationBaseState {
+export interface IInternacoesState {
   search: string;
 }
 
 export class Internacoes extends React.Component<IInternacoesProps, IInternacoesState> {
   state: IInternacoesState = {
-    search: '',
-    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+    search: ''
   };
 
   componentDidMount() {
-    this.reset();
-  }
-
-  componentDidUpdate() {
-    if (this.props.updateSuccess) {
-      this.reset();
-    }
+    this.props.getEntities();
   }
 
   search = () => {
     if (this.state.search) {
-      this.props.reset();
-      this.setState({ activePage: 1 }, () => {
-        const { activePage, itemsPerPage, sort, order, search } = this.state;
-        this.props.getSearchEntities(search, activePage - 1, itemsPerPage, `${sort},${order}`);
-      });
+      this.props.getSearchEntities(this.state.search);
     }
   };
 
   clear = () => {
-    this.props.reset();
-    this.setState({ search: '', activePage: 1 }, () => {
+    this.setState({ search: '' }, () => {
       this.props.getEntities();
     });
   };
 
   handleSearch = event => this.setState({ search: event.target.value });
 
-  reset = () => {
-    this.props.reset();
-    this.setState({ activePage: 1 }, () => {
-      this.getEntities();
-    });
-  };
-
-  handleLoadMore = () => {
-    if (window.pageYOffset > 0) {
-      this.setState({ activePage: this.state.activePage + 1 }, () => this.getEntities());
-    }
-  };
-
-  sort = prop => () => {
-    this.setState(
-      {
-        order: this.state.order === 'asc' ? 'desc' : 'asc',
-        sort: prop
-      },
-      () => {
-        this.reset();
-      }
-    );
-  };
-
-  getEntities = () => {
-    const { activePage, itemsPerPage, sort, order, search } = this.state;
-    if (search) {
-      this.props.getSearchEntities(search, activePage - 1, itemsPerPage, `${sort},${order}`);
-    } else {
-      this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
-    }
-  };
-
   render() {
     const { internacoesList, match } = this.props;
     return (
       <div>
         <h2 id="internacoes-heading">
-          Internacoes
+          <Translate contentKey="safhApp.internacoes.home.title">Internacoes</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create new Internacoes
+            &nbsp;
+            <Translate contentKey="safhApp.internacoes.home.createLabel">Create a new Internacoes</Translate>
           </Link>
         </h2>
         <Row>
@@ -106,7 +57,13 @@ export class Internacoes extends React.Component<IInternacoesProps, IInternacoes
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
+                  <AvInput
+                    type="text"
+                    name="search"
+                    value={this.state.search}
+                    onChange={this.handleSearch}
+                    placeholder={translate('safhApp.internacoes.home.search')}
+                  />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -119,34 +76,27 @@ export class Internacoes extends React.Component<IInternacoesProps, IInternacoes
           </Col>
         </Row>
         <div className="table-responsive">
-          <InfiniteScroll
-            pageStart={this.state.activePage}
-            loadMore={this.handleLoadMore}
-            hasMore={this.state.activePage - 1 < this.props.links.next}
-            loader={<div className="loader">Loading ...</div>}
-            threshold={0}
-            initialLoad={false}
-          >
-            <Table responsive>
+          {internacoesList && internacoesList.length > 0 ? (
+            <Table responsive aria-describedby="internacoes-heading">
               <thead>
                 <tr>
-                  <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('dataInternacao')}>
-                    Data Internacao <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('descricao')}>
-                    Descricao <FontAwesomeIcon icon="sort" />
+                  <th>
+                    <Translate contentKey="global.field.id">ID</Translate>
                   </th>
                   <th>
-                    Pacientes <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="safhApp.internacoes.dataInternacao">Data Internacao</Translate>
                   </th>
                   <th>
-                    Clinicas <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="safhApp.internacoes.descricao">Descricao</Translate>
                   </th>
                   <th>
-                    Medicos <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="safhApp.internacoes.pacientes">Pacientes</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.internacoes.clinicas">Clinicas</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="safhApp.internacoes.medicos">Medicos</Translate>
                   </th>
                   <th />
                 </tr>
@@ -173,13 +123,22 @@ export class Internacoes extends React.Component<IInternacoesProps, IInternacoes
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${internacoes.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.view">View</Translate>
+                          </span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${internacoes.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.edit">Edit</Translate>
+                          </span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${internacoes.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.delete">Delete</Translate>
+                          </span>
                         </Button>
                       </div>
                     </td>
@@ -187,7 +146,11 @@ export class Internacoes extends React.Component<IInternacoesProps, IInternacoes
                 ))}
               </tbody>
             </Table>
-          </InfiniteScroll>
+          ) : (
+            <div className="alert alert-warning">
+              <Translate contentKey="safhApp.internacoes.home.notFound">No Internacoes found</Translate>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -195,17 +158,12 @@ export class Internacoes extends React.Component<IInternacoesProps, IInternacoes
 }
 
 const mapStateToProps = ({ internacoes }: IRootState) => ({
-  internacoesList: internacoes.entities,
-  totalItems: internacoes.totalItems,
-  links: internacoes.links,
-  entity: internacoes.entity,
-  updateSuccess: internacoes.updateSuccess
+  internacoesList: internacoes.entities
 });
 
 const mapDispatchToProps = {
   getSearchEntities,
-  getEntities,
-  reset
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -95,59 +95,20 @@ entity Prescricoes {
 
 relationship OneToMany {
              Clinicas to Pacientes{clinicas(clinica)}
-}
-
-relationship OneToMany {
              Enfermarias to Pacientes{enfermarias(enfermaria)}
-}
-
-relationship OneToMany {
              Leitos to Pacientes{leitos(leito)}
-}
-
-relationship OneToMany {
              Especialidades to Medicos{especialidades(especialidade)}
-}
-
-relationship OneToMany {
              Posologias to Medicamentos{posologiaPadrao(posologia)}
-}
-
-relationship OneToMany {
              Fabricantes to Medicamentos{fabricantes(fabricante)}
-}
-
-
-relationship OneToMany {
              Pacientes to Internacoes{pacientes(nome)}
-}
-
-relationship OneToMany {
              Clinicas to Internacoes{clinicas(clinica)}
-}
-
-relationship OneToMany {
              Medicos to Internacoes{medicos(nome)}
-}
-
-
-relationship OneToMany {
-            Internacoes to InternacoesDetalhes{internacoes(descricao)}
-}
-
-relationship OneToMany {
+             Internacoes to InternacoesDetalhes{internacoes(descricao)}
              Dietas to InternacoesDetalhes{dietas(dieta)}
-}
-
-relationship OneToMany {
              Prescricoes to InternacoesDetalhes{prescricoes(prescricao)}
-}
-
-relationship OneToMany {
              Posologias to InternacoesDetalhes{posologias(posologia)}
 }
 
 
-paginate *  with infinite-scroll
 
 service InternacoesDetalhes with serviceClass

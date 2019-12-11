@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -16,7 +15,6 @@ import { IMedicos } from 'app/shared/model/medicos.model';
 import { getEntities as getMedicos } from 'app/entities/medicos/medicos.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './internacoes.reducer';
 import { IInternacoes } from 'app/shared/model/internacoes.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -47,7 +45,9 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
 
@@ -73,7 +73,7 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/internacoes');
+    this.props.history.push('/internacoes');
   };
 
   render() {
@@ -84,7 +84,9 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.internacoes.home.createOrEditLabel">Create or edit a Internacoes</h2>
+            <h2 id="safhApp.internacoes.home.createOrEditLabel">
+              <Translate contentKey="safhApp.internacoes.home.createOrEditLabel">Create or edit a Internacoes</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -95,13 +97,15 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
               <AvForm model={isNew ? {} : internacoesEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="internacoes-id">ID</Label>
+                    <Label for="internacoes-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="internacoes-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="dataInternacaoLabel" for="internacoes-dataInternacao">
-                    Data Internacao
+                    <Translate contentKey="safhApp.internacoes.dataInternacao">Data Internacao</Translate>
                   </Label>
                   <AvField
                     id="internacoes-dataInternacao"
@@ -109,26 +113,28 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
                     className="form-control"
                     name="dataInternacao"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="descricaoLabel" for="internacoes-descricao">
-                    Descricao
+                    <Translate contentKey="safhApp.internacoes.descricao">Descricao</Translate>
                   </Label>
                   <AvField
                     id="internacoes-descricao"
                     type="text"
                     name="descricao"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      maxLength: { value: 200, errorMessage: 'This field cannot be longer than 200 characters.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      maxLength: { value: 200, errorMessage: translate('entity.validation.maxlength', { max: 200 }) }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-pacientes">Pacientes</Label>
+                  <Label for="internacoes-pacientes">
+                    <Translate contentKey="safhApp.internacoes.pacientes">Pacientes</Translate>
+                  </Label>
                   <AvInput id="internacoes-pacientes" type="select" className="form-control" name="pacientes.id">
                     <option value="" key="0" />
                     {pacientes
@@ -141,7 +147,9 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-clinicas">Clinicas</Label>
+                  <Label for="internacoes-clinicas">
+                    <Translate contentKey="safhApp.internacoes.clinicas">Clinicas</Translate>
+                  </Label>
                   <AvInput id="internacoes-clinicas" type="select" className="form-control" name="clinicas.id">
                     <option value="" key="0" />
                     {clinicas
@@ -154,7 +162,9 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-medicos">Medicos</Label>
+                  <Label for="internacoes-medicos">
+                    <Translate contentKey="safhApp.internacoes.medicos">Medicos</Translate>
+                  </Label>
                   <AvInput id="internacoes-medicos" type="select" className="form-control" name="medicos.id">
                     <option value="" key="0" />
                     {medicos
@@ -166,15 +176,18 @@ export class InternacoesUpdate extends React.Component<IInternacoesUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/internacoes" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/internacoes" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

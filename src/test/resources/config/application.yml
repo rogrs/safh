@@ -16,39 +16,18 @@
 spring:
   application:
     name: safh
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:safh;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    name:
-    username:
-    password:
-    hikari:
-      auto-commit: false
-  jpa:
-    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-    database: H2
-    open-in-view: false
-    show-sql: false
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-    properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: false
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-      hibernate.hbm2ddl.auto: validate
-      hibernate.jdbc.time_zone: UTC
   data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: safh
     elasticsearch:
       properties:
         path:
           home: target/elasticsearch
-  liquibase:
-    contexts: test
+        # See https://github.com/jhipster/generator-jhipster/issues/10302
+        node:
+          max_local_storage_nodes: 2
   mail:
     host: localhost
   main:
@@ -88,9 +67,8 @@ jhipster:
   logging:
     # To test json console appender
     use-json-format: true # By default, logs are in Json format
-    # To test logstash appender
     logstash:
-      enabled: true
+      enabled: false
       host: localhost
       port: 5000
       queue-size: 512
@@ -101,7 +79,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: NGU3YTA5YmY5YTM0NjhhYTNiMmIxOTNmZDBmZWQ1M2QwY2FkNWZiMDMzNjljMTMxMDBlOWJlOTU2ODMxYWYzYTliZjY1ZjM2OGE2YzYzZDg1YWIzOTJkMmU0ZjA2MWViOTM1MGE1NzI4OTVjNTFiZjFmODcwMTZkZGM0Mjc2YTU=
+        base64-secret: MzFjZmVhZTA0YjkyNmRiNzM0OTFlODk4YmIyNTVhNmVmZWE1OTRkNDg4YWEwOGE1YWI4MmQ3ZTUwMTdhNWI1NjQxNGY5NWI1NzRmODc4ZGRkNmNhZDA3NTYyMjY0YTNkOTBhMWY5NTdjM2M0ZDI5MDhmZjVmMDRmNTJmZTRkZTQ=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
   metrics:

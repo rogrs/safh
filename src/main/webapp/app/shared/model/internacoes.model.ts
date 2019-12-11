@@ -5,7 +5,7 @@ import { IClinicas } from 'app/shared/model/clinicas.model';
 import { IMedicos } from 'app/shared/model/medicos.model';
 
 export interface IInternacoes {
-  id?: number;
+  id?: string;
   dataInternacao?: Moment;
   descricao?: string;
   internacoesDetalhes?: IInternacoesDetalhes[];

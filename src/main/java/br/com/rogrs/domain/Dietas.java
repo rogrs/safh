@@ -1,54 +1,47 @@
 package br.com.rogrs.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Dietas.
  */
-@Entity
-@Table(name = "dietas")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "dietas")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "dietas")
 public class Dietas implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(max = 40)
-    @Column(name = "dieta", length = 40, nullable = false)
+    @Field("dieta")
     private String dieta;
 
     @Size(max = 255)
-    @Column(name = "descricao", length = 255)
+    @Field("descricao")
     private String descricao;
 
-    @OneToMany(mappedBy = "dietas")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @DBRef
+    @Field("internacoesDetalhes")
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

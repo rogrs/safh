@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -18,7 +17,6 @@ import { IPosologias } from 'app/shared/model/posologias.model';
 import { getEntities as getPosologias } from 'app/entities/posologias/posologias.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './internacoes-detalhes.reducer';
 import { IInternacoesDetalhes } from 'app/shared/model/internacoes-detalhes.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -51,7 +49,9 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
   }
 
   componentDidMount() {
-    if (!this.state.isNew) {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
       this.props.getEntity(this.props.match.params.id);
     }
 
@@ -78,7 +78,7 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/internacoes-detalhes');
+    this.props.history.push('/internacoes-detalhes');
   };
 
   render() {
@@ -89,7 +89,9 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="safhApp.internacoesDetalhes.home.createOrEditLabel">Create or edit a InternacoesDetalhes</h2>
+            <h2 id="safhApp.internacoesDetalhes.home.createOrEditLabel">
+              <Translate contentKey="safhApp.internacoesDetalhes.home.createOrEditLabel">Create or edit a InternacoesDetalhes</Translate>
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -100,13 +102,15 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
               <AvForm model={isNew ? {} : internacoesDetalhesEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="internacoes-detalhes-id">ID</Label>
+                    <Label for="internacoes-detalhes-id">
+                      <Translate contentKey="global.field.id">ID</Translate>
+                    </Label>
                     <AvInput id="internacoes-detalhes-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="dataDetalheLabel" for="internacoes-detalhes-dataDetalhe">
-                    Data Detalhe
+                    <Translate contentKey="safhApp.internacoesDetalhes.dataDetalhe">Data Detalhe</Translate>
                   </Label>
                   <AvField
                     id="internacoes-detalhes-dataDetalhe"
@@ -114,13 +118,13 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                     className="form-control"
                     name="dataDetalhe"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="horarioLabel" for="internacoes-detalhes-horario">
-                    Horario
+                    <Translate contentKey="safhApp.internacoesDetalhes.horario">Horario</Translate>
                   </Label>
                   <AvField
                     id="internacoes-detalhes-horario"
@@ -128,13 +132,13 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                     className="form-control"
                     name="horario"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="qtdLabel" for="internacoes-detalhes-qtd">
-                    Qtd
+                    <Translate contentKey="safhApp.internacoesDetalhes.qtd">Qtd</Translate>
                   </Label>
                   <AvField
                     id="internacoes-detalhes-qtd"
@@ -142,13 +146,15 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                     className="form-control"
                     name="qtd"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-detalhes-internacoes">Internacoes</Label>
+                  <Label for="internacoes-detalhes-internacoes">
+                    <Translate contentKey="safhApp.internacoesDetalhes.internacoes">Internacoes</Translate>
+                  </Label>
                   <AvInput id="internacoes-detalhes-internacoes" type="select" className="form-control" name="internacoes.id">
                     <option value="" key="0" />
                     {internacoes
@@ -161,7 +167,9 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-detalhes-dietas">Dietas</Label>
+                  <Label for="internacoes-detalhes-dietas">
+                    <Translate contentKey="safhApp.internacoesDetalhes.dietas">Dietas</Translate>
+                  </Label>
                   <AvInput id="internacoes-detalhes-dietas" type="select" className="form-control" name="dietas.id">
                     <option value="" key="0" />
                     {dietas
@@ -174,7 +182,9 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-detalhes-prescricoes">Prescricoes</Label>
+                  <Label for="internacoes-detalhes-prescricoes">
+                    <Translate contentKey="safhApp.internacoesDetalhes.prescricoes">Prescricoes</Translate>
+                  </Label>
                   <AvInput id="internacoes-detalhes-prescricoes" type="select" className="form-control" name="prescricoes.id">
                     <option value="" key="0" />
                     {prescricoes
@@ -187,7 +197,9 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="internacoes-detalhes-posologias">Posologias</Label>
+                  <Label for="internacoes-detalhes-posologias">
+                    <Translate contentKey="safhApp.internacoesDetalhes.posologias">Posologias</Translate>
+                  </Label>
                   <AvInput id="internacoes-detalhes-posologias" type="select" className="form-control" name="posologias.id">
                     <option value="" key="0" />
                     {posologias
@@ -199,15 +211,18 @@ export class InternacoesDetalhesUpdate extends React.Component<IInternacoesDetal
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/internacoes-detalhes" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/internacoes-detalhes" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.back">Back</Translate>
+                  </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp;
+                  <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
             )}

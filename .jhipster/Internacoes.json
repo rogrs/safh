@@ -47,13 +47,14 @@
             "otherEntityField": "nome"
         }
     ],
-    "changelogDate": "20190510033906",
+    "changelogDate": "20191211110032",
     "entityTableName": "internacoes",
     "dto": "no",
-    "pagination": "infinite-scroll",
+    "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
+    "readOnly": false,
     "clientRootFolder": "",
     "applications": "*"
 }

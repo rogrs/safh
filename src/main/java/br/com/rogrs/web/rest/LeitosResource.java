@@ -6,18 +6,12 @@ import br.com.rogrs.repository.search.LeitosSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +64,7 @@ public class LeitosResource {
         Leitos result = leitosRepository.save(leitos);
         leitosSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/leitos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,22 +86,20 @@ public class LeitosResource {
         Leitos result = leitosRepository.save(leitos);
         leitosSearchRepository.save(result);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, leitos.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, leitos.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code GET  /leitos} : get all the leitos.
      *
-     * @param pageable the pagination information.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of leitos in body.
      */
     @GetMapping("/leitos")
-    public ResponseEntity<List<Leitos>> getAllLeitos(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to get a page of Leitos");
-        Page<Leitos> page = leitosRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Leitos> getAllLeitos() {
+        log.debug("REST request to get all Leitos");
+        return leitosRepository.findAll();
     }
 
     /**
@@ -117,7 +109,7 @@ public class LeitosResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the leitos, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/leitos/{id}")
-    public ResponseEntity<Leitos> getLeitos(@PathVariable Long id) {
+    public ResponseEntity<Leitos> getLeitos(@PathVariable String id) {
         log.debug("REST request to get Leitos : {}", id);
         Optional<Leitos> leitos = leitosRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(leitos);
@@ -130,11 +122,11 @@ public class LeitosResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/leitos/{id}")
-    public ResponseEntity<Void> deleteLeitos(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteLeitos(@PathVariable String id) {
         log.debug("REST request to delete Leitos : {}", id);
         leitosRepository.deleteById(id);
         leitosSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
     /**
@@ -142,15 +134,13 @@ public class LeitosResource {
      * to the query.
      *
      * @param query the query of the leitos search.
-     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/leitos")
-    public ResponseEntity<List<Leitos>> searchLeitos(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
-        log.debug("REST request to search for a page of Leitos for query {}", query);
-        Page<Leitos> page = leitosSearchRepository.search(queryStringQuery(query), pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Leitos> searchLeitos(@RequestParam String query) {
+        log.debug("REST request to search Leitos for query {}", query);
+        return StreamSupport
+            .stream(leitosSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
-
 }

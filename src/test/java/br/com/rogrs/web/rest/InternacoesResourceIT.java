@@ -11,17 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
@@ -36,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link InternacoesResource} REST controller.
+ * Integration tests for the {@link InternacoesResource} REST controller.
  */
 @SpringBootTest(classes = SafhApp.class)
 public class InternacoesResourceIT {
@@ -68,9 +65,6 @@ public class InternacoesResourceIT {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private Validator validator;
 
     private MockMvc restInternacoesMockMvc;
@@ -95,20 +89,32 @@ public class InternacoesResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Internacoes createEntity(EntityManager em) {
+    public static Internacoes createEntity() {
         Internacoes internacoes = new Internacoes()
             .dataInternacao(DEFAULT_DATA_INTERNACAO)
             .descricao(DEFAULT_DESCRICAO);
         return internacoes;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Internacoes createUpdatedEntity() {
+        Internacoes internacoes = new Internacoes()
+            .dataInternacao(UPDATED_DATA_INTERNACAO)
+            .descricao(UPDATED_DESCRICAO);
+        return internacoes;
+    }
 
     @BeforeEach
     public void initTest() {
-        internacoes = createEntity(em);
+        internacoesRepository.deleteAll();
+        internacoes = createEntity();
     }
 
     @Test
-    @Transactional
     public void createInternacoes() throws Exception {
         int databaseSizeBeforeCreate = internacoesRepository.findAll().size();
 
@@ -130,12 +136,11 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void createInternacoesWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = internacoesRepository.findAll().size();
 
         // Create the Internacoes with an existing ID
-        internacoes.setId(1L);
+        internacoes.setId("existing_id");
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restInternacoesMockMvc.perform(post("/api/internacoes")
@@ -153,7 +158,6 @@ public class InternacoesResourceIT {
 
 
     @Test
-    @Transactional
     public void checkDataInternacaoIsRequired() throws Exception {
         int databaseSizeBeforeTest = internacoesRepository.findAll().size();
         // set the field null
@@ -171,7 +175,6 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void checkDescricaoIsRequired() throws Exception {
         int databaseSizeBeforeTest = internacoesRepository.findAll().size();
         // set the field null
@@ -189,37 +192,34 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void getAllInternacoes() throws Exception {
         // Initialize the database
-        internacoesRepository.saveAndFlush(internacoes);
+        internacoesRepository.save(internacoes);
 
         // Get all the internacoesList
         restInternacoesMockMvc.perform(get("/api/internacoes?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoes.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoes.getId())))
             .andExpect(jsonPath("$.[*].dataInternacao").value(hasItem(DEFAULT_DATA_INTERNACAO.toString())))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())));
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
     }
     
     @Test
-    @Transactional
     public void getInternacoes() throws Exception {
         // Initialize the database
-        internacoesRepository.saveAndFlush(internacoes);
+        internacoesRepository.save(internacoes);
 
         // Get the internacoes
         restInternacoesMockMvc.perform(get("/api/internacoes/{id}", internacoes.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(internacoes.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(internacoes.getId()))
             .andExpect(jsonPath("$.dataInternacao").value(DEFAULT_DATA_INTERNACAO.toString()))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()));
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO));
     }
 
     @Test
-    @Transactional
     public void getNonExistingInternacoes() throws Exception {
         // Get the internacoes
         restInternacoesMockMvc.perform(get("/api/internacoes/{id}", Long.MAX_VALUE))
@@ -227,17 +227,14 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateInternacoes() throws Exception {
         // Initialize the database
-        internacoesRepository.saveAndFlush(internacoes);
+        internacoesRepository.save(internacoes);
 
         int databaseSizeBeforeUpdate = internacoesRepository.findAll().size();
 
         // Update the internacoes
         Internacoes updatedInternacoes = internacoesRepository.findById(internacoes.getId()).get();
-        // Disconnect from session so that the updates on updatedInternacoes are not directly saved in db
-        em.detach(updatedInternacoes);
         updatedInternacoes
             .dataInternacao(UPDATED_DATA_INTERNACAO)
             .descricao(UPDATED_DESCRICAO);
@@ -259,7 +256,6 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void updateNonExistingInternacoes() throws Exception {
         int databaseSizeBeforeUpdate = internacoesRepository.findAll().size();
 
@@ -280,10 +276,9 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void deleteInternacoes() throws Exception {
         // Initialize the database
-        internacoesRepository.saveAndFlush(internacoes);
+        internacoesRepository.save(internacoes);
 
         int databaseSizeBeforeDelete = internacoesRepository.findAll().size();
 
@@ -292,7 +287,7 @@ public class InternacoesResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Internacoes> internacoesList = internacoesRepository.findAll();
         assertThat(internacoesList).hasSize(databaseSizeBeforeDelete - 1);
 
@@ -301,33 +296,17 @@ public class InternacoesResourceIT {
     }
 
     @Test
-    @Transactional
     public void searchInternacoes() throws Exception {
         // Initialize the database
-        internacoesRepository.saveAndFlush(internacoes);
-        when(mockInternacoesSearchRepository.search(queryStringQuery("id:" + internacoes.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(internacoes), PageRequest.of(0, 1), 1));
+        internacoesRepository.save(internacoes);
+        when(mockInternacoesSearchRepository.search(queryStringQuery("id:" + internacoes.getId())))
+            .thenReturn(Collections.singletonList(internacoes));
         // Search the internacoes
         restInternacoesMockMvc.perform(get("/api/_search/internacoes?query=id:" + internacoes.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoes.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(internacoes.getId())))
             .andExpect(jsonPath("$.[*].dataInternacao").value(hasItem(DEFAULT_DATA_INTERNACAO.toString())))
             .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Internacoes.class);
-        Internacoes internacoes1 = new Internacoes();
-        internacoes1.setId(1L);
-        Internacoes internacoes2 = new Internacoes();
-        internacoes2.setId(internacoes1.getId());
-        assertThat(internacoes1).isEqualTo(internacoes2);
-        internacoes2.setId(2L);
-        assertThat(internacoes1).isNotEqualTo(internacoes2);
-        internacoes1.setId(null);
-        assertThat(internacoes1).isNotEqualTo(internacoes2);
     }
 }

@@ -1,11 +1,10 @@
 package br.com.rogrs.repository;
 
 import br.com.rogrs.domain.Authority;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * Spring Data JPA repository for the {@link Authority} entity.
+ * Spring Data MongoDB repository for the {@link Authority} entity.
  */
-public interface AuthorityRepository extends JpaRepository<Authority, String> {
+public interface AuthorityRepository extends MongoRepository<Authority, String> {
 }

@@ -27,13 +27,14 @@
             "relationshipName": "pacientes"
         }
     ],
-    "changelogDate": "20190510033908",
+    "changelogDate": "20191211110034",
     "entityTableName": "leitos",
     "dto": "no",
-    "pagination": "infinite-scroll",
+    "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
+    "readOnly": false,
     "clientRootFolder": "",
     "applications": "*"
 }
