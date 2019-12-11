@@ -1,0 +1,25 @@
+{
+  "safhApp": {
+    "posologias": {
+      "home": {
+        "title": "Posologias",
+        "createLabel": "Crear nuevo Posologias",
+        "createOrEditLabel": "Crear o editar Posologias",
+        "search": "Buscar Posologias",
+        "notFound": "Ningún Posologias encontrado"
+      },
+      "created": "Un nuevo Posologias ha sido creado con el identificador {{ param }}",
+      "updated": "Un Posologias ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Posologias ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Posologias {{ id }}?"
+      },
+      "detail": {
+        "title": "Posologias"
+      },
+      "posologia": "Posologia",
+      "medicamentos": "Medicamentos",
+      "internacoesDetalhes": "Internacoes Detalhes"
+    }
+  }
+}

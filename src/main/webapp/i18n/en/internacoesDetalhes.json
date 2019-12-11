@@ -1,0 +1,29 @@
+{
+  "safhApp": {
+    "internacoesDetalhes": {
+      "home": {
+        "title": "Internacoes Detalhes",
+        "createLabel": "Create a new Internacoes Detalhes",
+        "createOrEditLabel": "Create or edit a Internacoes Detalhes",
+        "search": "Search for Internacoes Detalhes",
+        "notFound": "No Internacoes Detalhes found"
+      },
+      "created": "A new Internacoes Detalhes is created with identifier {{ param }}",
+      "updated": "A Internacoes Detalhes is updated with identifier {{ param }}",
+      "deleted": "A Internacoes Detalhes is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Internacoes Detalhes {{ id }}?"
+      },
+      "detail": {
+        "title": "Internacoes Detalhes"
+      },
+      "dataDetalhe": "Data Detalhe",
+      "horario": "Horario",
+      "qtd": "Qtd",
+      "internacoes": "Internacoes",
+      "dietas": "Dietas",
+      "prescricoes": "Prescricoes",
+      "posologias": "Posologias"
+    }
+  }
+}

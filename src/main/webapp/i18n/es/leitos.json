@@ -1,0 +1,25 @@
+{
+  "safhApp": {
+    "leitos": {
+      "home": {
+        "title": "Leitos",
+        "createLabel": "Crear nuevo Leitos",
+        "createOrEditLabel": "Crear o editar Leitos",
+        "search": "Buscar Leitos",
+        "notFound": "Ningún Leitos encontrado"
+      },
+      "created": "Un nuevo Leitos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Leitos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Leitos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Leitos {{ id }}?"
+      },
+      "detail": {
+        "title": "Leitos"
+      },
+      "leito": "Leito",
+      "tipo": "Tipo",
+      "pacientes": "Pacientes"
+    }
+  }
+}

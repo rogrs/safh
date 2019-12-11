@@ -1,0 +1,24 @@
+{
+  "safhApp": {
+    "fabricantes": {
+      "home": {
+        "title": "Fabricantes",
+        "createLabel": "Create a new Fabricantes",
+        "createOrEditLabel": "Create or edit a Fabricantes",
+        "search": "Search for Fabricantes",
+        "notFound": "No Fabricantes found"
+      },
+      "created": "A new Fabricantes is created with identifier {{ param }}",
+      "updated": "A Fabricantes is updated with identifier {{ param }}",
+      "deleted": "A Fabricantes is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fabricantes {{ id }}?"
+      },
+      "detail": {
+        "title": "Fabricantes"
+      },
+      "fabricante": "Fabricante",
+      "medicamentos": "Medicamentos"
+    }
+  }
+}

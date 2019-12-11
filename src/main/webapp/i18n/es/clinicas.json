@@ -1,0 +1,26 @@
+{
+  "safhApp": {
+    "clinicas": {
+      "home": {
+        "title": "Clinicas",
+        "createLabel": "Crear nuevo Clinicas",
+        "createOrEditLabel": "Crear o editar Clinicas",
+        "search": "Buscar Clinicas",
+        "notFound": "Ningún Clinicas encontrado"
+      },
+      "created": "Un nuevo Clinicas ha sido creado con el identificador {{ param }}",
+      "updated": "Un Clinicas ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Clinicas ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Clinicas {{ id }}?"
+      },
+      "detail": {
+        "title": "Clinicas"
+      },
+      "clinica": "Clinica",
+      "descricao": "Descricao",
+      "pacientes": "Pacientes",
+      "internacoes": "Internacoes"
+    }
+  }
+}

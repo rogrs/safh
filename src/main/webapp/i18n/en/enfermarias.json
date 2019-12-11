@@ -1,0 +1,24 @@
+{
+  "safhApp": {
+    "enfermarias": {
+      "home": {
+        "title": "Enfermarias",
+        "createLabel": "Create a new Enfermarias",
+        "createOrEditLabel": "Create or edit a Enfermarias",
+        "search": "Search for Enfermarias",
+        "notFound": "No Enfermarias found"
+      },
+      "created": "A new Enfermarias is created with identifier {{ param }}",
+      "updated": "A Enfermarias is updated with identifier {{ param }}",
+      "deleted": "A Enfermarias is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Enfermarias {{ id }}?"
+      },
+      "detail": {
+        "title": "Enfermarias"
+      },
+      "enfermaria": "Enfermaria",
+      "pacientes": "Pacientes"
+    }
+  }
+}

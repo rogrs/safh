@@ -1,0 +1,24 @@
+{
+  "safhApp": {
+    "especialidades": {
+      "home": {
+        "title": "Especialidades",
+        "createLabel": "Create a new Especialidades",
+        "createOrEditLabel": "Create or edit a Especialidades",
+        "search": "Search for Especialidades",
+        "notFound": "No Especialidades found"
+      },
+      "created": "A new Especialidades is created with identifier {{ param }}",
+      "updated": "A Especialidades is updated with identifier {{ param }}",
+      "deleted": "A Especialidades is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Especialidades {{ id }}?"
+      },
+      "detail": {
+        "title": "Especialidades"
+      },
+      "especialidade": "Especialidade",
+      "medicos": "Medicos"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "safhApp": {
+    "medicamentos": {
+      "home": {
+        "title": "Medicamentos",
+        "createLabel": "Create a new Medicamentos",
+        "createOrEditLabel": "Create or edit a Medicamentos",
+        "search": "Search for Medicamentos",
+        "notFound": "No Medicamentos found"
+      },
+      "created": "A new Medicamentos is created with identifier {{ param }}",
+      "updated": "A Medicamentos is updated with identifier {{ param }}",
+      "deleted": "A Medicamentos is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Medicamentos {{ id }}?"
+      },
+      "detail": {
+        "title": "Medicamentos"
+      },
+      "descricao": "Descricao",
+      "registroMinisterioSaude": "Registro Ministerio Saude",
+      "codigoBarras": "Codigo Barras",
+      "qtdAtual": "Qtd Atual",
+      "qtdMin": "Qtd Min",
+      "qtdMax": "Qtd Max",
+      "observacoes": "Observacoes",
+      "apresentacao": "Apresentacao",
+      "posologiaPadrao": "Posologia Padrao",
+      "fabricantes": "Fabricantes"
+    }
+  }
+}

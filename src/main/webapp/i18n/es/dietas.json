@@ -1,0 +1,25 @@
+{
+  "safhApp": {
+    "dietas": {
+      "home": {
+        "title": "Dietas",
+        "createLabel": "Crear nuevo Dietas",
+        "createOrEditLabel": "Crear o editar Dietas",
+        "search": "Buscar Dietas",
+        "notFound": "Ningún Dietas encontrado"
+      },
+      "created": "Un nuevo Dietas ha sido creado con el identificador {{ param }}",
+      "updated": "Un Dietas ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Dietas ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Dietas {{ id }}?"
+      },
+      "detail": {
+        "title": "Dietas"
+      },
+      "dieta": "Dieta",
+      "descricao": "Descricao",
+      "internacoesDetalhes": "Internacoes Detalhes"
+    }
+  }
+}

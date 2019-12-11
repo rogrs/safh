@@ -1,0 +1,25 @@
+{
+  "safhApp": {
+    "dietas": {
+      "home": {
+        "title": "Dietas",
+        "createLabel": "Create a new Dietas",
+        "createOrEditLabel": "Create or edit a Dietas",
+        "search": "Search for Dietas",
+        "notFound": "No Dietas found"
+      },
+      "created": "A new Dietas is created with identifier {{ param }}",
+      "updated": "A Dietas is updated with identifier {{ param }}",
+      "deleted": "A Dietas is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Dietas {{ id }}?"
+      },
+      "detail": {
+        "title": "Dietas"
+      },
+      "dieta": "Dieta",
+      "descricao": "Descricao",
+      "internacoesDetalhes": "Internacoes Detalhes"
+    }
+  }
+}

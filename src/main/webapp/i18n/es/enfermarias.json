@@ -1,0 +1,24 @@
+{
+  "safhApp": {
+    "enfermarias": {
+      "home": {
+        "title": "Enfermarias",
+        "createLabel": "Crear nuevo Enfermarias",
+        "createOrEditLabel": "Crear o editar Enfermarias",
+        "search": "Buscar Enfermarias",
+        "notFound": "Ningún Enfermarias encontrado"
+      },
+      "created": "Un nuevo Enfermarias ha sido creado con el identificador {{ param }}",
+      "updated": "Un Enfermarias ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Enfermarias ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Enfermarias {{ id }}?"
+      },
+      "detail": {
+        "title": "Enfermarias"
+      },
+      "enfermaria": "Enfermaria",
+      "pacientes": "Pacientes"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "safhApp": {
+    "pacientes": {
+      "home": {
+        "title": "Pacientes",
+        "createLabel": "Criar novo Pacientes",
+        "createOrEditLabel": "Criar ou editar Pacientes",
+        "search": "Pesquisar por Pacientes",
+        "notFound": "Nenhum Pacientes encontrado"
+      },
+      "created": "Um novo Pacientes foi criado com o identificador {{ param }}",
+      "updated": "Um Pacientes foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Pacientes foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Pacientes {{ id }}?"
+      },
+      "detail": {
+        "title": "Pacientes"
+      },
+      "prontuario": "Prontuario",
+      "nome": "Nome",
+      "cpf": "Cpf",
+      "email": "Email",
+      "cep": "Cep",
+      "logradouro": "Logradouro",
+      "numero": "Numero",
+      "complemento": "Complemento",
+      "bairro": "Bairro",
+      "cidade": "Cidade",
+      "uF": "U F",
+      "internacoes": "Internacoes",
+      "clinicas": "Clinicas",
+      "enfermarias": "Enfermarias",
+      "leitos": "Leitos"
+    }
+  }
+}

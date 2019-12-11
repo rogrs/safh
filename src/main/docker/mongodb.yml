@@ -1,0 +1,8 @@
+version: '2'
+services:
+  safh-mongodb:
+    image: mongo:4.0.13
+    ports:
+      - '27017:27017'
+    # volumes:
+    #     - ~/volumes/jhipster/safh/mongodb/:/data/db/

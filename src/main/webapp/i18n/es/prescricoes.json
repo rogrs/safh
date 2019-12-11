@@ -1,0 +1,24 @@
+{
+  "safhApp": {
+    "prescricoes": {
+      "home": {
+        "title": "Prescricoes",
+        "createLabel": "Crear nuevo Prescricoes",
+        "createOrEditLabel": "Crear o editar Prescricoes",
+        "search": "Buscar Prescricoes",
+        "notFound": "Ningún Prescricoes encontrado"
+      },
+      "created": "Un nuevo Prescricoes ha sido creado con el identificador {{ param }}",
+      "updated": "Un Prescricoes ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Prescricoes ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Prescricoes {{ id }}?"
+      },
+      "detail": {
+        "title": "Prescricoes"
+      },
+      "prescricao": "Prescricao",
+      "internacoesDetalhes": "Internacoes Detalhes"
+    }
+  }
+}
