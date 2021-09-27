@@ -2,34 +2,26 @@ package br.com.rogrs.service;
 
 import br.com.rogrs.domain.InternacoesDetalhes;
 import br.com.rogrs.repository.InternacoesDetalhesRepository;
-import br.com.rogrs.repository.search.InternacoesDetalhesSearchRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Implementation for managing {@link InternacoesDetalhes}.
  */
 @Service
+@Transactional
 public class InternacoesDetalhesService {
 
     private final Logger log = LoggerFactory.getLogger(InternacoesDetalhesService.class);
 
     private final InternacoesDetalhesRepository internacoesDetalhesRepository;
 
-    private final InternacoesDetalhesSearchRepository internacoesDetalhesSearchRepository;
-
-    public InternacoesDetalhesService(InternacoesDetalhesRepository internacoesDetalhesRepository, InternacoesDetalhesSearchRepository internacoesDetalhesSearchRepository) {
+    public InternacoesDetalhesService(InternacoesDetalhesRepository internacoesDetalhesRepository) {
         this.internacoesDetalhesRepository = internacoesDetalhesRepository;
-        this.internacoesDetalhesSearchRepository = internacoesDetalhesSearchRepository;
     }
 
     /**
@@ -40,9 +32,36 @@ public class InternacoesDetalhesService {
      */
     public InternacoesDetalhes save(InternacoesDetalhes internacoesDetalhes) {
         log.debug("Request to save InternacoesDetalhes : {}", internacoesDetalhes);
-        InternacoesDetalhes result = internacoesDetalhesRepository.save(internacoesDetalhes);
-        internacoesDetalhesSearchRepository.save(result);
-        return result;
+        return internacoesDetalhesRepository.save(internacoesDetalhes);
+    }
+
+    /**
+     * Partially update a internacoesDetalhes.
+     *
+     * @param internacoesDetalhes the entity to update partially.
+     * @return the persisted entity.
+     */
+    public Optional<InternacoesDetalhes> partialUpdate(InternacoesDetalhes internacoesDetalhes) {
+        log.debug("Request to partially update InternacoesDetalhes : {}", internacoesDetalhes);
+
+        return internacoesDetalhesRepository
+            .findById(internacoesDetalhes.getId())
+            .map(
+                existingInternacoesDetalhes -> {
+                    if (internacoesDetalhes.getDataDetalhe() != null) {
+                        existingInternacoesDetalhes.setDataDetalhe(internacoesDetalhes.getDataDetalhe());
+                    }
+                    if (internacoesDetalhes.getHorario() != null) {
+                        existingInternacoesDetalhes.setHorario(internacoesDetalhes.getHorario());
+                    }
+                    if (internacoesDetalhes.getQtd() != null) {
+                        existingInternacoesDetalhes.setQtd(internacoesDetalhes.getQtd());
+                    }
+
+                    return existingInternacoesDetalhes;
+                }
+            )
+            .map(internacoesDetalhesRepository::save);
     }
 
     /**
@@ -50,11 +69,11 @@ public class InternacoesDetalhesService {
      *
      * @return the list of entities.
      */
+    @Transactional(readOnly = true)
     public List<InternacoesDetalhes> findAll() {
         log.debug("Request to get all InternacoesDetalhes");
         return internacoesDetalhesRepository.findAll();
     }
-
 
     /**
      * Get one internacoesDetalhes by id.
@@ -62,7 +81,8 @@ public class InternacoesDetalhesService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    public Optional<InternacoesDetalhes> findOne(String id) {
+    @Transactional(readOnly = true)
+    public Optional<InternacoesDetalhes> findOne(Long id) {
         log.debug("Request to get InternacoesDetalhes : {}", id);
         return internacoesDetalhesRepository.findById(id);
     }
@@ -72,22 +92,8 @@ public class InternacoesDetalhesService {
      *
      * @param id the id of the entity.
      */
-    public void delete(String id) {
+    public void delete(Long id) {
         log.debug("Request to delete InternacoesDetalhes : {}", id);
         internacoesDetalhesRepository.deleteById(id);
-        internacoesDetalhesSearchRepository.deleteById(id);
-    }
-
-    /**
-     * Search for the internacoesDetalhes corresponding to the query.
-     *
-     * @param query the query of the search.
-     * @return the list of entities.
-     */
-    public List<InternacoesDetalhes> search(String query) {
-        log.debug("Request to search InternacoesDetalhes for query {}", query);
-        return StreamSupport
-            .stream(internacoesDetalhesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
     }
 }

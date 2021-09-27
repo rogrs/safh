@@ -1,52 +1,59 @@
 package br.com.rogrs.domain;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Dietas.
  */
-@Document(collection = "dietas")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "dietas")
+@Entity
+@Table(name = "dietas")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Dietas implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Size(max = 40)
-    @Field("dieta")
+    @Column(name = "dieta", length = 40, nullable = false)
     private String dieta;
 
     @Size(max = 255)
-    @Field("descricao")
+    @Column(name = "descricao", length = 255)
     private String descricao;
 
-    @DBRef
-    @Field("internacoesDetalhes")
+    @OneToMany(mappedBy = "dietas")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "internacoes", "dietas", "prescricoes", "posologias" }, allowSetters = true)
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Dietas id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getDieta() {
-        return dieta;
+        return this.dieta;
     }
 
     public Dietas dieta(String dieta) {
@@ -59,7 +66,7 @@ public class Dietas implements Serializable {
     }
 
     public String getDescricao() {
-        return descricao;
+        return this.descricao;
     }
 
     public Dietas descricao(String descricao) {
@@ -72,11 +79,11 @@ public class Dietas implements Serializable {
     }
 
     public Set<InternacoesDetalhes> getInternacoesDetalhes() {
-        return internacoesDetalhes;
+        return this.internacoesDetalhes;
     }
 
     public Dietas internacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
-        this.internacoesDetalhes = internacoesDetalhes;
+        this.setInternacoesDetalhes(internacoesDetalhes);
         return this;
     }
 
@@ -93,9 +100,16 @@ public class Dietas implements Serializable {
     }
 
     public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        if (this.internacoesDetalhes != null) {
+            this.internacoesDetalhes.forEach(i -> i.setDietas(null));
+        }
+        if (internacoesDetalhes != null) {
+            internacoesDetalhes.forEach(i -> i.setDietas(this));
+        }
         this.internacoesDetalhes = internacoesDetalhes;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -110,9 +124,11 @@ public class Dietas implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Dietas{" +

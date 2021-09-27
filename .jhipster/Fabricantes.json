@@ -1,32 +1,29 @@
 {
-    "name": "Fabricantes",
-    "fields": [
-        {
-            "fieldName": "fabricante",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "medicamentos",
-            "otherEntityRelationshipName": "fabricantes",
-            "relationshipName": "medicamentos"
-        }
-    ],
-    "changelogDate": "20191211110031",
-    "entityTableName": "fabricantes",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Fabricantes",
+  "fields": [
+    {
+      "fieldName": "fabricante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "medicamentos",
+      "otherEntityRelationshipName": "fabricantes",
+      "relationshipName": "medicamentos"
+    }
+  ],
+  "entityTableName": "fabricantes",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223231"
 }

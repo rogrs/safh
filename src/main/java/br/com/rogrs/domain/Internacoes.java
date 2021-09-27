@@ -1,69 +1,72 @@
 package br.com.rogrs.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Internacoes.
  */
-@Document(collection = "internacoes")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "internacoes")
+@Entity
+@Table(name = "internacoes")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Internacoes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
-    @Field("data_internacao")
+    @Column(name = "data_internacao", nullable = false)
     private LocalDate dataInternacao;
 
     @NotNull
     @Size(max = 200)
-    @Field("descricao")
+    @Column(name = "descricao", length = 200, nullable = false)
     private String descricao;
 
-    @DBRef
-    @Field("internacoesDetalhes")
+    @OneToMany(mappedBy = "internacoes")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "internacoes", "dietas", "prescricoes", "posologias" }, allowSetters = true)
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
-    @DBRef
-    @Field("pacientes")
-    @JsonIgnoreProperties("internacoes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "internacoes", "clinicas", "enfermarias", "leitos" }, allowSetters = true)
     private Pacientes pacientes;
 
-    @DBRef
-    @Field("clinicas")
-    @JsonIgnoreProperties("internacoes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "pacientes", "internacoes" }, allowSetters = true)
     private Clinicas clinicas;
 
-    @DBRef
-    @Field("medicos")
-    @JsonIgnoreProperties("internacoes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "internacoes", "especialidades" }, allowSetters = true)
     private Medicos medicos;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Internacoes id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public LocalDate getDataInternacao() {
-        return dataInternacao;
+        return this.dataInternacao;
     }
 
     public Internacoes dataInternacao(LocalDate dataInternacao) {
@@ -76,7 +79,7 @@ public class Internacoes implements Serializable {
     }
 
     public String getDescricao() {
-        return descricao;
+        return this.descricao;
     }
 
     public Internacoes descricao(String descricao) {
@@ -89,11 +92,11 @@ public class Internacoes implements Serializable {
     }
 
     public Set<InternacoesDetalhes> getInternacoesDetalhes() {
-        return internacoesDetalhes;
+        return this.internacoesDetalhes;
     }
 
     public Internacoes internacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
-        this.internacoesDetalhes = internacoesDetalhes;
+        this.setInternacoesDetalhes(internacoesDetalhes);
         return this;
     }
 
@@ -110,15 +113,21 @@ public class Internacoes implements Serializable {
     }
 
     public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        if (this.internacoesDetalhes != null) {
+            this.internacoesDetalhes.forEach(i -> i.setInternacoes(null));
+        }
+        if (internacoesDetalhes != null) {
+            internacoesDetalhes.forEach(i -> i.setInternacoes(this));
+        }
         this.internacoesDetalhes = internacoesDetalhes;
     }
 
     public Pacientes getPacientes() {
-        return pacientes;
+        return this.pacientes;
     }
 
     public Internacoes pacientes(Pacientes pacientes) {
-        this.pacientes = pacientes;
+        this.setPacientes(pacientes);
         return this;
     }
 
@@ -127,11 +136,11 @@ public class Internacoes implements Serializable {
     }
 
     public Clinicas getClinicas() {
-        return clinicas;
+        return this.clinicas;
     }
 
     public Internacoes clinicas(Clinicas clinicas) {
-        this.clinicas = clinicas;
+        this.setClinicas(clinicas);
         return this;
     }
 
@@ -140,18 +149,19 @@ public class Internacoes implements Serializable {
     }
 
     public Medicos getMedicos() {
-        return medicos;
+        return this.medicos;
     }
 
     public Internacoes medicos(Medicos medicos) {
-        this.medicos = medicos;
+        this.setMedicos(medicos);
         return this;
     }
 
     public void setMedicos(Medicos medicos) {
         this.medicos = medicos;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -166,9 +176,11 @@ public class Internacoes implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Internacoes{" +

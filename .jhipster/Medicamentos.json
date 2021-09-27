@@ -1,82 +1,71 @@
 {
-    "name": "Medicamentos",
-    "fields": [
-        {
-            "fieldName": "descricao",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 100
-        },
-        {
-            "fieldName": "registroMinisterioSaude",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        },
-        {
-            "fieldName": "codigoBarras",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 13
-        },
-        {
-            "fieldName": "qtdAtual",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "qtdMin",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "qtdMax",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "observacoes",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 8000
-        },
-        {
-            "fieldName": "apresentacao",
-            "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "posologias",
-            "otherEntityRelationshipName": "medicamentos",
-            "relationshipName": "posologiaPadrao",
-            "otherEntityField": "posologia"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "fabricantes",
-            "otherEntityRelationshipName": "medicamentos",
-            "relationshipName": "fabricantes",
-            "otherEntityField": "fabricante"
-        }
-    ],
-    "changelogDate": "20191211110035",
-    "entityTableName": "medicamentos",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Medicamentos",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "registroMinisterioSaude",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "codigoBarras",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "13"
+    },
+    {
+      "fieldName": "qtdAtual",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "qtdMin",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "qtdMax",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "observacoes",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "8000"
+    },
+    {
+      "fieldName": "apresentacao",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "posologias",
+      "otherEntityRelationshipName": "medicamentos",
+      "relationshipName": "posologiaPadrao",
+      "otherEntityField": "posologia"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "fabricantes",
+      "otherEntityRelationshipName": "medicamentos",
+      "relationshipName": "fabricantes",
+      "otherEntityField": "fabricante"
+    }
+  ],
+  "entityTableName": "medicamentos",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223235"
 }

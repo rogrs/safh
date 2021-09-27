@@ -1,0 +1,98 @@
+<div>
+  <h2 id="page-heading" data-cy="InternacoesHeading">
+    <span jhiTranslate="safhApp.internacoes.home.title">Internacoes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="safhApp.internacoes.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-internacoes"
+        [routerLink]="['/internacoes/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="safhApp.internacoes.home.createLabel"> Create a new Internacoes </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="internacoes?.length === 0">
+    <span jhiTranslate="safhApp.internacoes.home.notFound">No internacoes found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="internacoes && internacoes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoes.dataInternacao">Data Internacao</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoes.descricao">Descricao</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoes.pacientes">Pacientes</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoes.clinicas">Clinicas</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoes.medicos">Medicos</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let internacoes of internacoes; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/internacoes', internacoes.id, 'view']">{{ internacoes.id }}</a>
+          </td>
+          <td>{{ internacoes.dataInternacao | formatMediumDate }}</td>
+          <td>{{ internacoes.descricao }}</td>
+          <td>
+            <div *ngIf="internacoes.pacientes">
+              <a [routerLink]="['/pacientes', internacoes.pacientes?.id, 'view']">{{ internacoes.pacientes?.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="internacoes.clinicas">
+              <a [routerLink]="['/clinicas', internacoes.clinicas?.id, 'view']">{{ internacoes.clinicas?.clinica }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="internacoes.medicos">
+              <a [routerLink]="['/medicos', internacoes.medicos?.id, 'view']">{{ internacoes.medicos?.nome }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/internacoes', internacoes.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/internacoes', internacoes.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(internacoes)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

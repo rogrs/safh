@@ -1,38 +1,35 @@
 {
-    "name": "Posologias",
-    "fields": [
-        {
-            "fieldName": "posologia",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 40
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "medicamentos",
-            "otherEntityRelationshipName": "posologiaPadrao",
-            "relationshipName": "medicamentos"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "internacoesDetalhes",
-            "otherEntityRelationshipName": "posologias",
-            "relationshipName": "internacoesDetalhes"
-        }
-    ],
-    "changelogDate": "20191211110038",
-    "entityTableName": "posologias",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Posologias",
+  "fields": [
+    {
+      "fieldName": "posologia",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "40"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "medicamentos",
+      "otherEntityRelationshipName": "posologiaPadrao",
+      "relationshipName": "medicamentos"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "internacoesDetalhes",
+      "otherEntityRelationshipName": "posologias",
+      "relationshipName": "internacoesDetalhes"
+    }
+  ],
+  "entityTableName": "posologias",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223238"
 }

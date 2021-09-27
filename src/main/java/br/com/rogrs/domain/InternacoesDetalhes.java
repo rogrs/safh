@@ -1,71 +1,72 @@
 package br.com.rogrs.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A InternacoesDetalhes.
  */
-@Document(collection = "internacoes_detalhes")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "internacoesdetalhes")
+@Entity
+@Table(name = "internacoes_detalhes")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class InternacoesDetalhes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
-    @Field("data_detalhe")
+    @Column(name = "data_detalhe", nullable = false)
     private LocalDate dataDetalhe;
 
     @NotNull
-    @Field("horario")
+    @Column(name = "horario", nullable = false)
     private LocalDate horario;
 
     @NotNull
-    @Field("qtd")
+    @Column(name = "qtd", nullable = false)
     private Float qtd;
 
-    @DBRef
-    @Field("internacoes")
-    @JsonIgnoreProperties("internacoesDetalhes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "internacoesDetalhes", "pacientes", "clinicas", "medicos" }, allowSetters = true)
     private Internacoes internacoes;
 
-    @DBRef
-    @Field("dietas")
-    @JsonIgnoreProperties("internacoesDetalhes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "internacoesDetalhes" }, allowSetters = true)
     private Dietas dietas;
 
-    @DBRef
-    @Field("prescricoes")
-    @JsonIgnoreProperties("internacoesDetalhes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "internacoesDetalhes" }, allowSetters = true)
     private Prescricoes prescricoes;
 
-    @DBRef
-    @Field("posologias")
-    @JsonIgnoreProperties("internacoesDetalhes")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "medicamentos", "internacoesDetalhes" }, allowSetters = true)
     private Posologias posologias;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public InternacoesDetalhes id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public LocalDate getDataDetalhe() {
-        return dataDetalhe;
+        return this.dataDetalhe;
     }
 
     public InternacoesDetalhes dataDetalhe(LocalDate dataDetalhe) {
@@ -78,7 +79,7 @@ public class InternacoesDetalhes implements Serializable {
     }
 
     public LocalDate getHorario() {
-        return horario;
+        return this.horario;
     }
 
     public InternacoesDetalhes horario(LocalDate horario) {
@@ -91,7 +92,7 @@ public class InternacoesDetalhes implements Serializable {
     }
 
     public Float getQtd() {
-        return qtd;
+        return this.qtd;
     }
 
     public InternacoesDetalhes qtd(Float qtd) {
@@ -104,11 +105,11 @@ public class InternacoesDetalhes implements Serializable {
     }
 
     public Internacoes getInternacoes() {
-        return internacoes;
+        return this.internacoes;
     }
 
     public InternacoesDetalhes internacoes(Internacoes internacoes) {
-        this.internacoes = internacoes;
+        this.setInternacoes(internacoes);
         return this;
     }
 
@@ -117,11 +118,11 @@ public class InternacoesDetalhes implements Serializable {
     }
 
     public Dietas getDietas() {
-        return dietas;
+        return this.dietas;
     }
 
     public InternacoesDetalhes dietas(Dietas dietas) {
-        this.dietas = dietas;
+        this.setDietas(dietas);
         return this;
     }
 
@@ -130,11 +131,11 @@ public class InternacoesDetalhes implements Serializable {
     }
 
     public Prescricoes getPrescricoes() {
-        return prescricoes;
+        return this.prescricoes;
     }
 
     public InternacoesDetalhes prescricoes(Prescricoes prescricoes) {
-        this.prescricoes = prescricoes;
+        this.setPrescricoes(prescricoes);
         return this;
     }
 
@@ -143,18 +144,19 @@ public class InternacoesDetalhes implements Serializable {
     }
 
     public Posologias getPosologias() {
-        return posologias;
+        return this.posologias;
     }
 
     public InternacoesDetalhes posologias(Posologias posologias) {
-        this.posologias = posologias;
+        this.setPosologias(posologias);
         return this;
     }
 
     public void setPosologias(Posologias posologias) {
         this.posologias = posologias;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -169,9 +171,11 @@ public class InternacoesDetalhes implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "InternacoesDetalhes{" +

@@ -3,9 +3,9 @@
     "medicos": {
       "home": {
         "title": "Medicos",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Medicos",
         "createOrEditLabel": "Criar ou editar Medicos",
-        "search": "Pesquisar por Medicos",
         "notFound": "Nenhum Medicos encontrado"
       },
       "created": "Um novo Medicos foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Medicos"
       },
+      "id": "ID",
       "nome": "Nome",
       "crm": "Crm",
       "cpf": "Cpf",

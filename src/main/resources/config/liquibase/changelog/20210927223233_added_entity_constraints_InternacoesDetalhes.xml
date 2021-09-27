@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity InternacoesDetalhes.
+    -->
+    <changeSet id="20210927223233-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="internacoes_id"
+                                 baseTableName="internacoes_detalhes"
+                                 constraintName="fk_internacoes_detalhes__internacoes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="internacoes"/>
+
+        <addForeignKeyConstraint baseColumnNames="dietas_id"
+                                 baseTableName="internacoes_detalhes"
+                                 constraintName="fk_internacoes_detalhes__dietas_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dietas"/>
+
+        <addForeignKeyConstraint baseColumnNames="prescricoes_id"
+                                 baseTableName="internacoes_detalhes"
+                                 constraintName="fk_internacoes_detalhes__prescricoes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prescricoes"/>
+
+        <addForeignKeyConstraint baseColumnNames="posologias_id"
+                                 baseTableName="internacoes_detalhes"
+                                 constraintName="fk_internacoes_detalhes__posologias_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="posologias"/>
+    </changeSet>
+</databaseChangeLog>

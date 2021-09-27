@@ -1,40 +1,35 @@
 {
-    "name": "Leitos",
-    "fields": [
-        {
-            "fieldName": "leito",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        },
-        {
-            "fieldName": "tipo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 40
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "pacientes",
-            "otherEntityRelationshipName": "leitos",
-            "relationshipName": "pacientes"
-        }
-    ],
-    "changelogDate": "20191211110034",
-    "entityTableName": "leitos",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Leitos",
+  "fields": [
+    {
+      "fieldName": "leito",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "40"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "pacientes",
+      "otherEntityRelationshipName": "leitos",
+      "relationshipName": "pacientes"
+    }
+  ],
+  "entityTableName": "leitos",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223234"
 }

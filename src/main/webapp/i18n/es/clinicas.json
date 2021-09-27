@@ -3,9 +3,9 @@
     "clinicas": {
       "home": {
         "title": "Clinicas",
+        "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Clinicas",
         "createOrEditLabel": "Crear o editar Clinicas",
-        "search": "Buscar Clinicas",
         "notFound": "Ningún Clinicas encontrado"
       },
       "created": "Un nuevo Clinicas ha sido creado con el identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Clinicas"
       },
+      "id": "ID",
       "clinica": "Clinica",
       "descricao": "Descricao",
       "pacientes": "Pacientes",

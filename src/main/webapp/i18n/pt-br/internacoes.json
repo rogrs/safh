@@ -3,9 +3,9 @@
     "internacoes": {
       "home": {
         "title": "Internacoes",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Internacoes",
         "createOrEditLabel": "Criar ou editar Internacoes",
-        "search": "Pesquisar por Internacoes",
         "notFound": "Nenhum Internacoes encontrado"
       },
       "created": "Um novo Internacoes foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Internacoes"
       },
+      "id": "ID",
       "dataInternacao": "Data Internacao",
       "descricao": "Descricao",
       "internacoesDetalhes": "Internacoes Detalhes",

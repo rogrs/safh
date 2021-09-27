@@ -2,34 +2,29 @@ package br.com.rogrs.web.rest;
 
 import br.com.rogrs.domain.Prescricoes;
 import br.com.rogrs.repository.PrescricoesRepository;
-import br.com.rogrs.repository.search.PrescricoesSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
-
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link br.com.rogrs.domain.Prescricoes}.
  */
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class PrescricoesResource {
 
     private final Logger log = LoggerFactory.getLogger(PrescricoesResource.class);
@@ -41,11 +36,8 @@ public class PrescricoesResource {
 
     private final PrescricoesRepository prescricoesRepository;
 
-    private final PrescricoesSearchRepository prescricoesSearchRepository;
-
-    public PrescricoesResource(PrescricoesRepository prescricoesRepository, PrescricoesSearchRepository prescricoesSearchRepository) {
+    public PrescricoesResource(PrescricoesRepository prescricoesRepository) {
         this.prescricoesRepository = prescricoesRepository;
-        this.prescricoesSearchRepository = prescricoesSearchRepository;
     }
 
     /**
@@ -62,38 +54,96 @@ public class PrescricoesResource {
             throw new BadRequestAlertException("A new prescricoes cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Prescricoes result = prescricoesRepository.save(prescricoes);
-        prescricoesSearchRepository.save(result);
-        return ResponseEntity.created(new URI("/api/prescricoes/" + result.getId()))
+        return ResponseEntity
+            .created(new URI("/api/prescricoes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /prescricoes} : Updates an existing prescricoes.
+     * {@code PUT  /prescricoes/:id} : Updates an existing prescricoes.
      *
+     * @param id the id of the prescricoes to save.
      * @param prescricoes the prescricoes to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated prescricoes,
      * or with status {@code 400 (Bad Request)} if the prescricoes is not valid,
      * or with status {@code 500 (Internal Server Error)} if the prescricoes couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/prescricoes")
-    public ResponseEntity<Prescricoes> updatePrescricoes(@Valid @RequestBody Prescricoes prescricoes) throws URISyntaxException {
-        log.debug("REST request to update Prescricoes : {}", prescricoes);
+    @PutMapping("/prescricoes/{id}")
+    public ResponseEntity<Prescricoes> updatePrescricoes(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Prescricoes prescricoes
+    ) throws URISyntaxException {
+        log.debug("REST request to update Prescricoes : {}, {}", id, prescricoes);
         if (prescricoes.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (!Objects.equals(id, prescricoes.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!prescricoesRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
         Prescricoes result = prescricoesRepository.save(prescricoes);
-        prescricoesSearchRepository.save(result);
-        return ResponseEntity.ok()
+        return ResponseEntity
+            .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, prescricoes.getId().toString()))
             .body(result);
     }
 
     /**
+     * {@code PATCH  /prescricoes/:id} : Partial updates given fields of an existing prescricoes, field will ignore if it is null
+     *
+     * @param id the id of the prescricoes to save.
+     * @param prescricoes the prescricoes to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated prescricoes,
+     * or with status {@code 400 (Bad Request)} if the prescricoes is not valid,
+     * or with status {@code 404 (Not Found)} if the prescricoes is not found,
+     * or with status {@code 500 (Internal Server Error)} if the prescricoes couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/prescricoes/{id}", consumes = "application/merge-patch+json")
+    public ResponseEntity<Prescricoes> partialUpdatePrescricoes(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Prescricoes prescricoes
+    ) throws URISyntaxException {
+        log.debug("REST request to partial update Prescricoes partially : {}, {}", id, prescricoes);
+        if (prescricoes.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, prescricoes.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!prescricoesRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<Prescricoes> result = prescricoesRepository
+            .findById(prescricoes.getId())
+            .map(
+                existingPrescricoes -> {
+                    if (prescricoes.getPrescricao() != null) {
+                        existingPrescricoes.setPrescricao(prescricoes.getPrescricao());
+                    }
+
+                    return existingPrescricoes;
+                }
+            )
+            .map(prescricoesRepository::save);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, prescricoes.getId().toString())
+        );
+    }
+
+    /**
      * {@code GET  /prescricoes} : get all the prescricoes.
      *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of prescricoes in body.
      */
     @GetMapping("/prescricoes")
@@ -109,7 +159,7 @@ public class PrescricoesResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the prescricoes, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/prescricoes/{id}")
-    public ResponseEntity<Prescricoes> getPrescricoes(@PathVariable String id) {
+    public ResponseEntity<Prescricoes> getPrescricoes(@PathVariable Long id) {
         log.debug("REST request to get Prescricoes : {}", id);
         Optional<Prescricoes> prescricoes = prescricoesRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(prescricoes);
@@ -122,25 +172,12 @@ public class PrescricoesResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/prescricoes/{id}")
-    public ResponseEntity<Void> deletePrescricoes(@PathVariable String id) {
+    public ResponseEntity<Void> deletePrescricoes(@PathVariable Long id) {
         log.debug("REST request to delete Prescricoes : {}", id);
         prescricoesRepository.deleteById(id);
-        prescricoesSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * {@code SEARCH  /_search/prescricoes?query=:query} : search for the prescricoes corresponding
-     * to the query.
-     *
-     * @param query the query of the prescricoes search.
-     * @return the result of the search.
-     */
-    @GetMapping("/_search/prescricoes")
-    public List<Prescricoes> searchPrescricoes(@RequestParam String query) {
-        log.debug("REST request to search Prescricoes for query {}", query);
-        return StreamSupport
-            .stream(prescricoesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }

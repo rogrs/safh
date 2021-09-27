@@ -3,9 +3,9 @@
     "posologias": {
       "home": {
         "title": "Posologias",
+        "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Posologias",
         "createOrEditLabel": "Create or edit a Posologias",
-        "search": "Search for Posologias",
         "notFound": "No Posologias found"
       },
       "created": "A new Posologias is created with identifier {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Posologias"
       },
+      "id": "ID",
       "posologia": "Posologia",
       "medicamentos": "Medicamentos",
       "internacoesDetalhes": "Internacoes Detalhes"

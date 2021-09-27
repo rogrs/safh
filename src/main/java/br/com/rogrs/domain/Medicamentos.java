@@ -1,79 +1,82 @@
 package br.com.rogrs.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Medicamentos.
  */
-@Document(collection = "medicamentos")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "medicamentos")
+@Entity
+@Table(name = "medicamentos")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Medicamentos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Size(max = 100)
-    @Field("descricao")
+    @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
     @NotNull
     @Size(max = 60)
-    @Field("registro_ministerio_saude")
+    @Column(name = "registro_ministerio_saude", length = 60, nullable = false)
     private String registroMinisterioSaude;
 
     @NotNull
     @Size(max = 13)
-    @Field("codigo_barras")
+    @Column(name = "codigo_barras", length = 13, nullable = false)
     private String codigoBarras;
 
-    @Field("qtd_atual")
+    @Column(name = "qtd_atual")
     private Float qtdAtual;
 
-    @Field("qtd_min")
+    @Column(name = "qtd_min")
     private Float qtdMin;
 
-    @Field("qtd_max")
+    @Column(name = "qtd_max")
     private Float qtdMax;
 
     @Size(max = 8000)
-    @Field("observacoes")
+    @Column(name = "observacoes", length = 8000)
     private String observacoes;
 
-    @Field("apresentacao")
+    @Column(name = "apresentacao")
     private String apresentacao;
 
-    @DBRef
-    @Field("posologiaPadrao")
-    @JsonIgnoreProperties("medicamentos")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "medicamentos", "internacoesDetalhes" }, allowSetters = true)
     private Posologias posologiaPadrao;
 
-    @DBRef
-    @Field("fabricantes")
-    @JsonIgnoreProperties("medicamentos")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "medicamentos" }, allowSetters = true)
     private Fabricantes fabricantes;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Medicamentos id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getDescricao() {
-        return descricao;
+        return this.descricao;
     }
 
     public Medicamentos descricao(String descricao) {
@@ -86,7 +89,7 @@ public class Medicamentos implements Serializable {
     }
 
     public String getRegistroMinisterioSaude() {
-        return registroMinisterioSaude;
+        return this.registroMinisterioSaude;
     }
 
     public Medicamentos registroMinisterioSaude(String registroMinisterioSaude) {
@@ -99,7 +102,7 @@ public class Medicamentos implements Serializable {
     }
 
     public String getCodigoBarras() {
-        return codigoBarras;
+        return this.codigoBarras;
     }
 
     public Medicamentos codigoBarras(String codigoBarras) {
@@ -112,7 +115,7 @@ public class Medicamentos implements Serializable {
     }
 
     public Float getQtdAtual() {
-        return qtdAtual;
+        return this.qtdAtual;
     }
 
     public Medicamentos qtdAtual(Float qtdAtual) {
@@ -125,7 +128,7 @@ public class Medicamentos implements Serializable {
     }
 
     public Float getQtdMin() {
-        return qtdMin;
+        return this.qtdMin;
     }
 
     public Medicamentos qtdMin(Float qtdMin) {
@@ -138,7 +141,7 @@ public class Medicamentos implements Serializable {
     }
 
     public Float getQtdMax() {
-        return qtdMax;
+        return this.qtdMax;
     }
 
     public Medicamentos qtdMax(Float qtdMax) {
@@ -151,7 +154,7 @@ public class Medicamentos implements Serializable {
     }
 
     public String getObservacoes() {
-        return observacoes;
+        return this.observacoes;
     }
 
     public Medicamentos observacoes(String observacoes) {
@@ -164,7 +167,7 @@ public class Medicamentos implements Serializable {
     }
 
     public String getApresentacao() {
-        return apresentacao;
+        return this.apresentacao;
     }
 
     public Medicamentos apresentacao(String apresentacao) {
@@ -177,11 +180,11 @@ public class Medicamentos implements Serializable {
     }
 
     public Posologias getPosologiaPadrao() {
-        return posologiaPadrao;
+        return this.posologiaPadrao;
     }
 
     public Medicamentos posologiaPadrao(Posologias posologias) {
-        this.posologiaPadrao = posologias;
+        this.setPosologiaPadrao(posologias);
         return this;
     }
 
@@ -190,18 +193,19 @@ public class Medicamentos implements Serializable {
     }
 
     public Fabricantes getFabricantes() {
-        return fabricantes;
+        return this.fabricantes;
     }
 
     public Medicamentos fabricantes(Fabricantes fabricantes) {
-        this.fabricantes = fabricantes;
+        this.setFabricantes(fabricantes);
         return this;
     }
 
     public void setFabricantes(Fabricantes fabricantes) {
         this.fabricantes = fabricantes;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -216,9 +220,11 @@ public class Medicamentos implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Medicamentos{" +

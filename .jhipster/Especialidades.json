@@ -1,32 +1,29 @@
 {
-    "name": "Especialidades",
-    "fields": [
-        {
-            "fieldName": "especialidade",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "medicos",
-            "otherEntityRelationshipName": "especialidades",
-            "relationshipName": "medicos"
-        }
-    ],
-    "changelogDate": "20191211110030",
-    "entityTableName": "especialidades",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Especialidades",
+  "fields": [
+    {
+      "fieldName": "especialidade",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "medicos",
+      "otherEntityRelationshipName": "especialidades",
+      "relationshipName": "medicos"
+    }
+  ],
+  "entityTableName": "especialidades",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223230"
 }

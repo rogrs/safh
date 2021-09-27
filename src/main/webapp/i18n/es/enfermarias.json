@@ -3,9 +3,9 @@
     "enfermarias": {
       "home": {
         "title": "Enfermarias",
+        "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Enfermarias",
         "createOrEditLabel": "Crear o editar Enfermarias",
-        "search": "Buscar Enfermarias",
         "notFound": "Ningún Enfermarias encontrado"
       },
       "created": "Un nuevo Enfermarias ha sido creado con el identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Enfermarias"
       },
+      "id": "ID",
       "enfermaria": "Enfermaria",
       "pacientes": "Pacientes"
     }

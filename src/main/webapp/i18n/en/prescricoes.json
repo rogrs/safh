@@ -3,9 +3,9 @@
     "prescricoes": {
       "home": {
         "title": "Prescricoes",
+        "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Prescricoes",
         "createOrEditLabel": "Create or edit a Prescricoes",
-        "search": "Search for Prescricoes",
         "notFound": "No Prescricoes found"
       },
       "created": "A new Prescricoes is created with identifier {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Prescricoes"
       },
+      "id": "ID",
       "prescricao": "Prescricao",
       "internacoesDetalhes": "Internacoes Detalhes"
     }

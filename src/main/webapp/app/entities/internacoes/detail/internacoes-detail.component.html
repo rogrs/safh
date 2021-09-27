@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="internacoes">
+      <h2 data-cy="internacoesDetailsHeading"><span jhiTranslate="safhApp.internacoes.detail.title">Internacoes</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ internacoes.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoes.dataInternacao">Data Internacao</span></dt>
+        <dd>
+          <span>{{ internacoes.dataInternacao | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoes.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ internacoes.descricao }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoes.pacientes">Pacientes</span></dt>
+        <dd>
+          <div *ngIf="internacoes.pacientes">
+            <a [routerLink]="['/pacientes', internacoes.pacientes?.id, 'view']">{{ internacoes.pacientes?.nome }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoes.clinicas">Clinicas</span></dt>
+        <dd>
+          <div *ngIf="internacoes.clinicas">
+            <a [routerLink]="['/clinicas', internacoes.clinicas?.id, 'view']">{{ internacoes.clinicas?.clinica }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoes.medicos">Medicos</span></dt>
+        <dd>
+          <div *ngIf="internacoes.medicos">
+            <a [routerLink]="['/medicos', internacoes.medicos?.id, 'view']">{{ internacoes.medicos?.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/internacoes', internacoes.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

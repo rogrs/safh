@@ -1,0 +1,173 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-internacoes-detalhes-heading"
+        data-cy="InternacoesDetalhesCreateUpdateHeading"
+        jhiTranslate="safhApp.internacoesDetalhes.home.createOrEditLabel"
+      >
+        Create or edit a Internacoes Detalhes
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.dataDetalhe" for="field_dataDetalhe"
+            >Data Detalhe</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dataDetalhe"
+              data-cy="dataDetalhe"
+              type="text"
+              class="form-control"
+              name="dataDetalhe"
+              ngbDatepicker
+              #dataDetalheDp="ngbDatepicker"
+              formControlName="dataDetalhe"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dataDetalheDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div *ngIf="editForm.get('dataDetalhe')!.invalid && (editForm.get('dataDetalhe')!.dirty || editForm.get('dataDetalhe')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dataDetalhe')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.horario" for="field_horario">Horario</label>
+          <div class="input-group">
+            <input
+              id="field_horario"
+              data-cy="horario"
+              type="text"
+              class="form-control"
+              name="horario"
+              ngbDatepicker
+              #horarioDp="ngbDatepicker"
+              formControlName="horario"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="horarioDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+          <div *ngIf="editForm.get('horario')!.invalid && (editForm.get('horario')!.dirty || editForm.get('horario')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('horario')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.qtd" for="field_qtd">Qtd</label>
+          <input type="number" class="form-control" name="qtd" id="field_qtd" data-cy="qtd" formControlName="qtd" />
+          <div *ngIf="editForm.get('qtd')!.invalid && (editForm.get('qtd')!.dirty || editForm.get('qtd')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('qtd')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('qtd')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.internacoes" for="field_internacoes"
+            >Internacoes</label
+          >
+          <select class="form-control" id="field_internacoes" data-cy="internacoes" name="internacoes" formControlName="internacoes">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                internacoesOption.id === editForm.get('internacoes')!.value?.id ? editForm.get('internacoes')!.value : internacoesOption
+              "
+              *ngFor="let internacoesOption of internacoesSharedCollection; trackBy: trackInternacoesById"
+            >
+              {{ internacoesOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.dietas" for="field_dietas">Dietas</label>
+          <select class="form-control" id="field_dietas" data-cy="dietas" name="dietas" formControlName="dietas">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="dietasOption.id === editForm.get('dietas')!.value?.id ? editForm.get('dietas')!.value : dietasOption"
+              *ngFor="let dietasOption of dietasSharedCollection; trackBy: trackDietasById"
+            >
+              {{ dietasOption.dieta }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.prescricoes" for="field_prescricoes"
+            >Prescricoes</label
+          >
+          <select class="form-control" id="field_prescricoes" data-cy="prescricoes" name="prescricoes" formControlName="prescricoes">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                prescricoesOption.id === editForm.get('prescricoes')!.value?.id ? editForm.get('prescricoes')!.value : prescricoesOption
+              "
+              *ngFor="let prescricoesOption of prescricoesSharedCollection; trackBy: trackPrescricoesById"
+            >
+              {{ prescricoesOption.prescricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.internacoesDetalhes.posologias" for="field_posologias">Posologias</label>
+          <select class="form-control" id="field_posologias" data-cy="posologias" name="posologias" formControlName="posologias">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                posologiasOption.id === editForm.get('posologias')!.value?.id ? editForm.get('posologias')!.value : posologiasOption
+              "
+              *ngFor="let posologiasOption of posologiasSharedCollection; trackBy: trackPosologiasById"
+            >
+              {{ posologiasOption.posologia }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,32 +1,29 @@
 {
-    "name": "Enfermarias",
-    "fields": [
-        {
-            "fieldName": "enfermaria",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "pacientes",
-            "otherEntityRelationshipName": "enfermarias",
-            "relationshipName": "pacientes"
-        }
-    ],
-    "changelogDate": "20191211110029",
-    "entityTableName": "enfermarias",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Enfermarias",
+  "fields": [
+    {
+      "fieldName": "enfermaria",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "pacientes",
+      "otherEntityRelationshipName": "enfermarias",
+      "relationshipName": "pacientes"
+    }
+  ],
+  "entityTableName": "enfermarias",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223229"
 }

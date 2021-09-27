@@ -3,9 +3,9 @@
     "dietas": {
       "home": {
         "title": "Dietas",
+        "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Dietas",
         "createOrEditLabel": "Create or edit a Dietas",
-        "search": "Search for Dietas",
         "notFound": "No Dietas found"
       },
       "created": "A new Dietas is created with identifier {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Dietas"
       },
+      "id": "ID",
       "dieta": "Dieta",
       "descricao": "Descricao",
       "internacoesDetalhes": "Internacoes Detalhes"

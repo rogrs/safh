@@ -1,0 +1,104 @@
+<div>
+  <h2 id="page-heading" data-cy="MedicosHeading">
+    <span jhiTranslate="safhApp.medicos.home.title">Medicos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="safhApp.medicos.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-medicos"
+        [routerLink]="['/medicos/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="safhApp.medicos.home.createLabel"> Create a new Medicos </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="medicos?.length === 0">
+    <span jhiTranslate="safhApp.medicos.home.notFound">No medicos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="medicos && medicos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.nome">Nome</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.crm">Crm</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.cpf">Cpf</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.email">Email</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.cep">Cep</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.logradouro">Logradouro</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.numero">Numero</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.complemento">Complemento</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.bairro">Bairro</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.cidade">Cidade</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.uF">U F</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicos.especialidades">Especialidades</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medicos of medicos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/medicos', medicos.id, 'view']">{{ medicos.id }}</a>
+          </td>
+          <td>{{ medicos.nome }}</td>
+          <td>{{ medicos.crm }}</td>
+          <td>{{ medicos.cpf }}</td>
+          <td>{{ medicos.email }}</td>
+          <td>{{ medicos.cep }}</td>
+          <td>{{ medicos.logradouro }}</td>
+          <td>{{ medicos.numero }}</td>
+          <td>{{ medicos.complemento }}</td>
+          <td>{{ medicos.bairro }}</td>
+          <td>{{ medicos.cidade }}</td>
+          <td jhiTranslate="{{ 'safhApp.Estados.' + medicos.uF }}">{{ medicos.uF }}</td>
+          <td>
+            <div *ngIf="medicos.especialidades">
+              <a [routerLink]="['/especialidades', medicos.especialidades?.id, 'view']">{{ medicos.especialidades?.especialidade }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/medicos', medicos.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/medicos', medicos.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(medicos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

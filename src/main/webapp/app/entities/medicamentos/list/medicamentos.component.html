@@ -1,0 +1,104 @@
+<div>
+  <h2 id="page-heading" data-cy="MedicamentosHeading">
+    <span jhiTranslate="safhApp.medicamentos.home.title">Medicamentos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="safhApp.medicamentos.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-medicamentos"
+        [routerLink]="['/medicamentos/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="safhApp.medicamentos.home.createLabel"> Create a new Medicamentos </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="medicamentos?.length === 0">
+    <span jhiTranslate="safhApp.medicamentos.home.notFound">No medicamentos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="medicamentos && medicamentos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.descricao">Descricao</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.registroMinisterioSaude">Registro Ministerio Saude</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.codigoBarras">Codigo Barras</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.qtdAtual">Qtd Atual</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.qtdMin">Qtd Min</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.qtdMax">Qtd Max</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.observacoes">Observacoes</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.apresentacao">Apresentacao</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.posologiaPadrao">Posologia Padrao</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.medicamentos.fabricantes">Fabricantes</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medicamentos of medicamentos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/medicamentos', medicamentos.id, 'view']">{{ medicamentos.id }}</a>
+          </td>
+          <td>{{ medicamentos.descricao }}</td>
+          <td>{{ medicamentos.registroMinisterioSaude }}</td>
+          <td>{{ medicamentos.codigoBarras }}</td>
+          <td>{{ medicamentos.qtdAtual }}</td>
+          <td>{{ medicamentos.qtdMin }}</td>
+          <td>{{ medicamentos.qtdMax }}</td>
+          <td>{{ medicamentos.observacoes }}</td>
+          <td>{{ medicamentos.apresentacao }}</td>
+          <td>
+            <div *ngIf="medicamentos.posologiaPadrao">
+              <a [routerLink]="['/posologias', medicamentos.posologiaPadrao?.id, 'view']">{{ medicamentos.posologiaPadrao?.posologia }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="medicamentos.fabricantes">
+              <a [routerLink]="['/fabricantes', medicamentos.fabricantes?.id, 'view']">{{ medicamentos.fabricantes?.fabricante }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/medicamentos', medicamentos.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/medicamentos', medicamentos.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(medicamentos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

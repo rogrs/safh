@@ -1,0 +1,90 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="pacientes">
+      <h2 data-cy="pacientesDetailsHeading"><span jhiTranslate="safhApp.pacientes.detail.title">Pacientes</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ pacientes.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.prontuario">Prontuario</span></dt>
+        <dd>
+          <span>{{ pacientes.prontuario }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.nome">Nome</span></dt>
+        <dd>
+          <span>{{ pacientes.nome }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.cpf">Cpf</span></dt>
+        <dd>
+          <span>{{ pacientes.cpf }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.email">Email</span></dt>
+        <dd>
+          <span>{{ pacientes.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.cep">Cep</span></dt>
+        <dd>
+          <span>{{ pacientes.cep }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.logradouro">Logradouro</span></dt>
+        <dd>
+          <span>{{ pacientes.logradouro }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.numero">Numero</span></dt>
+        <dd>
+          <span>{{ pacientes.numero }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.complemento">Complemento</span></dt>
+        <dd>
+          <span>{{ pacientes.complemento }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.bairro">Bairro</span></dt>
+        <dd>
+          <span>{{ pacientes.bairro }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.cidade">Cidade</span></dt>
+        <dd>
+          <span>{{ pacientes.cidade }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.uF">U F</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'safhApp.Estados.' + pacientes.uF }}">{{ pacientes.uF }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.clinicas">Clinicas</span></dt>
+        <dd>
+          <div *ngIf="pacientes.clinicas">
+            <a [routerLink]="['/clinicas', pacientes.clinicas?.id, 'view']">{{ pacientes.clinicas?.clinica }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.enfermarias">Enfermarias</span></dt>
+        <dd>
+          <div *ngIf="pacientes.enfermarias">
+            <a [routerLink]="['/enfermarias', pacientes.enfermarias?.id, 'view']">{{ pacientes.enfermarias?.enfermaria }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.pacientes.leitos">Leitos</span></dt>
+        <dd>
+          <div *ngIf="pacientes.leitos">
+            <a [routerLink]="['/leitos', pacientes.leitos?.id, 'view']">{{ pacientes.leitos?.leito }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pacientes', pacientes.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

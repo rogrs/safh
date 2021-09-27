@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="InternacoesDetalhesHeading">
+    <span jhiTranslate="safhApp.internacoesDetalhes.home.title">Internacoes Detalhes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="safhApp.internacoesDetalhes.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-internacoes-detalhes"
+        [routerLink]="['/internacoes-detalhes/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="safhApp.internacoesDetalhes.home.createLabel"> Create a new Internacoes Detalhes </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="internacoesDetalhes?.length === 0">
+    <span jhiTranslate="safhApp.internacoesDetalhes.home.notFound">No internacoesDetalhes found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="internacoesDetalhes && internacoesDetalhes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.dataDetalhe">Data Detalhe</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.horario">Horario</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.qtd">Qtd</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.internacoes">Internacoes</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.dietas">Dietas</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.prescricoes">Prescricoes</span></th>
+          <th scope="col"><span jhiTranslate="safhApp.internacoesDetalhes.posologias">Posologias</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let internacoesDetalhes of internacoesDetalhes; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/internacoes-detalhes', internacoesDetalhes.id, 'view']">{{ internacoesDetalhes.id }}</a>
+          </td>
+          <td>{{ internacoesDetalhes.dataDetalhe | formatMediumDate }}</td>
+          <td>{{ internacoesDetalhes.horario | formatMediumDate }}</td>
+          <td>{{ internacoesDetalhes.qtd }}</td>
+          <td>
+            <div *ngIf="internacoesDetalhes.internacoes">
+              <a [routerLink]="['/internacoes', internacoesDetalhes.internacoes?.id, 'view']">{{
+                internacoesDetalhes.internacoes?.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="internacoesDetalhes.dietas">
+              <a [routerLink]="['/dietas', internacoesDetalhes.dietas?.id, 'view']">{{ internacoesDetalhes.dietas?.dieta }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="internacoesDetalhes.prescricoes">
+              <a [routerLink]="['/prescricoes', internacoesDetalhes.prescricoes?.id, 'view']">{{
+                internacoesDetalhes.prescricoes?.prescricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="internacoesDetalhes.posologias">
+              <a [routerLink]="['/posologias', internacoesDetalhes.posologias?.id, 'view']">{{
+                internacoesDetalhes.posologias?.posologia
+              }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/internacoes-detalhes', internacoesDetalhes.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/internacoes-detalhes', internacoesDetalhes.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(internacoesDetalhes)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

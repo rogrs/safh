@@ -1,46 +1,41 @@
 {
-    "name": "Clinicas",
-    "fields": [
-        {
-            "fieldName": "clinica",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 80
-        },
-        {
-            "fieldName": "descricao",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 100
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "pacientes",
-            "otherEntityRelationshipName": "clinicas",
-            "relationshipName": "pacientes"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "internacoes",
-            "otherEntityRelationshipName": "clinicas",
-            "relationshipName": "internacoes"
-        }
-    ],
-    "changelogDate": "20191211110027",
-    "entityTableName": "clinicas",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Clinicas",
+  "fields": [
+    {
+      "fieldName": "clinica",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "80"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "pacientes",
+      "otherEntityRelationshipName": "clinicas",
+      "relationshipName": "pacientes"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "internacoes",
+      "otherEntityRelationshipName": "clinicas",
+      "relationshipName": "internacoes"
+    }
+  ],
+  "entityTableName": "clinicas",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223227"
 }

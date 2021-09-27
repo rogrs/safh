@@ -3,9 +3,9 @@
     "especialidades": {
       "home": {
         "title": "Especialidades",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Especialidades",
         "createOrEditLabel": "Criar ou editar Especialidades",
-        "search": "Pesquisar por Especialidades",
         "notFound": "Nenhum Especialidades encontrado"
       },
       "created": "Um novo Especialidades foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Especialidades"
       },
+      "id": "ID",
       "especialidade": "Especialidade",
       "medicos": "Medicos"
     }

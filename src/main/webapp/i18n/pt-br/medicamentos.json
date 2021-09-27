@@ -3,9 +3,9 @@
     "medicamentos": {
       "home": {
         "title": "Medicamentos",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Medicamentos",
         "createOrEditLabel": "Criar ou editar Medicamentos",
-        "search": "Pesquisar por Medicamentos",
         "notFound": "Nenhum Medicamentos encontrado"
       },
       "created": "Um novo Medicamentos foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Medicamentos"
       },
+      "id": "ID",
       "descricao": "Descricao",
       "registroMinisterioSaude": "Registro Ministerio Saude",
       "codigoBarras": "Codigo Barras",

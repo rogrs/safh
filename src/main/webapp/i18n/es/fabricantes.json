@@ -3,9 +3,9 @@
     "fabricantes": {
       "home": {
         "title": "Fabricantes",
+        "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Fabricantes",
         "createOrEditLabel": "Crear o editar Fabricantes",
-        "search": "Buscar Fabricantes",
         "notFound": "Ningún Fabricantes encontrado"
       },
       "created": "Un nuevo Fabricantes ha sido creado con el identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Fabricantes"
       },
+      "id": "ID",
       "fabricante": "Fabricante",
       "medicamentos": "Medicamentos"
     }

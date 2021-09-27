@@ -1,129 +1,108 @@
 {
-    "name": "Pacientes",
-    "fields": [
-        {
-            "fieldName": "prontuario",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "nome",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 255
-        },
-        {
-            "fieldName": "cpf",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 11
-        },
-        {
-            "fieldName": "email",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 100
-        },
-        {
-            "fieldName": "cep",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 10
-        },
-        {
-            "fieldName": "logradouro",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 80
-        },
-        {
-            "fieldName": "numero",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 10
-        },
-        {
-            "fieldName": "complemento",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        },
-        {
-            "fieldName": "bairro",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        },
-        {
-            "fieldName": "cidade",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 60
-        },
-        {
-            "fieldName": "uF",
-            "fieldType": "Estados",
-            "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "internacoes",
-            "otherEntityRelationshipName": "pacientes",
-            "relationshipName": "internacoes"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "clinicas",
-            "otherEntityRelationshipName": "pacientes",
-            "relationshipName": "clinicas",
-            "otherEntityField": "clinica"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "enfermarias",
-            "otherEntityRelationshipName": "pacientes",
-            "relationshipName": "enfermarias",
-            "otherEntityField": "enfermaria"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "leitos",
-            "otherEntityRelationshipName": "pacientes",
-            "relationshipName": "leitos",
-            "otherEntityField": "leito"
-        }
-    ],
-    "changelogDate": "20191211110037",
-    "entityTableName": "pacientes",
-    "dto": "no",
-    "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Pacientes",
+  "fields": [
+    {
+      "fieldName": "prontuario",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "cpf",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "11"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "cep",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "logradouro",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "80"
+    },
+    {
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "complemento",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "bairro",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "cidade",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "uF",
+      "fieldType": "Estados",
+      "fieldValues": "AC,AL,AM,AP,BA,CE,DF,ES,GO,MA,MG,MS,MT,PA,PB,PE,PI,PR,RJ,RN,RO,RR,RS,SC,SE,SP,TO"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "internacoes",
+      "otherEntityRelationshipName": "pacientes",
+      "relationshipName": "internacoes"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "clinicas",
+      "otherEntityRelationshipName": "pacientes",
+      "relationshipName": "clinicas",
+      "otherEntityField": "clinica"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "enfermarias",
+      "otherEntityRelationshipName": "pacientes",
+      "relationshipName": "enfermarias",
+      "otherEntityField": "enfermaria"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "leitos",
+      "otherEntityRelationshipName": "pacientes",
+      "relationshipName": "leitos",
+      "otherEntityField": "leito"
+    }
+  ],
+  "entityTableName": "pacientes",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210927223237"
 }

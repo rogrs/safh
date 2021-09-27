@@ -1,15 +1,12 @@
 package br.com.rogrs.repository;
+
 import br.com.rogrs.domain.Prescricoes;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
-
 /**
- * Spring Data MongoDB repository for the Prescricoes entity.
+ * Spring Data SQL repository for the Prescricoes entity.
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PrescricoesRepository extends MongoRepository<Prescricoes, String> {
-
-}
+public interface PrescricoesRepository extends JpaRepository<Prescricoes, Long> {}

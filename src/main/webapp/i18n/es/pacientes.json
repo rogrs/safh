@@ -3,9 +3,9 @@
     "pacientes": {
       "home": {
         "title": "Pacientes",
+        "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Pacientes",
         "createOrEditLabel": "Crear o editar Pacientes",
-        "search": "Buscar Pacientes",
         "notFound": "Ningún Pacientes encontrado"
       },
       "created": "Un nuevo Pacientes ha sido creado con el identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Pacientes"
       },
+      "id": "ID",
       "prontuario": "Prontuario",
       "nome": "Nome",
       "cpf": "Cpf",

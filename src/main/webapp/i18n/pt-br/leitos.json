@@ -3,9 +3,9 @@
     "leitos": {
       "home": {
         "title": "Leitos",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Leitos",
         "createOrEditLabel": "Criar ou editar Leitos",
-        "search": "Pesquisar por Leitos",
         "notFound": "Nenhum Leitos encontrado"
       },
       "created": "Um novo Leitos foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Leitos"
       },
+      "id": "ID",
       "leito": "Leito",
       "tipo": "Tipo",
       "pacientes": "Pacientes"

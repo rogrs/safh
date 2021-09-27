@@ -3,9 +3,9 @@
     "dietas": {
       "home": {
         "title": "Dietas",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Dietas",
         "createOrEditLabel": "Criar ou editar Dietas",
-        "search": "Pesquisar por Dietas",
         "notFound": "Nenhum Dietas encontrado"
       },
       "created": "Um novo Dietas foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Dietas"
       },
+      "id": "ID",
       "dieta": "Dieta",
       "descricao": "Descricao",
       "internacoesDetalhes": "Internacoes Detalhes"

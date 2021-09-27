@@ -3,9 +3,9 @@
     "medicos": {
       "home": {
         "title": "Medicos",
+        "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Medicos",
         "createOrEditLabel": "Create or edit a Medicos",
-        "search": "Search for Medicos",
         "notFound": "No Medicos found"
       },
       "created": "A new Medicos is created with identifier {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Medicos"
       },
+      "id": "ID",
       "nome": "Nome",
       "crm": "Crm",
       "cpf": "Cpf",

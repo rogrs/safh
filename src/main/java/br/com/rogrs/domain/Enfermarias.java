@@ -1,48 +1,55 @@
 package br.com.rogrs.domain;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Enfermarias.
  */
-@Document(collection = "enfermarias")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "enfermarias")
+@Entity
+@Table(name = "enfermarias")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Enfermarias implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Size(max = 60)
-    @Field("enfermaria")
+    @Column(name = "enfermaria", length = 60, nullable = false)
     private String enfermaria;
 
-    @DBRef
-    @Field("pacientes")
+    @OneToMany(mappedBy = "enfermarias")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "internacoes", "clinicas", "enfermarias", "leitos" }, allowSetters = true)
     private Set<Pacientes> pacientes = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Enfermarias id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getEnfermaria() {
-        return enfermaria;
+        return this.enfermaria;
     }
 
     public Enfermarias enfermaria(String enfermaria) {
@@ -55,11 +62,11 @@ public class Enfermarias implements Serializable {
     }
 
     public Set<Pacientes> getPacientes() {
-        return pacientes;
+        return this.pacientes;
     }
 
     public Enfermarias pacientes(Set<Pacientes> pacientes) {
-        this.pacientes = pacientes;
+        this.setPacientes(pacientes);
         return this;
     }
 
@@ -76,9 +83,16 @@ public class Enfermarias implements Serializable {
     }
 
     public void setPacientes(Set<Pacientes> pacientes) {
+        if (this.pacientes != null) {
+            this.pacientes.forEach(i -> i.setEnfermarias(null));
+        }
+        if (pacientes != null) {
+            pacientes.forEach(i -> i.setEnfermarias(this));
+        }
         this.pacientes = pacientes;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -93,9 +107,11 @@ public class Enfermarias implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Enfermarias{" +

@@ -1,96 +1,101 @@
 package br.com.rogrs.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import br.com.rogrs.domain.enumeration.Estados;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-import br.com.rogrs.domain.enumeration.Estados;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Medicos.
  */
-@Document(collection = "medicos")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "medicos")
+@Entity
+@Table(name = "medicos")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Medicos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Size(max = 255)
-    @Field("nome")
+    @Column(name = "nome", length = 255, nullable = false)
     private String nome;
 
     @NotNull
     @Size(max = 40)
-    @Field("crm")
+    @Column(name = "crm", length = 40, nullable = false)
     private String crm;
 
     @Size(max = 11)
-    @Field("cpf")
+    @Column(name = "cpf", length = 11)
     private String cpf;
 
     @Size(max = 100)
-    @Field("email")
+    @Column(name = "email", length = 100)
     private String email;
 
     @Size(max = 10)
-    @Field("cep")
+    @Column(name = "cep", length = 10)
     private String cep;
 
     @Size(max = 80)
-    @Field("logradouro")
+    @Column(name = "logradouro", length = 80)
     private String logradouro;
 
     @Size(max = 10)
-    @Field("numero")
+    @Column(name = "numero", length = 10)
     private String numero;
 
     @Size(max = 60)
-    @Field("complemento")
+    @Column(name = "complemento", length = 60)
     private String complemento;
 
     @Size(max = 60)
-    @Field("bairro")
+    @Column(name = "bairro", length = 60)
     private String bairro;
 
     @Size(max = 60)
-    @Field("cidade")
+    @Column(name = "cidade", length = 60)
     private String cidade;
 
-    @Field("u_f")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "u_f")
     private Estados uF;
 
-    @DBRef
-    @Field("internacoes")
+    @OneToMany(mappedBy = "medicos")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "internacoesDetalhes", "pacientes", "clinicas", "medicos" }, allowSetters = true)
     private Set<Internacoes> internacoes = new HashSet<>();
 
-    @DBRef
-    @Field("especialidades")
-    @JsonIgnoreProperties("medicos")
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "medicos" }, allowSetters = true)
     private Especialidades especialidades;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Medicos id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public Medicos nome(String nome) {
@@ -103,7 +108,7 @@ public class Medicos implements Serializable {
     }
 
     public String getCrm() {
-        return crm;
+        return this.crm;
     }
 
     public Medicos crm(String crm) {
@@ -116,7 +121,7 @@ public class Medicos implements Serializable {
     }
 
     public String getCpf() {
-        return cpf;
+        return this.cpf;
     }
 
     public Medicos cpf(String cpf) {
@@ -129,7 +134,7 @@ public class Medicos implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public Medicos email(String email) {
@@ -142,7 +147,7 @@ public class Medicos implements Serializable {
     }
 
     public String getCep() {
-        return cep;
+        return this.cep;
     }
 
     public Medicos cep(String cep) {
@@ -155,7 +160,7 @@ public class Medicos implements Serializable {
     }
 
     public String getLogradouro() {
-        return logradouro;
+        return this.logradouro;
     }
 
     public Medicos logradouro(String logradouro) {
@@ -168,7 +173,7 @@ public class Medicos implements Serializable {
     }
 
     public String getNumero() {
-        return numero;
+        return this.numero;
     }
 
     public Medicos numero(String numero) {
@@ -181,7 +186,7 @@ public class Medicos implements Serializable {
     }
 
     public String getComplemento() {
-        return complemento;
+        return this.complemento;
     }
 
     public Medicos complemento(String complemento) {
@@ -194,7 +199,7 @@ public class Medicos implements Serializable {
     }
 
     public String getBairro() {
-        return bairro;
+        return this.bairro;
     }
 
     public Medicos bairro(String bairro) {
@@ -207,7 +212,7 @@ public class Medicos implements Serializable {
     }
 
     public String getCidade() {
-        return cidade;
+        return this.cidade;
     }
 
     public Medicos cidade(String cidade) {
@@ -220,7 +225,7 @@ public class Medicos implements Serializable {
     }
 
     public Estados getuF() {
-        return uF;
+        return this.uF;
     }
 
     public Medicos uF(Estados uF) {
@@ -233,11 +238,11 @@ public class Medicos implements Serializable {
     }
 
     public Set<Internacoes> getInternacoes() {
-        return internacoes;
+        return this.internacoes;
     }
 
     public Medicos internacoes(Set<Internacoes> internacoes) {
-        this.internacoes = internacoes;
+        this.setInternacoes(internacoes);
         return this;
     }
 
@@ -254,22 +259,29 @@ public class Medicos implements Serializable {
     }
 
     public void setInternacoes(Set<Internacoes> internacoes) {
+        if (this.internacoes != null) {
+            this.internacoes.forEach(i -> i.setMedicos(null));
+        }
+        if (internacoes != null) {
+            internacoes.forEach(i -> i.setMedicos(this));
+        }
         this.internacoes = internacoes;
     }
 
     public Especialidades getEspecialidades() {
-        return especialidades;
+        return this.especialidades;
     }
 
     public Medicos especialidades(Especialidades especialidades) {
-        this.especialidades = especialidades;
+        this.setEspecialidades(especialidades);
         return this;
     }
 
     public void setEspecialidades(Especialidades especialidades) {
         this.especialidades = especialidades;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -284,9 +296,11 @@ public class Medicos implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Medicos{" +

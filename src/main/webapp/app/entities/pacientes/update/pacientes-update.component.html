@@ -1,0 +1,289 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-pacientes-heading" data-cy="PacientesCreateUpdateHeading" jhiTranslate="safhApp.pacientes.home.createOrEditLabel">
+        Create or edit a Pacientes
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.prontuario" for="field_prontuario">Prontuario</label>
+          <input
+            type="number"
+            class="form-control"
+            name="prontuario"
+            id="field_prontuario"
+            data-cy="prontuario"
+            formControlName="prontuario"
+          />
+          <div *ngIf="editForm.get('prontuario')!.invalid && (editForm.get('prontuario')!.dirty || editForm.get('prontuario')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('prontuario')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('prontuario')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nome')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.cpf" for="field_cpf">Cpf</label>
+          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          <div *ngIf="editForm.get('cpf')!.invalid && (editForm.get('cpf')!.dirty || editForm.get('cpf')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cpf')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 11 }"
+            >
+              This field cannot be longer than 11 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('email')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be longer than 100 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.cep" for="field_cep">Cep</label>
+          <input type="text" class="form-control" name="cep" id="field_cep" data-cy="cep" formControlName="cep" />
+          <div *ngIf="editForm.get('cep')!.invalid && (editForm.get('cep')!.dirty || editForm.get('cep')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cep')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              This field cannot be longer than 10 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.logradouro" for="field_logradouro">Logradouro</label>
+          <input
+            type="text"
+            class="form-control"
+            name="logradouro"
+            id="field_logradouro"
+            data-cy="logradouro"
+            formControlName="logradouro"
+          />
+          <div *ngIf="editForm.get('logradouro')!.invalid && (editForm.get('logradouro')!.dirty || editForm.get('logradouro')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('logradouro')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 80 }"
+            >
+              This field cannot be longer than 80 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.numero" for="field_numero">Numero</label>
+          <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numero')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              This field cannot be longer than 10 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.complemento" for="field_complemento">Complemento</label>
+          <input
+            type="text"
+            class="form-control"
+            name="complemento"
+            id="field_complemento"
+            data-cy="complemento"
+            formControlName="complemento"
+          />
+          <div *ngIf="editForm.get('complemento')!.invalid && (editForm.get('complemento')!.dirty || editForm.get('complemento')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('complemento')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 60 }"
+            >
+              This field cannot be longer than 60 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.bairro" for="field_bairro">Bairro</label>
+          <input type="text" class="form-control" name="bairro" id="field_bairro" data-cy="bairro" formControlName="bairro" />
+          <div *ngIf="editForm.get('bairro')!.invalid && (editForm.get('bairro')!.dirty || editForm.get('bairro')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bairro')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 60 }"
+            >
+              This field cannot be longer than 60 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.cidade" for="field_cidade">Cidade</label>
+          <input type="text" class="form-control" name="cidade" id="field_cidade" data-cy="cidade" formControlName="cidade" />
+          <div *ngIf="editForm.get('cidade')!.invalid && (editForm.get('cidade')!.dirty || editForm.get('cidade')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cidade')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 60 }"
+            >
+              This field cannot be longer than 60 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.uF" for="field_uF">U F</label>
+          <select class="form-control" name="uF" formControlName="uF" id="field_uF" data-cy="uF">
+            <option [ngValue]="null">{{ 'safhApp.Estados.null' | translate }}</option>
+            <option value="AC">{{ 'safhApp.Estados.AC' | translate }}</option>
+            <option value="AL">{{ 'safhApp.Estados.AL' | translate }}</option>
+            <option value="AM">{{ 'safhApp.Estados.AM' | translate }}</option>
+            <option value="AP">{{ 'safhApp.Estados.AP' | translate }}</option>
+            <option value="BA">{{ 'safhApp.Estados.BA' | translate }}</option>
+            <option value="CE">{{ 'safhApp.Estados.CE' | translate }}</option>
+            <option value="DF">{{ 'safhApp.Estados.DF' | translate }}</option>
+            <option value="ES">{{ 'safhApp.Estados.ES' | translate }}</option>
+            <option value="GO">{{ 'safhApp.Estados.GO' | translate }}</option>
+            <option value="MA">{{ 'safhApp.Estados.MA' | translate }}</option>
+            <option value="MG">{{ 'safhApp.Estados.MG' | translate }}</option>
+            <option value="MS">{{ 'safhApp.Estados.MS' | translate }}</option>
+            <option value="MT">{{ 'safhApp.Estados.MT' | translate }}</option>
+            <option value="PA">{{ 'safhApp.Estados.PA' | translate }}</option>
+            <option value="PB">{{ 'safhApp.Estados.PB' | translate }}</option>
+            <option value="PE">{{ 'safhApp.Estados.PE' | translate }}</option>
+            <option value="PI">{{ 'safhApp.Estados.PI' | translate }}</option>
+            <option value="PR">{{ 'safhApp.Estados.PR' | translate }}</option>
+            <option value="RJ">{{ 'safhApp.Estados.RJ' | translate }}</option>
+            <option value="RN">{{ 'safhApp.Estados.RN' | translate }}</option>
+            <option value="RO">{{ 'safhApp.Estados.RO' | translate }}</option>
+            <option value="RR">{{ 'safhApp.Estados.RR' | translate }}</option>
+            <option value="RS">{{ 'safhApp.Estados.RS' | translate }}</option>
+            <option value="SC">{{ 'safhApp.Estados.SC' | translate }}</option>
+            <option value="SE">{{ 'safhApp.Estados.SE' | translate }}</option>
+            <option value="SP">{{ 'safhApp.Estados.SP' | translate }}</option>
+            <option value="TO">{{ 'safhApp.Estados.TO' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.clinicas" for="field_clinicas">Clinicas</label>
+          <select class="form-control" id="field_clinicas" data-cy="clinicas" name="clinicas" formControlName="clinicas">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="clinicasOption.id === editForm.get('clinicas')!.value?.id ? editForm.get('clinicas')!.value : clinicasOption"
+              *ngFor="let clinicasOption of clinicasSharedCollection; trackBy: trackClinicasById"
+            >
+              {{ clinicasOption.clinica }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.enfermarias" for="field_enfermarias">Enfermarias</label>
+          <select class="form-control" id="field_enfermarias" data-cy="enfermarias" name="enfermarias" formControlName="enfermarias">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                enfermariasOption.id === editForm.get('enfermarias')!.value?.id ? editForm.get('enfermarias')!.value : enfermariasOption
+              "
+              *ngFor="let enfermariasOption of enfermariasSharedCollection; trackBy: trackEnfermariasById"
+            >
+              {{ enfermariasOption.enfermaria }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="safhApp.pacientes.leitos" for="field_leitos">Leitos</label>
+          <select class="form-control" id="field_leitos" data-cy="leitos" name="leitos" formControlName="leitos">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="leitosOption.id === editForm.get('leitos')!.value?.id ? editForm.get('leitos')!.value : leitosOption"
+              *ngFor="let leitosOption of leitosSharedCollection; trackBy: trackLeitosById"
+            >
+              {{ leitosOption.leito }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

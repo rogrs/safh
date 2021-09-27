@@ -2,34 +2,29 @@ package br.com.rogrs.web.rest;
 
 import br.com.rogrs.domain.Enfermarias;
 import br.com.rogrs.repository.EnfermariasRepository;
-import br.com.rogrs.repository.search.EnfermariasSearchRepository;
 import br.com.rogrs.web.rest.errors.BadRequestAlertException;
-
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link br.com.rogrs.domain.Enfermarias}.
  */
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class EnfermariasResource {
 
     private final Logger log = LoggerFactory.getLogger(EnfermariasResource.class);
@@ -41,11 +36,8 @@ public class EnfermariasResource {
 
     private final EnfermariasRepository enfermariasRepository;
 
-    private final EnfermariasSearchRepository enfermariasSearchRepository;
-
-    public EnfermariasResource(EnfermariasRepository enfermariasRepository, EnfermariasSearchRepository enfermariasSearchRepository) {
+    public EnfermariasResource(EnfermariasRepository enfermariasRepository) {
         this.enfermariasRepository = enfermariasRepository;
-        this.enfermariasSearchRepository = enfermariasSearchRepository;
     }
 
     /**
@@ -62,38 +54,96 @@ public class EnfermariasResource {
             throw new BadRequestAlertException("A new enfermarias cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Enfermarias result = enfermariasRepository.save(enfermarias);
-        enfermariasSearchRepository.save(result);
-        return ResponseEntity.created(new URI("/api/enfermarias/" + result.getId()))
+        return ResponseEntity
+            .created(new URI("/api/enfermarias/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /enfermarias} : Updates an existing enfermarias.
+     * {@code PUT  /enfermarias/:id} : Updates an existing enfermarias.
      *
+     * @param id the id of the enfermarias to save.
      * @param enfermarias the enfermarias to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated enfermarias,
      * or with status {@code 400 (Bad Request)} if the enfermarias is not valid,
      * or with status {@code 500 (Internal Server Error)} if the enfermarias couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/enfermarias")
-    public ResponseEntity<Enfermarias> updateEnfermarias(@Valid @RequestBody Enfermarias enfermarias) throws URISyntaxException {
-        log.debug("REST request to update Enfermarias : {}", enfermarias);
+    @PutMapping("/enfermarias/{id}")
+    public ResponseEntity<Enfermarias> updateEnfermarias(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Enfermarias enfermarias
+    ) throws URISyntaxException {
+        log.debug("REST request to update Enfermarias : {}, {}", id, enfermarias);
         if (enfermarias.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (!Objects.equals(id, enfermarias.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!enfermariasRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
         Enfermarias result = enfermariasRepository.save(enfermarias);
-        enfermariasSearchRepository.save(result);
-        return ResponseEntity.ok()
+        return ResponseEntity
+            .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, enfermarias.getId().toString()))
             .body(result);
     }
 
     /**
+     * {@code PATCH  /enfermarias/:id} : Partial updates given fields of an existing enfermarias, field will ignore if it is null
+     *
+     * @param id the id of the enfermarias to save.
+     * @param enfermarias the enfermarias to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated enfermarias,
+     * or with status {@code 400 (Bad Request)} if the enfermarias is not valid,
+     * or with status {@code 404 (Not Found)} if the enfermarias is not found,
+     * or with status {@code 500 (Internal Server Error)} if the enfermarias couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/enfermarias/{id}", consumes = "application/merge-patch+json")
+    public ResponseEntity<Enfermarias> partialUpdateEnfermarias(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Enfermarias enfermarias
+    ) throws URISyntaxException {
+        log.debug("REST request to partial update Enfermarias partially : {}, {}", id, enfermarias);
+        if (enfermarias.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, enfermarias.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!enfermariasRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<Enfermarias> result = enfermariasRepository
+            .findById(enfermarias.getId())
+            .map(
+                existingEnfermarias -> {
+                    if (enfermarias.getEnfermaria() != null) {
+                        existingEnfermarias.setEnfermaria(enfermarias.getEnfermaria());
+                    }
+
+                    return existingEnfermarias;
+                }
+            )
+            .map(enfermariasRepository::save);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, enfermarias.getId().toString())
+        );
+    }
+
+    /**
      * {@code GET  /enfermarias} : get all the enfermarias.
      *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of enfermarias in body.
      */
     @GetMapping("/enfermarias")
@@ -109,7 +159,7 @@ public class EnfermariasResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the enfermarias, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/enfermarias/{id}")
-    public ResponseEntity<Enfermarias> getEnfermarias(@PathVariable String id) {
+    public ResponseEntity<Enfermarias> getEnfermarias(@PathVariable Long id) {
         log.debug("REST request to get Enfermarias : {}", id);
         Optional<Enfermarias> enfermarias = enfermariasRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(enfermarias);
@@ -122,25 +172,12 @@ public class EnfermariasResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/enfermarias/{id}")
-    public ResponseEntity<Void> deleteEnfermarias(@PathVariable String id) {
+    public ResponseEntity<Void> deleteEnfermarias(@PathVariable Long id) {
         log.debug("REST request to delete Enfermarias : {}", id);
         enfermariasRepository.deleteById(id);
-        enfermariasSearchRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * {@code SEARCH  /_search/enfermarias?query=:query} : search for the enfermarias corresponding
-     * to the query.
-     *
-     * @param query the query of the enfermarias search.
-     * @return the result of the search.
-     */
-    @GetMapping("/_search/enfermarias")
-    public List<Enfermarias> searchEnfermarias(@RequestParam String query) {
-        log.debug("REST request to search Enfermarias for query {}", query);
-        return StreamSupport
-            .stream(enfermariasSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }

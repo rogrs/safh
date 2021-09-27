@@ -3,9 +3,9 @@
     "internacoesDetalhes": {
       "home": {
         "title": "Internacoes Detalhes",
+        "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Internacoes Detalhes",
         "createOrEditLabel": "Criar ou editar Internacoes Detalhes",
-        "search": "Pesquisar por Internacoes Detalhes",
         "notFound": "Nenhum Internacoes Detalhes encontrado"
       },
       "created": "Um novo Internacoes Detalhes foi criado com o identificador {{ param }}",
@@ -17,6 +17,7 @@
       "detail": {
         "title": "Internacoes Detalhes"
       },
+      "id": "ID",
       "dataDetalhe": "Data Detalhe",
       "horario": "Horario",
       "qtd": "Qtd",

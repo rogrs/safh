@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="clinicas">
+      <h2 data-cy="clinicasDetailsHeading"><span jhiTranslate="safhApp.clinicas.detail.title">Clinicas</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ clinicas.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.clinicas.clinica">Clinica</span></dt>
+        <dd>
+          <span>{{ clinicas.clinica }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.clinicas.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ clinicas.descricao }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/clinicas', clinicas.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

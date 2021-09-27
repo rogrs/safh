@@ -1,52 +1,60 @@
 package br.com.rogrs.domain;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Posologias.
  */
-@Document(collection = "posologias")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "posologias")
+@Entity
+@Table(name = "posologias")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Posologias implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Size(max = 40)
-    @Field("posologia")
+    @Column(name = "posologia", length = 40, nullable = false)
     private String posologia;
 
-    @DBRef
-    @Field("medicamentos")
+    @OneToMany(mappedBy = "posologiaPadrao")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "posologiaPadrao", "fabricantes" }, allowSetters = true)
     private Set<Medicamentos> medicamentos = new HashSet<>();
 
-    @DBRef
-    @Field("internacoesDetalhes")
+    @OneToMany(mappedBy = "posologias")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "internacoes", "dietas", "prescricoes", "posologias" }, allowSetters = true)
     private Set<InternacoesDetalhes> internacoesDetalhes = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Posologias id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getPosologia() {
-        return posologia;
+        return this.posologia;
     }
 
     public Posologias posologia(String posologia) {
@@ -59,11 +67,11 @@ public class Posologias implements Serializable {
     }
 
     public Set<Medicamentos> getMedicamentos() {
-        return medicamentos;
+        return this.medicamentos;
     }
 
     public Posologias medicamentos(Set<Medicamentos> medicamentos) {
-        this.medicamentos = medicamentos;
+        this.setMedicamentos(medicamentos);
         return this;
     }
 
@@ -80,15 +88,21 @@ public class Posologias implements Serializable {
     }
 
     public void setMedicamentos(Set<Medicamentos> medicamentos) {
+        if (this.medicamentos != null) {
+            this.medicamentos.forEach(i -> i.setPosologiaPadrao(null));
+        }
+        if (medicamentos != null) {
+            medicamentos.forEach(i -> i.setPosologiaPadrao(this));
+        }
         this.medicamentos = medicamentos;
     }
 
     public Set<InternacoesDetalhes> getInternacoesDetalhes() {
-        return internacoesDetalhes;
+        return this.internacoesDetalhes;
     }
 
     public Posologias internacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
-        this.internacoesDetalhes = internacoesDetalhes;
+        this.setInternacoesDetalhes(internacoesDetalhes);
         return this;
     }
 
@@ -105,9 +119,16 @@ public class Posologias implements Serializable {
     }
 
     public void setInternacoesDetalhes(Set<InternacoesDetalhes> internacoesDetalhes) {
+        if (this.internacoesDetalhes != null) {
+            this.internacoesDetalhes.forEach(i -> i.setPosologias(null));
+        }
+        if (internacoesDetalhes != null) {
+            internacoesDetalhes.forEach(i -> i.setPosologias(this));
+        }
         this.internacoesDetalhes = internacoesDetalhes;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -122,9 +143,11 @@ public class Posologias implements Serializable {
 
     @Override
     public int hashCode() {
-        return 31;
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Posologias{" +

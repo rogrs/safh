@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="internacoesDetalhes">
+      <h2 data-cy="internacoesDetalhesDetailsHeading">
+        <span jhiTranslate="safhApp.internacoesDetalhes.detail.title">Internacoes Detalhes</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ internacoesDetalhes.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.dataDetalhe">Data Detalhe</span></dt>
+        <dd>
+          <span>{{ internacoesDetalhes.dataDetalhe | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.horario">Horario</span></dt>
+        <dd>
+          <span>{{ internacoesDetalhes.horario | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.qtd">Qtd</span></dt>
+        <dd>
+          <span>{{ internacoesDetalhes.qtd }}</span>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.internacoes">Internacoes</span></dt>
+        <dd>
+          <div *ngIf="internacoesDetalhes.internacoes">
+            <a [routerLink]="['/internacoes', internacoesDetalhes.internacoes?.id, 'view']">{{
+              internacoesDetalhes.internacoes?.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.dietas">Dietas</span></dt>
+        <dd>
+          <div *ngIf="internacoesDetalhes.dietas">
+            <a [routerLink]="['/dietas', internacoesDetalhes.dietas?.id, 'view']">{{ internacoesDetalhes.dietas?.dieta }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.prescricoes">Prescricoes</span></dt>
+        <dd>
+          <div *ngIf="internacoesDetalhes.prescricoes">
+            <a [routerLink]="['/prescricoes', internacoesDetalhes.prescricoes?.id, 'view']">{{
+              internacoesDetalhes.prescricoes?.prescricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="safhApp.internacoesDetalhes.posologias">Posologias</span></dt>
+        <dd>
+          <div *ngIf="internacoesDetalhes.posologias">
+            <a [routerLink]="['/posologias', internacoesDetalhes.posologias?.id, 'view']">{{
+              internacoesDetalhes.posologias?.posologia
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/internacoes-detalhes', internacoesDetalhes.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

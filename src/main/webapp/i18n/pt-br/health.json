@@ -13,8 +13,10 @@
     "indicator": {
       "diskSpace": "Espaço em disco",
       "mail": "E-mail",
-      "elasticsearch": "Elasticsearch",
-      "mongo": "MongoDB"
+      "livenessState": "Liveness state",
+      "readinessState": "Readiness state",
+      "ping": "Application",
+      "db": "Banco de dados"
     },
     "table": {
       "service": "Nome do Serviço",
